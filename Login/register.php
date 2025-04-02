@@ -1,32 +1,58 @@
 <?php
-
-session_start();
-
-include("bdconnect.php");
-
-$nom_utilisateur = $_POST['nom_utilisateur'];
-$nom = $_POST['nom'];
-$prenom = $_POST['prenom'];
-$adresse_mail_client = $_POST['adresse_mail_client'];
-$telephone = $_POST['telephone'];
-$mot_de_passe = $_POST['mot_de_passe'];
-
-$requete = "SELECT * FROM inscription WHERE nom_utilisateur = '$nom_utilisateur'";
-$curseur = mysqli_query($bdd, $requete);
-$num = mysqli_num_rows($curseur);
-
-if ($num == 1) {
-  echo "<script>alert('Ce nom d'utilisateur est deja pris');</script>";
-  header("Refresh: 0; URL='../php/supercar_connexion.php'");
-} else {
-  $reg = "INSERT INTO inscription(nom_utilisateur, nom, prenom, adresse_mail_client, telephone, mot_de_passe) VALUES ('$nom_utilisateur', '$nom', '$prenom', '$adresse_mail_client', '$telephone', '$mot_de_passe')";
-  mysqli_query($bdd,$reg);
-  echo "<script>alert('Bienvenue, Vous pouvez vous connecter');</script>";
-  header("Refresh: 0; URL='../php/supercar_connexion.php'");
-}
-
-mysqli_free_result($curseur);
- 
-mysqli_close($bdd);
-
+	include 'user.inc.php'
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$login = $_POST['login'];
+		$mdp = $_POST['mdp'];
+		$mdp_confirm = $_POST['mdp_confirm'];
+		$email = $_POST['mail'];
+		
+		if(exist($login)){
+			$error="Le nom d'utilisateur existe déjà";
+		}
+		elseif ($mdp!=$mdp_confirm){
+			$error="Veuillez saisir des mots de passe identiques";
+		}
+		else{
+			addUser($login,$mdp);
+			header('Location: login.php?message=Inscription réussie. Vous pouvez maintenant vous connecter.');
+		}
+		
+	}
 ?>
+
+
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>register</title>
+	</head>
+	<body>
+		
+		<form action="register.php" method="post">
+			<label for="login">Nom d'utilisateur</label>
+			<input type="text" name="login" id="login" required>
+			<br>
+			
+			<label for="mdp">Mot de passe</label>
+			<input type="password" name="mdp" id="mdp" required>
+			<br>
+			
+			<label for="mdp_confirm">Mot de passe</label>
+			<input type="password" name="mdp_confirm" id="mdp_confirm" required>
+			<br>
+			
+			<label for="mail">Mail</label>
+			<input type="email" name="mail" id="mail" required>
+			<br>
+			
+			<button type="submit">Inscription</button>
+			
+			<?php
+				if (isset($error)){
+					echo "<p style='color=red;'>$error</p>";
+				}
+			?>
+		</form>
+	</body>
+</html>
