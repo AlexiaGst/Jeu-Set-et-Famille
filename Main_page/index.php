@@ -6,7 +6,7 @@ $isConnected = !isset($_SESSION['nom_utilisateur']);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jeu, Set et Famille</title>
+    <title>Jeu, Set et Famille - Jeu des 7 familles </title>
     <link rel="icon" href="images/logo.ico" type="image/x-icon">
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="style/header_css.css">
@@ -23,10 +23,10 @@ $isConnected = !isset($_SESSION['nom_utilisateur']);
     <input type="checkbox" id="nav_check" hidden>
     <nav>
         <ul> 
-            <li><a href="">Jouer une Partie</a></li>
+            <li><a href="ongoing_games.php">Jouer une Partie</a></li>
             <li><a href="">Règles du jeu</a></li>
             <li><a href="">Les familles</a></li>
-            <li><a href="Login/login.php">Connexion</a></li>
+            <li><a href="">Connexion</a></li>
         </ul>
     </nav>
     <label for="nav_check" class="hamburger">
@@ -39,22 +39,35 @@ $isConnected = !isset($_SESSION['nom_utilisateur']);
 
 <div class="main">
 <div class="jeu">
-    <img src="images/logo.png">
-    <div class="text"></div>
 
+<div class="cards">
+<div class="black card">
+  </div>
+  <div class="red card">
+  </div>
+  <div class="black card">
+  </div>
+  <div class="red card">
+  </div>
+  <div class="red card">
+  </div>
 </div>
-<button onclick="handle_play_button()">Jouer</button>
-</div>
+
+
+<div class="text"></div>
+
 <script>
 	function handle_play_button() {
 		<?php if (!$isConnected): ?>
-			window.location.href = "Login/login.php";
+			window.location.href = "login.php";
 		<?php else: ?>
-			window.location.href = "create_game.php";
+			window.location.href = "create.php";
 		<?php endif; ?>
 	}
 </script>
 <script src="script.js"></script>
+</div>
+</div>
 
 <div class="footer">
         <footer>
@@ -63,10 +76,10 @@ $isConnected = !isset($_SESSION['nom_utilisateur']);
                 <li><a href=""> Jouer une Partie </a></li>
                 <li><a href="">Règles du jeu</a></li>
                 <li><a href="">Les familles</a></li>
-                <li><a href="Login/login.php"> Connexion </a></li>
+                <li><a href=""> Connexion </a></li>
             </ul>
         </footer>
-    </div>
+</div>
 
 </body>
 </html>
