@@ -26,27 +26,21 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>register</title>
+		<link rel="stylesheet" type="text/css" href="../style/login_css.css">
 	</head>
 	<body>
-		
-		<form action="register.php" method="post">
-			<label for="login">Nom d'utilisateur</label>
-			<input type="text" name="login" id="login" required>
-			<br>
-			
-			<label for="mdp">Mot de passe</label>
-			<input type="password" name="mdp" id="mdp" required>
-			<br>
-			
-			<label for="mdp_confirm">Mot de passe</label>
-			<input type="password" name="mdp_confirm" id="mdp_confirm" required>
-			<br>
-			
-			<label for="mail">Mail</label>
-			<input type="email" name="mail" id="mail" required>
-			<br>
-			
-			<button type="submit">Inscription</button>
+
+			<div class="container">
+				<div class="heading">Inscription</div>
+				<form action="login.php" class="form">
+				  <input required class="input" type="text" name="login" id="login" placeholder="Nom d'utilisateur">
+				  <input required class="input" type="email" name="mail" id="mail" placeholder="E-mail">
+				  <input required class="input" type="password" name="password" id="password" placeholder="Mot de passe">
+				  <input required class="input" type="password" name="password" id="password" placeholder="Mot de passe">
+				  <input class="login-button" type="submit" value="Inscription">
+				  <a href="login.php"<button id="inscription">Connexion</button><a>
+				</form>
+			</div>
 			
 			<?php
 				if (isset($error)){
