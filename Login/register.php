@@ -1,5 +1,5 @@
 <?php
-	include 'user.inc.php'
+	include 'user.inc.php';
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$login = $_POST['login'];
 		$mdp = $_POST['mdp'];
