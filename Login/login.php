@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>login</title>
+		<link rel="stylesheet" type="text/css" href="../style/login_css.css">
 	</head>
 	<body>
 		<?php
@@ -14,18 +15,18 @@
 				echo '<p style="color:red;">Aucun compte ne correspond, veuillez réesayer ou vous inscrire </p>';
 			}
 		?>
+
+		<div class="container">
+			<div class="heading">Connexion</div>
+			<form action="acces.php" class="form">
+			  <input required class="input" type="text" name="login" id="login" placeholder="Nom d'utilisateur">
+			  <input required class="input" type="password" name="password" id="password" placeholder="Mot de passe">
+			  <span class="forgot-password"><a href="#">Mot de passe oublié ?</a></span>
+			  <input class="login-button" type="submit" value="Connexion">
+			  <a href="register.php"<button id="inscription">Inscription</button><a>
+			</form>
+		  </div>
 		
-		<form action="acces.php" method="post">
-			<label for="login">Nom d'utilisateur</label>
-			<input type="text" name="login" id="login" required>
-			<br>
-			
-			<label for="mdp">Mot de passe</label>
-			<input type="password" name="mdp" id="mdp" required>
-			<br>
-			
-			<button type="submit">Connexion</button>
-		</form>
-		<a href="register.php"<button id="inscription">Inscription</button><a>
+		
 	</body>
 </html>
