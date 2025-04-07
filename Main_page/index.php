@@ -26,7 +26,7 @@ $isConnected = !isset($_SESSION['nom_utilisateur']);
             <li><a href="">Jouer une Partie</a></li>
             <li><a href="">Règles du jeu</a></li>
             <li><a href="">Les familles</a></li>
-            <li><a href="">Connexion</a></li>
+            <li><a href="Login/login.php">Connexion</a></li>
         </ul>
     </nav>
     <label for="nav_check" class="hamburger">
@@ -48,9 +48,9 @@ $isConnected = !isset($_SESSION['nom_utilisateur']);
 <script>
 	function handle_play_button() {
 		<?php if (!$isConnected): ?>
-			window.location.href = "login.php";
+			window.location.href = "Login/login.php";
 		<?php else: ?>
-			window.location.href = "create.php";
+			window.location.href = "create_game.php";
 		<?php endif; ?>
 	}
 </script>
@@ -63,7 +63,7 @@ $isConnected = !isset($_SESSION['nom_utilisateur']);
                 <li><a href=""> Jouer une Partie </a></li>
                 <li><a href="">Règles du jeu</a></li>
                 <li><a href="">Les familles</a></li>
-                <li><a href=""> Connexion </a></li>
+                <li><a href="Login/login.php"> Connexion </a></li>
             </ul>
         </footer>
     </div>
