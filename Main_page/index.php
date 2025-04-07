@@ -1,6 +1,6 @@
 <?php
 session_start();
-$isConnected = !isset($_SESSION['nom_utilisateur']);
+$isConnected = isset($_SESSION['nom_utilisateur']);
 ?>
 
 <!DOCTYPE html>
