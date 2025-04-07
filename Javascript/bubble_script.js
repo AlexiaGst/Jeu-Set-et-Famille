@@ -22,8 +22,32 @@ document.addEventListener("DOMContentLoaded", function () {
             
             index++;
             setTimeout(addMessage, 2000);
+        } else {
+            setTimeout(addButton, 500); 
         }
+    }
+
+    function addButton() {
+        const button = document.createElement("button");
+        button.textContent = "Jouer";
+        button.classList.add("play-button");
+        button.onclick = handle_play_button;
+
+        chatContainer.appendChild(button);
+
+        
+        setTimeout(() => {
+            button.classList.add("visible");
+        }, 100);
     }
     
     addMessage();
+
+    const cards = document.querySelectorAll(".card");
+cards.forEach((card) => {
+  card.addEventListener("click", (e) => e.target.className.includes("card")? e.target.classList.toggle("selected") : e.target.closest(".card").classList.toggle("selected"));
 });
+
+});
+
+
