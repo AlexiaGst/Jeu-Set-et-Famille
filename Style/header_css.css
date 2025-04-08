@@ -102,6 +102,7 @@ header nav ul li a:hover {
       background: #fff;
       padding: 30px;
       transition: 0.3s;
+      z-index:1000;
   }
   header #nav_check:checked ~ nav {
       left: 0;
