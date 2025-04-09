@@ -21,7 +21,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  padding-top: 80px
+  padding-top: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,16 +97,33 @@ button:active {
   position: absolute;
   top: 70px;
   left: 50%;
-  transform: translate(-50%, 0) rotate(0deg);
+  transform: translateX(-50%);
   width: 50px;
   height: 80px;
-  background-color: #f2f2f2;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   border: 2px solid #ccc;
   opacity: 0;
   transition: all 0.4s ease;
   z-index: -1;
+}
+
+.mini-card.card1{
+  background-image: url('../images/ski.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.mini-card.card2{
+  background-image: url('../images/basket.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.mini-card.card3{
+  background-image: url('../images/wakeboard.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .reveal-button:hover .card1 {
@@ -116,7 +133,7 @@ button:active {
 }
 
 .reveal-button:hover .card2 {
-  transform: translate(-50%, -130px) rotate(0deg);
+  transform: translate(-50%, -130px);
   opacity: 1;
   z-index: 2;
 }
