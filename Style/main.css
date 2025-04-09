@@ -6,18 +6,16 @@
   list-style: none;
   box-sizing: border-box;
   overflow: hidden;
+  
 }
 
-.main {
-
-  background-color: #003645;
-  height: 32rem;
-
+body {
+  background: #003645
 }
 
 .jeu {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
   gap: 20px; 
   justify-content: center;
   text-align: center;
@@ -25,8 +23,7 @@
   width: 100%;
   max-width: 800px;
   margin: auto;
-  background-color: #003645;
-  margin-top: 2rem;
+  margin-top: 5rem;
 }
 
 .cards {
