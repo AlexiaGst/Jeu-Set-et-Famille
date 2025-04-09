@@ -35,6 +35,9 @@
 			if (isset ($_GET['message'])){
 				echo "<p> $message </p>";
 			}
+			if (isset($_GET['error'])){
+				echo "<p style='color:red;'>$error</p>";
+			}
 		?>
 
 		<div class="container">
