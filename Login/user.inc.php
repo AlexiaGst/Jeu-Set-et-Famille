@@ -22,6 +22,7 @@
 		if (password_verify($mdp, $hashed_password)) {
 			mysqli_free_result($curseur);
 			mysqli_close($bdd);
+			$_SESSION['nom_utilisateur'] = $login;
 			return 1;
 		} else {
 			mysqli_free_result($curseur);
