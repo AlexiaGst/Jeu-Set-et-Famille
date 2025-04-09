@@ -26,10 +26,10 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
             <li><a href="rules.php">Règles du jeu</a></li>
             <li><a href="">Les familles</a></li>
 	    <?php if (!$isConnected): ?>
-            <li><a href="login.php">Connexion</a></li>
-	    <?php else: ?>
-	    <li><a onclick="logout.php">Déconnexion</a></li>
-	    <?php endif; ?>
+                <li><a href="Login/login.php">Connexion</a></li>
+    	    <?php else: ?>
+    	    <li><a href="Login/logout.php">Déconnexion</a></li>
+    	    <?php endif; ?>
         </ul>
     </nav>
     <label for="nav_check" class="hamburger">
