@@ -1,0 +1,137 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    background: linear-gradient(135deg, #003645, #00798c);
+}
+
+main {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parties {
+    width: 100%;
+    max-width: 650px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    height: 500px;
+}
+
+.bouton-switch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 5px;
+    position: relative;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 12px 20px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+}
+
+
+#btn {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: #00798c;
+    border-radius: 30px;
+    transition: left 0.4s ease-in-out;
+}
+
+.game-list {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.game-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.9);
+    color: #003645;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin: 12px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+
+
+.game-item img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.game-item p {
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.game-item a {
+    background-color: #32afbb;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.game-item a:hover {
+    background-color: #26a0a6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main {
+        width: 90%;
+    }
+
+    .game-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .game-item img {
+        margin-bottom: 10px;
+    }
+
+    .game-item a {
+        margin-top: 10px;
+    }
+}
