@@ -1,6 +1,10 @@
 <?php
 	include 'user.inc.php';
-	session_start();
+	if (session_status() === PHP_SESSION_NONE) {
+		session_start();
+	}
+
+
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$login=$_POST['login'];
 		$mdp=$_POST['mdp'];
@@ -9,11 +13,11 @@
 				header('Location: ../index.php');
 			}
 			else{
-				echo '<p style="color:red;">Identifiant ou mot de passe incorrect. Veuillez réessayer.</p>';
+				$error="Identifiant ou mot de passe incorrect. Veuillez réessayer.";
 			}
 		}
 		else {
-			echo '<p style="color:red;">Aucun compte ne correspond, veuillez réesayer ou vous inscrire </p>';
+			$error="Aucun compte ne correspond, veuillez réesayer ou vous inscrire";
 		}
 	}
 
