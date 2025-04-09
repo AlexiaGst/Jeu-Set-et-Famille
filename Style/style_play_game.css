@@ -1,0 +1,128 @@
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+html,body{
+  height:100%;
+}
+
+body {
+  background: #003645;
+}
+
+.main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 80px
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#retour{
+  display: block;
+  position:absolute;
+  top:70px;
+  left:20px;
+  margin: 2px;
+  font-size: 14px;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #ccc;
+  padding:5px;
+}
+
+.button_container{
+	display:block;
+	transform:translateY(-10%);
+}
+
+button {
+  display: block;
+  margin: 70px auto;
+  padding: 1.3em 3em;
+  font-size: 18px;
+  letter-spacing: 2.5px;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #32afbb;
+  box-shadow: 0px 15px 20px rgba(50, 143, 171, 0.6);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+button:active {
+  transform: translateY(-1px);
+}
+
+.mini-cards-wrapper {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 60px; 
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mini-cards {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.mini-card {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translate(-50%, 0) rotate(0deg);
+  width: 50px;
+  height: 80px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border: 2px solid #ccc;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+
+.reveal-button:hover .card1 {
+  transform: translate(-120%, -120px) rotate(-15deg);
+  opacity: 1;
+  z-index: 1;
+}
+
+.reveal-button:hover .card2 {
+  transform: translate(-50%, -130px) rotate(0deg);
+  opacity: 1;
+  z-index: 2;
+}
+
+.reveal-button:hover .card3 {
+  transform: translate(20%, -120px) rotate(15deg);
+  opacity: 1;
+  z-index: 1;
+}
