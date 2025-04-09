@@ -57,7 +57,8 @@
 					</div>
 				</div>
 			</button>
-			<button onclick="ongoing_games.php" class="reveal-button">
+			<a href="ongoing_games.php">
+			<button class="reveal-button">
 				Rejoindre
 				<div class="mini-cards-wrapper">
 					<div class="mini-cards">
@@ -66,7 +67,7 @@
 						<div class="mini-card card3"></div>
 					</div>
 				</div>
-			</button>
+			</button></a>
 			</div>
 		</div>
 		
