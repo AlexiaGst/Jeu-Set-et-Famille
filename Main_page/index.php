@@ -10,7 +10,6 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
     <link rel="icon" href="images/logo.ico" type="image/x-icon">
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="style/header_css.css">
-    <link rel="stylesheet" type="text/css" href="style/footer_css.css">
     <link rel="stylesheet" type="text/css" href="style/style.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap" rel="stylesheet">
 </head>
