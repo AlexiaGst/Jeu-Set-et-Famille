@@ -1,53 +1,41 @@
 <?php
-	include ('bd_user.php');
+	include 'bd_user.php';
 	session_start();
 
 	function exist($login){
 		global $bdd;
-		$requete = $bdd->prepare("SELECT id FROM utilisateurs WHERE nom_utilisateur = ?");
-		$requete->bind_param("s", $login);
-		$requete->execute();
-		$requete->store_result();
-
-		$exists = $requete->num_rows > 0;
-
-		$requete->close();
-		return $exists;
+		$requete = "SELECT * FROM utilisateurs WHERE nom_utilisateur = '$login'";
+		$curseur = mysqli_query($bdd, $requete);
+		$num = mysqli_num_rows($curseur);
+		return $num;
+		mysqli_close($bdd);
 	}
 	
 	
 	function loginOk($login,$mdp){
 		global $bdd;
-		$requete = $bdd->prepare("SELECT mot_de_passe FROM utilisateurs WHERE nom_utilisateur = ?");
-		$requete->bind_param("s", $login);
-		$requete->execute();
-		$requete->store_result();
-		$requete->bind_result($hashed_password);
-		$requete->fetch();
-
-		if ($requete->num_rows > 0 && password_verify($mdp, $hashed_password)) {
-			$requete->close();
-			return true;
+		$requete = "SELECT mot_de_passe FROM utilisateurs WHERE nom_utilisateur = '$login'";
+		$curseur = mysqli_query($bdd, $requete);
+		$row = mysqli_fetch_assoc($curseur);
+		$hashed_password = $row['mot_de_passe'];
+		
+		if (password_verify($mdp, $hashed_password)) {
+			mysqli_free_result($curseur);
+			mysqli_close($bdd);
+			return 1;
 		} else {
-			$requete->close();
-			return false; 
+			mysqli_free_result($curseur);
+			mysqli_close($bdd);
+			return 0;
 		}
 	}
 	
-	function addUser($login, $mdp) {
+	function addUser($login, $mdp, $email) {
 		global $bdd;
 		$hashed_password = password_hash($mdp, PASSWORD_BCRYPT);
-
-		$requete = $bdd->prepare("INSERT INTO inscription (nom_utilisateur, mot_de_passe) VALUES (?, ?)");
-		$requete->bind_param("ss", $login, $hashed_password);
-
-		if ($requete->execute()) {
-			$requete->close();
-			return True;
-		} else {
-			$requete->close();
-			return False;
-		}
+		$reg = "INSERT INTO utilisateurs(nom_utilisateur, mot_de_passe, adresse_mail_utilisateur) VALUES ('$login', '$hashed_password','$email')";
+		mysqli_query($bdd,$reg);
+		mysqli_close($bdd);
 	}
-	
+
 ?>
