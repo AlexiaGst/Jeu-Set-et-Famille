@@ -58,10 +58,10 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
 
 <script>
 	function handle_play_button() {
-		<?php if (!$isConnected): ?>
-			window.location.href = "login.php";
+		<?php if ($isConnected): ?>
+			window.location.href = "Login/login.php";
 		<?php else: ?>
-			window.location.href = "create.php";
+			window.location.href = "play_game.php";
 		<?php endif; ?>
 	}
 </script>
