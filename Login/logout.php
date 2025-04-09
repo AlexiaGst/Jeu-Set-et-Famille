@@ -1,12 +1,8 @@
 <?php
+	session_start();
+	session_unset(); 
+	session_destroy(); 
 
-    session_start();
-
-    session_destroy();
-
-    unset($_SESSION);
-
-    echo "<script>alert('Vous avez été déconnecté du site');</script>";
-    header("Refresh: 0; URL='../index.php'");
-
+	header("Location: ../index.php");
+	exit();
 ?>
