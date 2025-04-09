@@ -2,11 +2,11 @@
 include("Login/bd_user.php");
 
 // Sélectionner les parties ouvertes
-$sql = "SELECT id_partie, mot_de_passe, nbr_joueurs, max_joueurs FROM parties WHERE nbr_joueurs < max_joueurs AND mot_de_passe IS NOT NULL";
+$sql = "SELECT id_partie, mot_de_passe, nbr_joueurs, max_joueurs FROM parties WHERE nbr_joueurs < max_joueurs AND mot_de_passe IS NULL";
 $result = $bdd->query($sql);
 
 // Sélectionner les parties privées (mot de passe défini)
-$sql2 = "SELECT id_partie, mot_de_passe, nbr_joueurs, max_joueurs FROM parties WHERE nbr_joueurs < max_joueurs AND mot_de_passe IS NULL";
+$sql2 = "SELECT id_partie, mot_de_passe, nbr_joueurs, max_joueurs FROM parties WHERE nbr_joueurs < max_joueurs AND mot_de_passe IS NOT NULL";
 $result2 = $bdd->query($sql2);
 
 session_start();
