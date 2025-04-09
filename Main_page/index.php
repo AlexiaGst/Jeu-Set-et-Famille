@@ -73,17 +73,5 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
 </div>
 </div>
 
-<div class="footer">
-        <footer>
-            <ul>
-                <li><a href=""> Accueil </a></li>
-                <li><a href=""> Jouer une Partie </a></li>
-                <li><a href="">Règles du jeu</a></li>
-                <li><a href="">Les familles</a></li>
-                <li><a href=""> Connexion </a></li>
-            </ul>
-        </footer>
-</div>
-
 </body>
 </html>
