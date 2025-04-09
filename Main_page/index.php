@@ -25,11 +25,11 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
             <li><a href="ongoing_games.php">Jouer une Partie</a></li>
             <li><a href="">Règles du jeu</a></li>
             <li><a href="">Les familles</a></li>
-			<?php if ($isConnected): ?>
+	    <?php if (!$isConnected): ?>
             <li><a href="">Connexion</a></li>
-			<?php else: ?>
-			<li><a onclick="logout.php">Déconnexion</a></li>
-			<?php endif; ?>
+	    <?php else: ?>
+	    <li><a onclick="logout.php">Déconnexion</a></li>
+	    <?php endif; ?>
         </ul>
     </nav>
     <label for="nav_check" class="hamburger">
@@ -61,7 +61,7 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
 
 <script>
 	function handle_play_button() {
-		<?php if ($isConnected): ?>
+		<?php if (!$isConnected): ?>
 			window.location.href = "Login/login.php";
 		<?php else: ?>
 			window.location.href = "play_game.php";
