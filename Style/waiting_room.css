@@ -55,7 +55,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Faces avant et arrière */
 .face {
     position: absolute;
     height: 100%;
