@@ -42,7 +42,7 @@
 
     var index = 0;
     var lastFlipTime = 0;
-    var interval = 5000; // 2.5 secondes = dos visible à mi-rotation
+    var interval = 5000; 
     function updateImage(timestamp) {
         if (!lastFlipTime) lastFlipTime = timestamp;
 
