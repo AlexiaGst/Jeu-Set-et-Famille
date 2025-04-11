@@ -11,7 +11,18 @@ $result2 = $bdd->query($sql2);
 
 session_start();
 $isConnected = isset($_SESSION['nom_utilisateur']);
+
+if (isset($_GET['retour'])) {
+    $id_partie = intval($_GET['retour']);
+
+    $sql = "UPDATE parties SET nbr_joueurs = nbr_joueurs - 1 WHERE id_partie = $id_partie";
+    mysqli_query($bdd, $sql);
+
+    header("Location: ongoing_games.php");
+    exit();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,16 +37,16 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
 <body>
 
 <header>
-    <a href="../index.php">
+    <a href="index.php">
         <img src="images/logo.png" alt="Jeu-Set-et-Famille logo" class="logo">
     </a>
     <input type="checkbox" id="nav_check" hidden>
     <nav>
-         <ul> 
+        <ul>
             <li><a href="play_game.php">Jouer une Partie</a></li>
             <li><a href="rules.php">Règles du jeu</a></li>
             <li><a href="">Les familles</a></li>
-    	    <?php if (!$isConnected): ?>
+            <?php if (!$isConnected): ?>
                 <li><a href="Login/login.php">Connexion</a></li>
     	    <?php else: ?>
     	    <li><a href="Login/logout.php">Déconnexion</a></li>
@@ -50,6 +61,7 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
 </header>
 
 <main>
+<a href='index.php' id='retour'>&lt; Retour</a>
 <div class="parties">
     <div class="bouton-switch">
         <div id="btn"></div>
@@ -62,14 +74,9 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<div class='game-item'>
-                            <img src='images/logo.png'>
-                            <p>Joueurs: " . $row["nbr_joueurs"] . " / " . $row["max_joueurs"] . "</p>";
-                    if ($row["max_joueurs"] - $row["nbr_joueurs"] > 1) {
-                        echo "<a href='waiting_room.php?id_partie=" . $row["id_partie"] . "'>Rejoindre</a>";
-                    } else {
-                        echo "<a href='game.php?id_partie=" . $row["id_partie"] . "'>Rejoindre</a>";
-                    }
+                    echo "<div class='game-item'><img src='images/logo.png'><p>Joueurs: " . $row["nbr_joueurs"] . " / " . $row["max_joueurs"] . "</p>";
+                    echo "<a href='waiting_room.php?id_partie=" . $row["id_partie"] . "&action=increment'>Rejoindre</a>";
+
                     echo "</div>";
                 }
             } else {
@@ -85,7 +92,7 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
                     echo "<div class='game-item'>
                             <img src='images/logo.png'>
                             <p>Joueurs: " . $row2["nbr_joueurs"] . " / " . $row2["max_joueurs"] . "</p>
-                            <a href='game.php?id_partie=" . $row2["id_partie"] . "'>Rejoindre</a>
+                            <a href='game.php?id_partie=" . $row2["id_partie"] . "&action=increment'>Rejoindre</a>
                           </div>";
                 }
             } else {
