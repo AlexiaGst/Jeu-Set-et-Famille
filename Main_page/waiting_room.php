@@ -2,16 +2,32 @@
 	include 'Login/bd_user.php';
 	session_start();
 	if (isset($_GET['id_partie'])) {
-    $id_partie = $_GET['id_partie'];
-		
-		$sql = "SELECT id_partie, mot_de_passe, nbr_joueurs, max_joueurs FROM parties WHERE id_partie=$id_partie";
-		$res = mysqli_query($bdd, $sql);
-		$row = mysqli_fetch_assoc($res);
-		
-		$nouveau_nbr_joueurs = $row['nbr_joueurs'] + 1;
-		$update_sql = "UPDATE parties SET nbr_joueurs = $nouveau_nbr_joueurs WHERE id_partie = $id_partie";
-		mysqli_query($bdd, $update_sql);
-		mysqli_close($bdd);
+		$id_partie = $_GET['id_partie'];
+		if (isset($_GET['action']) && $_GET['action'] == 'increment') {
+			$sql = "SELECT id_partie, mot_de_passe, nbr_joueurs, max_joueurs FROM parties WHERE id_partie=$id_partie";
+			$res = mysqli_query($bdd, $sql);
+			$row = mysqli_fetch_assoc($res);
+
+			$nouveau_nbr_joueurs = $row['nbr_joueurs'] + 1;
+			$update_sql = "UPDATE parties SET nbr_joueurs = $nouveau_nbr_joueurs WHERE id_partie = $id_partie";
+			mysqli_query($bdd, $update_sql);
+
+			if ($nouveau_nbr_joueurs >= $row['max_joueurs']) {
+				$data = json_encode([
+					'type' => 'start',
+					'id_partie' => $id_partie
+				]);
+				file_put_contents("start_msg.json", $data);
+
+				sleep(1); // laisser le temps aux clients de se connecter
+				$full_path = realpath(__DIR__ . "/js/send_start.js");
+				exec("node \"$full_path\"");
+			}
+
+			mysqli_close($bdd);
+			header("Location: waiting_room.php?id_partie=" . $row["id_partie"]);
+			exit();
+		}
 	}
 ?>
 
@@ -29,6 +45,7 @@
 <body>
 
 <div class="main">
+	<a href='ongoing_games.php?retour=<?php echo $id_partie; ?>' id='retour'>&lt; Retour</a>
     <div class="deck">
         <div class="card">
 			<div class="face back">
@@ -60,7 +77,7 @@
 
     var index = 0;
     var lastFlipTime = 0;
-    var interval = 5000; 
+    var interval = 5000;
     function updateImage(timestamp) {
         if (!lastFlipTime) lastFlipTime = timestamp;
 
@@ -76,6 +93,28 @@
     }
 
     requestAnimationFrame(updateImage);
+
+
+	
+	const idPartie = <?php echo json_encode($id_partie); ?>;
+
+	const socket = new WebSocket('ws://localhost:8080');
+
+	socket.addEventListener('open', () => {
+		socket.send(JSON.stringify({ type: 'join', id_partie: idPartie }));
+	});
+
+	socket.addEventListener('message', (event) => {
+		const data = JSON.parse(event.data);
+
+		if (data.type === 'start_game') {
+			window.location.href = 'jeu.php?id_partie=' + idPartie;
+		}
+	});
+
+	socket.addEventListener('error', (event) => {
+		console.error("Erreur WebSocket :", event);
+	});
 </script>
 
 </body>
