@@ -1,3 +1,21 @@
+<?php
+	include 'Login/bd_user.php';
+	session_start();
+	if (isset($_GET['id_partie'])) {
+    $id_partie = $_GET['id_partie'];
+		
+		$sql = "SELECT id_partie, mot_de_passe, nbr_joueurs, max_joueurs FROM parties WHERE id_partie=$id_partie";
+		$res = mysqli_query($bdd, $sql);
+		$row = mysqli_fetch_assoc($res);
+		
+		$nouveau_nbr_joueurs = $row['nbr_joueurs'] + 1;
+		$update_sql = "UPDATE parties SET nbr_joueurs = $nouveau_nbr_joueurs WHERE id_partie = $id_partie";
+		mysqli_query($bdd, $update_sql);
+		mysqli_close($bdd);
+	}
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
