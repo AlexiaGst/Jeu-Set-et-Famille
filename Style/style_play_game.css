@@ -12,7 +12,7 @@ html,body{
 }
 
 body {
-  background: #003645;
+  background: linear-gradient(135deg, #003645, #00798c);
 }
 
 .main {
