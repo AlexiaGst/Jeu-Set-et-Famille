@@ -46,7 +46,7 @@
 		<a href='index.php' id='retour'>&lt; Retour</a>
 		
 		<div class="button_container">
-			
+			<a href="create_game.php">
 			<button class="reveal-button">
 				Créer
 				<div class="mini-cards-wrapper">
@@ -56,7 +56,7 @@
 						<div class="mini-card card3"></div>
 					</div>
 				</div>
-			</button>
+			</button></a>
 			<a href="ongoing_games.php">
 			<button class="reveal-button">
 				Rejoindre
