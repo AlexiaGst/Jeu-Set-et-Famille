@@ -1,8 +1,11 @@
 * {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  overflow: hidden; 
 }
 
 body {
@@ -13,13 +16,14 @@ main {
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+	flex-direction:column;
 }
 
 #retour{
   display: block;
   position:absolute;
-  top:20px;
+  top:70px;
   left:20px;
   margin: 2px;
   font-size: 14px;
@@ -29,6 +33,28 @@ main {
   padding:5px;
 }
 
+.recherche {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+	max-width: 800px;
+}
+
+.recherche input{
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.9);
+    color: #003645;
+    border-radius: 12px;
+    padding: 15px;
+    width: 400px;
+    margin: 12px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#rech_btn{
+	border:none;
+	margin: 12px auto;
+}
 
 .parties {
     width: 100%;
@@ -40,6 +66,8 @@ main {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
     height: 500px;
+	transform:translateY(-25px);
+	overflow-y: auto;
 }
 
 .bouton-switch {
@@ -70,7 +98,7 @@ main {
 }
 
 
-#btn {
+#btn{
     position: absolute;
     width: 50%;
     height: 100%;
@@ -115,7 +143,7 @@ main {
     font-weight: 500;
 }
 
-.game-item a {
+.game-item a,#rech_btn {
     background-color: #32afbb;
     color: white;
     padding: 10px 18px;
@@ -125,7 +153,7 @@ main {
     font-size: 14px;
 }
 
-.game-item a:hover {
+.game-item a:hover ,#rech_btn:hover {
     background-color: #26a0a6;
 }
 
