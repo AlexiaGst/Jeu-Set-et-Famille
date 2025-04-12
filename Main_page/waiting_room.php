@@ -3,6 +3,7 @@
 	session_start();
 	if (isset($_GET['id_partie'])) {
 		$id_partie = $_GET['id_partie'];
+		
 		if (isset($_GET['action']) && $_GET['action'] == 'increment') {
 			$sql = "SELECT id_partie, mot_de_passe, nbr_joueurs, max_joueurs FROM parties WHERE id_partie=$id_partie";
 			$res = mysqli_query($bdd, $sql);
@@ -25,7 +26,12 @@
 			}
 
 			mysqli_close($bdd);
-			header("Location: waiting_room.php?id_partie=" . $row["id_partie"]);
+			if(isset($_GET['mode'])&&$_GET['mode']){
+				header("Location: waiting_room.php?id_partie=" . $row["id_partie"] . "&mode=prive");
+			}
+			else{
+				header("Location: waiting_room.php?id_partie=" . $row["id_partie"] . "&mode=public");
+			}
 			exit();
 		}
 	}
@@ -60,6 +66,18 @@
     <div class="text">
         <p class="title"> En attente d'autres joueurs</p>
         <p class="desc">Veuillez attendre la venue des autres joueurs</p>
+		<?php if($_GET['mode']=='prive'){
+			$sql = "SELECT mot_de_passe FROM parties WHERE id_partie=$id_partie";
+			$mdp = mysqli_query($bdd, $sql);
+			$mdp = mysqli_fetch_assoc($mdp)['mot_de_passe'];
+			mysqli_close($bdd);
+			if ($mdp){
+				echo "<br><p class='code'>Mot de passe: $mdp</p>";
+			}
+		}
+		?>
+				
+			
     </div>
 </div>
 <script>
