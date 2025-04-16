@@ -5,12 +5,12 @@
   text-decoration: none;
   list-style: none;
   box-sizing: border-box;
-  overflow: hidden; 
 }
 
 
 body {
     background: linear-gradient(135deg, #003645, #00798c);
+    overflow: hidden;
 }
 
 main {
