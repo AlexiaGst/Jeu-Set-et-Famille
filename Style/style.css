@@ -258,13 +258,6 @@ span {
   transform: rotate(5deg);
 }
 
-.black {
-  color: #141414;
-}
-
-.red {
-  color: #de4b4b;
-}
 
 .card section:nth-child(1) {
   display: flex;
