@@ -1,6 +1,18 @@
 <?php
 session_start();
 $isConnected = isset($_SESSION['nom_utilisateur']);
+
+$cartes=[
+	'images/alpinisme.png', 'images/arc.png', 'images/aviron.png', 'images/basket.png', 'images/baseball.png', 'images/bobsleigh.png',
+	'images/bowling.png', 'images/boxe.png', 'images/curling.png', 'images/cyclisme.png', 'images/escalade.png', 'images/flechettes.png',
+	'images/football.png', 'images/golf.png', 'images/hockey.png', 'images/javelot.png', 'images/judo.png', 'images/karate.png', 'images/kitesurf.png',
+	'images/lutte.png', 'images/mma.png', 'images/monocycle.png', 'images/natation.png', 'images/parapente.png', 'images/patinage.png',
+	'images/petanque.png', 'images/randonnee.png', 'images/roller.png', 'images/rugby.png', 'images/skateboard.png', 'images/ski.png',
+	'images/slackline.png', 'images/snowboard.png', 'images/surf.png', 'images/taekwondo.png', 'images/tennis.png', 'images/trail.png',
+	'images/trottinette.png', 'images/volleyball.png', 'images/vtt.png', 'images/wakeboard.png', 'images/waterpolo.png'
+];
+shuffle($cartes);
+$cartes_melangees = array_slice($cartes, 0, 5);
 ?>
 
 <!DOCTYPE html>
@@ -44,16 +56,9 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
 <div class="jeu">
 
 <div class="cards">
-<div class="black card">
-  </div>
-  <div class="red card">
-  </div>
-  <div class="black card">
-  </div>
-  <div class="red card">
-  </div>
-  <div class="red card">
-  </div>
+  <?php foreach ($cartes_melangees as $index => $image): ?>
+    <div class="card" style="background-image: url('<?= $image ?>'); background-size: cover; background-position: center;"></div>
+  <?php endforeach; ?>
 </div>
 
 
