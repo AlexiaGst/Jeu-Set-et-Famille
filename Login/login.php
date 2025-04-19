@@ -45,7 +45,6 @@
 			<form  action="login.php" method="post" class="form">
 			  <input required class="input" type="text" name="login" id="login" placeholder="Nom d'utilisateur">
 			  <input required class="input" type="password" name="mdp" id="mdp" placeholder="Mot de passe">
-			  <span class="forgot-password"><a href="#">Mot de passe oublié ?</a></span>
 			  <input class="login-button" type="submit" value="Connexion">
 			  <a href="register.php"<button id="inscription">Inscription</button><a>
 			</form>
