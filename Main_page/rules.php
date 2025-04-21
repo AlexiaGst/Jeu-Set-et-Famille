@@ -19,7 +19,7 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
 <body>
 
 <header>
-    <a href="../index.php">
+    <a href="index.php">
         <img src="images/logo.png" alt="Jeu-Set-et-Famille logo" class="logo">
     </a>
     <input type="checkbox" id="nav_check" hidden>
