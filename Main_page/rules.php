@@ -25,7 +25,11 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
     <input type="checkbox" id="nav_check" hidden>
     <nav>
         <ul> 
-            <li><a href="play_game.php">Jouer une Partie</a></li>
+            <?php if ($isConnected): ?>
+                <li><a href="play_game.php">Jouer une Partie</a></li>
+    	    <?php else: ?>
+    	        <li><a href="Login/login.php">Jouer une Partie</a></li>
+    	    <?php endif; ?>
             <li><a href="rules.php">Règles du jeu</a></li>
             <li><a href="">Les familles</a></li>
     	    <?php if (!$isConnected): ?>
