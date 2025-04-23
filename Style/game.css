@@ -1,322 +1,393 @@
 * {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #003645, #00798c);
-    overflow: hidden;
-  }
-  
-  #retour {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    margin: 2px;
-    font-size: 14px;
-    padding: 12px 40px;
-    background-color: #ffffff;
-    color: #000000 !important;
-    border-radius: 30px;
-    text-decoration: none;
-    z-index: 999;
-  }
-  
-  .grid-layout {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    gap: 80px;
-    padding: 20px;
-    border-radius: 30px;
-    max-width: 1200px;
-    width: 100%;
-    margin: auto;
-  }
-  
-  .top-section,
-  .bottom-section {
-    height: 150px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .middle-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  
-  .middle-section .box {
-    height: 150px;
-    border-radius: 10px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .cards,
-  .cards1{
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #003645, #00798c);
+  overflow: hidden;
+}
+
+#retour {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  margin: 2px;
+  font-size: 14px;
+  padding: 12px 40px;
+  background-color: #ffffff;
+  color: #000000 !important;
+  border-radius: 30px;
+  text-decoration: none;
+  z-index: 999;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 80px;
+  padding: 20px;
+  border-radius: 30px;
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+}
+
+
+.player-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.profile-timer {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.3s linear, stroke 0.3s linear;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.top-section,
+.bottom-section {
+  height: 150px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom-section {
+  margin-left: 17%;
+}
+
+.middle-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.middle-section .box {
+  height: 150px;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.two-player {
+  display: grid;
+  gap:20px;
+}
+
+.cards,
+.cards1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.pioche-cards {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-  }
+}
 
-  .pioche-cards {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-  }
-  
-  
-  .card,
-  .card1 {
-    width: 5rem;
-    height: 8rem;
-    background: white;
-    border-radius: 16px;
-    border: 2px solid #333;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.3s;
-    transform-origin: bottom center;
-    z-index: calc(var(--index));
-    position: relative;
-  }
-  
-  .card {
-    width: 8rem;
-    height: 12rem;
-  }
 
-  .card2 {
-    width: 8rem;
-    height: 11rem;
-    background: white;
-    border-radius: 16px;
-    border: 2px solid #333;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.3s;
-    transform-origin: bottom center;
-    z-index: calc(var(--index));
-    position: absolute;
-  }
-  
-  .pioche-cards > *:nth-child(1) { transform: rotate(-8deg); z-index: 1; }
-  .pioche-cards > *:nth-child(2) { transform: rotate(5deg);  z-index: 1; }
-  .pioche-cards > *:nth-child(3) { transform: rotate(-3deg); z-index: 1; }
-  .pioche-cards > *:nth-child(4) { transform: rotate(10deg); z-index: 1; }
-  .pioche-cards > *:nth-child(5) { transform: rotate(1deg);  z-index: 1; }
-  
-  .cards > *:nth-child(1) { --index: 0; transform: translateX(0%); }
-  .cards > *:nth-child(1):hover { transform: translateX(0%) translateY(-20px) !important;}
+.card,
+.card1 {
+  width: 5rem;
+  height: 7rem;
+  background: white;
+  border-radius: 16px;
+  border: 2px solid #333;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s;
+  transform-origin: bottom center;
+  z-index: calc(var(--index));
+  position: relative;
+}
+
+.card {
+  width: 7rem;
+  height: 9rem;
+}
+
+.card2 {
+  width: 7rem;
+  height: 9rem;
+  background: white;
+  border-radius: 16px;
+  border: 2px solid #333;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s;
+  transform-origin: bottom center;
+  z-index: calc(var(--index));
+  position: absolute;
+}
+
+.pioche-cards > *:nth-child(1) { transform: rotate(-8deg); z-index: 1; }
+.pioche-cards > *:nth-child(2) { transform: rotate(5deg);  z-index: 1; }
+.pioche-cards > *:nth-child(3) { transform: rotate(-3deg); z-index: 1; }
+.pioche-cards > *:nth-child(4) { transform: rotate(10deg); z-index: 1; }
+.pioche-cards > *:nth-child(5) { transform: rotate(1deg);  z-index: 1; }
+
+.pioche-cards > *:nth-child(6) { transform: rotate(-8deg); z-index: 1; }
+.pioche-cards > *:nth-child(7) { transform: rotate(5deg);  z-index: 1; }
+.pioche-cards > *:nth-child(8) { transform: rotate(-3deg); z-index: 1; }
+.pioche-cards > *:nth-child(9) { transform: rotate(10deg); z-index: 1; }
+.pioche-cards > *:nth-child(10) { transform: rotate(1deg);  z-index: 1; }
+
+.cards > *:nth-child(1) { --index: 0; transform: translateX(0%); }
+.cards > *:nth-child(1):hover { transform: translateX(0%) translateY(-20px) !important;}
 
 .cards > *:nth-child(2) {
-    --index: 1;
-    transform: translateX(-50%);
+  --index: 1;
+  transform: translateX(-50%);
 }
 .cards > *:nth-child(2):hover {
-    transform: translateX(-50%) translateY(-20px) !important;
+  transform: translateX(-50%) translateY(-20px) !important;
 }
 
 .cards > *:nth-child(3) {
-    --index: 2;
-    transform: translateX(-100%);
+  --index: 2;
+  transform: translateX(-100%);
 }
 .cards > *:nth-child(3):hover {
-    transform: translateX(-100%) translateY(-20px) !important;
+  transform: translateX(-100%) translateY(-20px) !important;
 }
 
 .cards > *:nth-child(4) {
-    --index: 3;
-    transform: translateX(-125%);
+  --index: 3;
+  transform: translateX(-150%);
 }
 .cards > *:nth-child(4):hover {
-    transform: translateX(-125%) translateY(-20px) !important;
+  transform: translateX(-150%) translateY(-20px) !important;
 }
 
 .cards > *:nth-child(5) {
-    --index: 4;
-    transform: translateX(-150%);
+  --index: 4;
+  transform: translateX(-200%);
 }
 .cards > *:nth-child(5):hover {
-    transform: translateX(-150%) translateY(-20px) !important;
+  transform: translateX(-200%) translateY(-20px) !important;
 }
 
 .cards > *:nth-child(6) {
-    --index: 5;
-    transform: translateX(-175%);
+  --index: 5;
+  transform: translateX(-250%);
 }
 .cards > *:nth-child(6):hover {
-    transform: translateX(-175%) translateY(-20px) !important;
+  transform: translateX(-250%) translateY(-20px) !important;
 }
 
 .cards > *:nth-child(7) {
-    --index: 6;
-    transform: translateX(-200%);
+  --index: 6;
+  transform: translateX(-300%);
 }
 .cards > *:nth-child(7):hover {
-    transform: translateX(-200%) translateY(-20px) !important;
+  transform: translateX(-300%) translateY(-20px) !important;
 }
 
 
 
-  .cards1 > *:nth-child(1) { --index: 0; transform: translateX(0%); }
-  .cards1 > *:nth-child(2) { --index: 1; transform: translateX(-15%); }
-  .cards1 > *:nth-child(3) { --index: 2; transform: translateX(-25%); }
-  .cards1 > *:nth-child(4) { --index: 3; transform: translateX(-35%); }
-  
-  
-  .cards > *:hover {
-    transform: translateY(-20px) !important;
-  }
-  
-
-  /* POUR LES CARTES */
+.cards1 > *:nth-child(1) { --index: 0; transform: translateX(0%); }
+.cards1 > *:nth-child(2) { --index: 1; transform: translateX(-15%); }
+.cards1 > *:nth-child(3) { --index: 2; transform: translateX(-25%); }
+.cards1 > *:nth-child(4) { --index: 3; transform: translateX(-35%); }
 
 
-  @keyframes flyInFromCenter {
-    from {
-      transform: translateX(0%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(var(--final-x));
-      opacity: 1;
-    }
-  }
-  
-  .cards1 > * {
+.cards > *:hover {
+  transform: translateY(-20px) !important;
+}
+
+
+/* POUR LES CARTES */
+
+
+@keyframes flyInFromCenter {
+  from {
+    transform: translateX(0%);
     opacity: 0;
-    animation: flyInFromCenter 0.6s ease-out forwards;
   }
-  
-  .cards1 > *:nth-child(1) {
-    --final-x: 0%;
-    animation-delay: 0.1s;
+  to {
+    transform: translateX(var(--final-x));
+    opacity: 1;
   }
-  .cards1 > *:nth-child(2) {
-    --final-x: -15%;
-    animation-delay: 0.2s;
-  }
-  .cards1 > *:nth-child(3) {
-    --final-x: -25%;
-    animation-delay: 0.3s;
-  }
-  .cards1 > *:nth-child(4) {
-    --final-x: -35%;
-    animation-delay: 0.4s;
-  }
-  
+}
 
-  @keyframes flyInFromCenterWide {
-    from {
-      transform: translateX(0%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(var(--final-x));
-      opacity: 1;
-    }
-  }
-  
-  .cards > * {
+.cards1 > * {
+  opacity: 0;
+  animation: flyInFromCenter 0.6s ease-out forwards;
+}
+
+.cards1 > *:nth-child(1) {
+  --final-x: 0%;
+  animation-delay: 0.1s;
+}
+.cards1 > *:nth-child(2) {
+  --final-x: -15%;
+  animation-delay: 0.2s;
+}
+.cards1 > *:nth-child(3) {
+  --final-x: -25%;
+  animation-delay: 0.3s;
+}
+.cards1 > *:nth-child(4) {
+  --final-x: -35%;
+  animation-delay: 0.4s;
+}
+
+
+@keyframes flyInFromCenterWide {
+  from {
+    transform: translateX(0%);
     opacity: 0;
-    animation: flyInFromCenterWide 0.6s ease-out forwards;
   }
-  
-  .cards > *:nth-child(1) {
-    --final-x: 0%;
-    animation-delay: 0.1s;
+  to {
+    transform: translateX(var(--final-x));
+    opacity: 1;
   }
-  .cards > *:nth-child(2) {
-    --final-x: -50%;
-    animation-delay: 0.2s;
-  }
-  .cards > *:nth-child(3) {
-    --final-x: -100%;
-    animation-delay: 0.3s;
-  }
-  .cards > *:nth-child(4) {
-    --final-x: -125%;
-    animation-delay: 0.4s;
-  }
-  .cards > *:nth-child(5) {
-    --final-x: -150%;
-    animation-delay: 0.5s;
-  }
-  .cards > *:nth-child(6) {
-    --final-x: -175%;
-    animation-delay: 0.6s;
-  }
-  .cards > *:nth-child(7) {
-    --final-x: -200%;
-    animation-delay: 0.7s;
-  }
-  
+}
 
-  /* POUR LA PIOCHE */
-  @keyframes flyToTopLeft {
-    from { transform: translate(0, 0) rotate(0); opacity: 1; }
-    to { transform: translate(-300px, -200px) rotate(-30deg); opacity: 0; }
-  }
-  
-  @keyframes flyToTopRight {
-    from { transform: translate(0, 0) rotate(0); opacity: 1; }
-    to { transform: translate(300px, -200px) rotate(30deg); opacity: 0; }
-  }
-  
-  @keyframes flyToMiddleLeft {
-    from { transform: translate(0, 0) rotate(0); opacity: 1; }
-    to { transform: translate(-300px, 0px) rotate(-15deg); opacity: 0; }
-  }
-  
-  @keyframes flyToMiddleRight {
-    from { transform: translate(0, 0) rotate(0); opacity: 1; }
-    to { transform: translate(300px, 0px) rotate(15deg); opacity: 0; }
-  }
-  
-  @keyframes flyToBottom {
-    from { transform: translate(0, 0) rotate(0); opacity: 1; }
-    to { transform: translate(0px, 250px) rotate(0deg); opacity: 0; }
-  }
-  
-  .pioche-cards > *:nth-child(1) {
-    animation: flyToTopLeft 1s ease forwards;
-    animation-delay: 0.2s;
-  }
-  .pioche-cards > *:nth-child(2) {
-    animation: flyToTopRight 1s ease forwards;
-    animation-delay: 0.4s;
-  }
-  .pioche-cards > *:nth-child(3) {
-    animation: flyToMiddleLeft 1s ease forwards;
-    animation-delay: 0.6s;
-  }
-  .pioche-cards > *:nth-child(4) {
-    animation: flyToMiddleRight 1s ease forwards;
-    animation-delay: 0.8s;
-  }
-  .pioche-cards > *:nth-child(5) {
-    animation: flyToBottom 1s ease forwards;
-    animation-delay: 1s;
-  }
-  
+.cards > * {
+  opacity: 0;
+  animation: flyInFromCenterWide 0.6s ease-out forwards;
+}
+
+.cards > *:nth-child(1) {
+  --final-x: 0%;
+  animation-delay: 0.1s;
+}
+.cards > *:nth-child(2) {
+  --final-x: -50%;
+  animation-delay: 0.2s;
+}
+.cards > *:nth-child(3) {
+  --final-x: -100%;
+  animation-delay: 0.3s;
+}
+.cards > *:nth-child(4) {
+  --final-x: -125%;
+  animation-delay: 0.4s;
+}
+.cards > *:nth-child(5) {
+  --final-x: -150%;
+  animation-delay: 0.5s;
+}
+.cards > *:nth-child(6) {
+  --final-x: -175%;
+  animation-delay: 0.6s;
+}
+.cards > *:nth-child(7) {
+  --final-x: -200%;
+  animation-delay: 0.7s;
+}
+
+
+/* POUR LA PIOCHE */
+@keyframes flyToTopLeft {
+  from { transform: translate(0, 0) rotate(0); opacity: 1; }
+  to { transform: translate(-300px, -200px) rotate(-30deg); opacity: 0; }
+}
+
+@keyframes flyToTopRight {
+  from { transform: translate(0, 0) rotate(0); opacity: 1; }
+  to { transform: translate(300px, -200px) rotate(30deg); opacity: 0; }
+}
+
+@keyframes flyToMiddleLeft {
+  from { transform: translate(0, 0) rotate(0); opacity: 1; }
+  to { transform: translate(-300px, 0px) rotate(-15deg); opacity: 0; }
+}
+
+@keyframes flyToMiddleRight {
+  from { transform: translate(0, 0) rotate(0); opacity: 1; }
+  to { transform: translate(300px, 0px) rotate(15deg); opacity: 0; }
+}
+
+@keyframes flyToBottom {
+  from { transform: translate(0, 0) rotate(0); opacity: 1; }
+  to { transform: translate(0px, 250px) rotate(0deg); opacity: 0; }
+}
+
+.pioche-cards > *:nth-child(1) {
+  animation: flyToTopLeft 1s ease forwards;
+  animation-delay: 0.2s;
+}
+.pioche-cards > *:nth-child(2) {
+  animation: flyToTopRight 1s ease forwards;
+  animation-delay: 0.4s;
+}
+.pioche-cards > *:nth-child(3) {
+  animation: flyToMiddleLeft 1s ease forwards;
+  animation-delay: 0.6s;
+}
+.pioche-cards > *:nth-child(4) {
+  animation: flyToMiddleRight 1s ease forwards;
+  animation-delay: 0.8s;
+}
+.pioche-cards > *:nth-child(5) {
+  animation: flyToBottom 1s ease forwards;
+  animation-delay: 1s;
+}
