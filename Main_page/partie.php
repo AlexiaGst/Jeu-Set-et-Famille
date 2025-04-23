@@ -103,7 +103,7 @@ session_start();
 <!-- -->
 
 <div class="box">
-  <div class="two-player">
+  <div class="two-player2">
     <div class="player-info">
   <div class="profile-timer">
     <svg class="progress-ring" width="80" height="80">
@@ -169,7 +169,13 @@ session_start();
 </div>
 
 </main>
-<script src="game_script.js"></script>
+
+
+<script>
+
+
+
+</script>
 
 
 
