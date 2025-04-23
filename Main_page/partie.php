@@ -1,7 +1,9 @@
 <?php
-	include 'Login/bd_user.php';
-	session_start();
+include 'Login/bd_user.php';
+session_start();
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -150,9 +152,9 @@
       <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
     </svg>
     <img src="images/profil1.png" alt="Profil" class="profile-pic">
-  </div>
-  <span class="player-name">Joueur 1</span>
-</div>
+    </div>
+    <span class="player-name">Joueur 1</span>
+    </div>
 
     <div class="cards">
         <div class="card"></div>
