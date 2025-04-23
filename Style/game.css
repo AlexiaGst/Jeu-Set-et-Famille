@@ -32,7 +32,6 @@ body {
 .grid-layout {
   display: grid;
   grid-template-rows: auto auto auto;
-  gap: 80px;
   padding: 20px;
   border-radius: 30px;
   max-width: 1200px;
@@ -48,6 +47,8 @@ body {
   gap: 10px;
   position: relative;
 }
+
+
 
 .profile-timer {
   position: relative;
@@ -99,21 +100,27 @@ body {
 
 .top-section,
 .bottom-section {
-  height: 150px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.top-section {
+  margin-bottom: 5%;
+  margin-right: 10%;
+}
+
 .bottom-section {
-  margin-left: 17%;
+  margin-top: 3%;
+  margin-left: 7%;
 }
 
 .middle-section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  height: 250px;
 }
 
 .middle-section .box {
@@ -127,6 +134,19 @@ body {
 .two-player {
   display: grid;
   gap:20px;
+  height: 250px;
+}
+
+.two-player2 {
+  display: grid;
+  gap:20px;
+  height: 250px;
+}
+
+.two-player2 > .player-info {
+
+  flex-direction: row-reverse;
+  margin-left: 4%
 }
 
 .cards,
@@ -141,6 +161,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 25%;
 }
 
 
@@ -195,7 +216,7 @@ body {
 .pioche-cards > *:nth-child(6) { transform: rotate(-8deg); z-index: 1; }
 .pioche-cards > *:nth-child(7) { transform: rotate(5deg);  z-index: 1; }
 .pioche-cards > *:nth-child(8) { transform: rotate(-3deg); z-index: 1; }
-.pioche-cards > *:nth-child(9) { transform: rotate(10deg); z-index: 1; }
+.pioche-cards > *:nth-child(9) { transform: rotate(8deg); z-index: 1; }
 .pioche-cards > *:nth-child(10) { transform: rotate(1deg);  z-index: 1; }
 
 .cards > *:nth-child(1) { --index: 0; transform: translateX(0%); }
