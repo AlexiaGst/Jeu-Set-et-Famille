@@ -46,6 +46,7 @@ body {
   align-items: center;
   gap: 10px;
   position: relative;
+  cursor: pointer;
 }
 
 
@@ -66,6 +67,8 @@ body {
   z-index: 1;
   object-fit: cover;
   border: 2px solid #fff;
+  position: relative;
+  display: inline-block;
 }
 
 .progress-ring {
@@ -81,6 +84,32 @@ body {
 }
 
 
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  min-width: 200px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.dropdown-content strong {
+  display: block;
+  margin-top: 10px;
+  color: #333;
+}
+
+.card1 {
+  display: inline-block;
+  margin: 5px 3px;
+  padding: 5px 8px;
+  background-color: lightblue;
+  border-radius: 5px;
+  font-size: 14px;
+}
 
 
 
@@ -370,11 +399,6 @@ body {
 @keyframes flyToTopLeft {
   from { transform: translate(0, 0) rotate(0); opacity: 1; }
   to { transform: translate(-300px, -200px) rotate(-30deg); opacity: 0; }
-}
-
-@keyframes flyToTopRight {
-  from { transform: translate(0, 0) rotate(0); opacity: 1; }
-  to { transform: translate(300px, -200px) rotate(30deg); opacity: 0; }
 }
 
 @keyframes flyToMiddleLeft {
