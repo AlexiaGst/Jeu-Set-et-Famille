@@ -20,6 +20,7 @@ function afficherClassement(classement) {
 
 
 
+
 const urlParams = new URLSearchParams(window.location.search);
 const idPartie = urlParams.get('id_partie');
 
@@ -48,7 +49,6 @@ socket.addEventListener('message', (event) => {
 			const bloc = blocs[i];
 			if (!bloc) continue;
 
-			// Mise à jour image et nom
 			const img = bloc.querySelector('.profile-pic');
 			const span = bloc.querySelector('.player-name');
 
@@ -65,12 +65,14 @@ socket.addEventListener('message', (event) => {
     if (data.type === 'distribution') {
         const myCards = data.cartes;
         console.log("🃏 Cartes reçues :", myCards);
+		mesCartes.push(myCards);
         // Affichage
     }
 	
 	if (data.type === 'pioche_animation') {
 		if (data.pourMoi && data.carte) {
 			console.log("J'ai pioché :", data.carte);
+			mesCartes.push(data.carte);
 			// TODO : ajoute la carte à ta main locale
 		} else {
 			console.log("Un autre joueur a pioché !");
@@ -93,6 +95,7 @@ socket.addEventListener('message', (event) => {
 		if (data.succes && data.pourMoi) {
 			// Tu peux aussi mettre data.destinataire === monNom pour sécuriser
 			console.log("Carte reçue :", data.carte);
+			mesCartes.push(data.carte);
 			// ajoute la carte à ta main ici
 		}
 	}
@@ -104,6 +107,7 @@ socket.addEventListener('message', (event) => {
 	
 	if (data.type === "fin_partie") {
 		console.log("Stooooooooop");
+		console.log("Classement reçu :", data.classement);
 		afficherClassement(data.classement);
 	}
 	
