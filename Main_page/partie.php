@@ -52,7 +52,7 @@ $stmt->bind_param("ii", $id_client, $id_partie);
 $stmt->execute();
 $result = $stmt->get_result();
 
-
+*/
 
 
 // TABLEAU DES JOUEURS
@@ -63,7 +63,7 @@ $stmt_count->execute();
 $result_count = $stmt_count->get_result();
 $row_count = $result_count->fetch_assoc();
 $playerCount = intval($row_count['max_joueurs']);
-*/
+
 ?>
 
 
@@ -76,6 +76,8 @@ $playerCount = intval($row_count['max_joueurs']);
     <link rel="stylesheet" href="style/game.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap" rel="stylesheet">
     <script src="js/gestion_cartes.js" defer></script>
+    <script src="js/pioche.js" defer></script>
+
  	<script>
  		const monNom = <?php echo json_encode($_SESSION['nom_utilisateur']); ?>;
  	</script>
@@ -83,6 +85,11 @@ $playerCount = intval($row_count['max_joueurs']);
 </head>
 
 <body>
+
+<div id="chat-bubble" class="chat-bubble">
+  <div class="chat-text"></div>
+</div>
+
 
 <main>
     <a href='ongoing_games.php?retour=<?php echo $id_partie; ?>' id='retour'>&lt; Retour</a>
@@ -117,6 +124,7 @@ $playerCount = intval($row_count['max_joueurs']);
               </div>
               <div class="box">
                   <div class="pioche-cards">
+                    <div class="card2"></div>
                     <div class="card2"></div>
                     <div class="card2"></div>
                     <div class="card2"></div>
@@ -379,5 +387,4 @@ function toggleDropdown(playerDiv) {
 
 </body>
 </html>
-
 
