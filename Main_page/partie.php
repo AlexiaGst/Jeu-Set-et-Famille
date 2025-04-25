@@ -7,7 +7,32 @@ if (!isset($_SESSION['nom_utilisateur'])) {
     exit();
 }
 
-$id_partie = intval($_GET['id_partie']);
+if (isset($_GET['id_partie'])) {
+	$id_partie = $_GET['id_partie'];
+	$id_joueur = $_SESSION['nom_utilisateur'];
+	
+	$sql = "SELECT nbr_joueurs FROM parties WHERE id_partie=$id_partie";
+	$res = mysqli_query($bdd, $sql);
+	$row = mysqli_fetch_assoc($res);
+	$nb_joueurs=$row['nbr_joueurs'];
+	$sql = "SELECT u.id_client, u.nom_utilisateur 
+			FROM utilisateurs u
+			JOIN jeu ON jeu.id_joueur = u.id_client
+			WHERE jeu.id_partie = $id_partie
+			ORDER BY jeu.id_joueur";
+			
+	$res = mysqli_query($bdd, $sql);
+	$joueurs = [];
+	while ($row = mysqli_fetch_assoc($res)) {
+		$joueurs[] = $row;
+	}
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------
+//Au dessus c'est la partie que j'avais faite et qui a été supprimée
+// J'ai retiré ce qui était en double avec ma partie et j'ai laissé ta partie en dessous au cas où tu en ais besoin mais j'ai pas du tout compris ce que tu veux faire 😅
+
+/*
 $nom_utilisateur = $_SESSION['nom_utilisateur'];
 
 $stmt_user = $bdd->prepare("SELECT id_client FROM utilisateurs WHERE nom_utilisateur = ?");
@@ -27,17 +52,7 @@ $stmt->bind_param("ii", $id_client, $id_partie);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if ($result->num_rows == 0) {
-    $insert_sql = "INSERT INTO jeu (id_joueur, id_partie) VALUES (?, ?)";
-    $stmt_insert = $bdd->prepare($insert_sql);
-    $stmt_insert->bind_param("ii", $id_client, $id_partie);
-    $stmt_insert->execute();
 
-    $update_sql = "UPDATE parties SET nbr_joueurs = nbr_joueurs + 1 WHERE id_partie = ?";
-    $stmt_update = $bdd->prepare($update_sql);
-    $stmt_update->bind_param("i", $id_partie);
-    $stmt_update->execute();
-}
 
 
 // TABLEAU DES JOUEURS
@@ -48,9 +63,8 @@ $stmt_count->execute();
 $result_count = $stmt_count->get_result();
 $row_count = $result_count->fetch_assoc();
 $playerCount = intval($row_count['max_joueurs']);
-
+*/
 ?>
-
 
 
 <!DOCTYPE html>
@@ -61,19 +75,24 @@ $playerCount = intval($row_count['max_joueurs']);
     <link rel="icon" href="images/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="style/game.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap" rel="stylesheet">
+    <script src="js/gestion_cartes.js" defer></script>
+ 	<script>
+ 		const monNom = <?php echo json_encode($_SESSION['nom_utilisateur']); ?>;
+ 	</script>
+	<link rel="stylesheet" href="style/fin_partie.css">
 </head>
 
 <body>
 
 <main>
     <a href='ongoing_games.php?retour=<?php echo $id_partie; ?>' id='retour'>&lt; Retour</a>
-
+    <div id="wrapper_fin"></div>
     <div class="grid-layout">
         
         <?php if ($playerCount === 2): ?>
             <!-- Affichage pour 2 joueurs -->
             <div class="top-section">
-              <div class="player-info" onclick="toggleDropdown(this)">
+              <div class="player-info" onclick="toggleDropdown(this)" data-joueur="?">
                 <div class="profile-timer">
                   <svg class="progress-ring" width="80" height="80">
                     <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -118,7 +137,7 @@ $playerCount = intval($row_count['max_joueurs']);
         <?php elseif ($playerCount === 4): ?>
             <!-- Affichage pour 4 joueurs avec middle-section version 1 -->
             <div class="top-section">
-              <div class="player-info">
+              <div class="player-info" data-joueur="?">
                 <div class="profile-timer">
                   <svg class="progress-ring" width="80" height="80">
                     <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -137,7 +156,7 @@ $playerCount = intval($row_count['max_joueurs']);
             </div>
             <div class="middle-section">
               <div class="box">
-              <div class="player-info">
+              <div class="player-info" data-joueur="?">
                 <div class="profile-timer">
                   <svg class="progress-ring" width="80" height="80">
                     <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -176,7 +195,7 @@ $playerCount = intval($row_count['max_joueurs']);
           <!-- -->
 
           <div class="box">
-              <div class="player-info">
+              <div class="player-info" data-joueur="?">
                 <div class="profile-timer">
                   <svg class="progress-ring" width="80" height="80">
                     <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -199,7 +218,7 @@ $playerCount = intval($row_count['max_joueurs']);
         <?php elseif ($playerCount === 6): ?>
             <!-- Affichage pour 6 joueurs (middle-section complet) -->
             <div class="top-section">
-              <div class="player-info">
+              <div class="player-info" data-joueur="?">
                 <div class="profile-timer">
                   <svg class="progress-ring" width="80" height="80">
                     <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -219,7 +238,7 @@ $playerCount = intval($row_count['max_joueurs']);
             <div class="middle-section">
     <div class="box">
     <div class="two-player">
-    <div class="player-info">
+    <div class="player-info" data-joueur="?">
   <div class="profile-timer">
     <svg class="progress-ring" width="80" height="80">
       <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -237,7 +256,7 @@ $playerCount = intval($row_count['max_joueurs']);
       </div>
       </div>
 
-      <div class="player-info">
+      <div class="player-info" data-joueur="?">
   <div class="profile-timer">
     <svg class="progress-ring" width="80" height="80">
       <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -280,7 +299,7 @@ $playerCount = intval($row_count['max_joueurs']);
 
 <div class="box">
   <div class="two-player2">
-    <div class="player-info">
+    <div class="player-info" data-joueur="?">
   <div class="profile-timer">
     <svg class="progress-ring" width="80" height="80">
       <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -298,7 +317,7 @@ $playerCount = intval($row_count['max_joueurs']);
       </div>
       </div>
 
-      <div class="player-info">
+      <div class="player-info" data-joueur="?">
   <div class="profile-timer">
     <svg class="progress-ring" width="80" height="80">
       <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
@@ -324,7 +343,7 @@ $playerCount = intval($row_count['max_joueurs']);
 
         <!-- Bas pour TOUS les cas (joueur principal) -->
         <div class="bottom-section">
-            <div class="player-info" id="me">
+            <div class="player-info" id="me" data-joueur="?">
                 <div class="profile-timer">
                     <svg class="progress-ring" width="80" height="80">
                         <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
