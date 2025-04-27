@@ -1,3 +1,15 @@
+window.addEventListener("load", () => {
+  const piocheCards = document.querySelectorAll('.pioche-cards .card2');
+  
+  // PIOCHE DU DEBUT
+  setTimeout(() => animatePiocheToTop(), 200);
+  setTimeout(() => animatePiocheToTopLeft(), 400);
+  setTimeout(() => animatePiocheToTopRight(), 600);
+  setTimeout(() => animatePiocheToMiddleLeft(), 800);
+  setTimeout(() => animatePiocheToMiddleRight(), 1000);
+  setTimeout(() => animatePiocheToBottom(), 1200);
+});
+
 // ANIMATION CARTE VERS LE JOUEUR DU HAUT
 
 function animatePiocheToTop() {
@@ -89,7 +101,5 @@ function animatePiocheToBottom() {
 
   setTimeout(() => {
     lastCard.classList.remove("fly-to-bottom");
-    lastCard.style.opacity = "1";
-    lastCard.style.transform = "translate(0, 0) rotate(0)";
   }, 1200);
 }
