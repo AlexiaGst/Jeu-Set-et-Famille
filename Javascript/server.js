@@ -15,7 +15,7 @@ var img_profil=[
 	'images/profil4.png',
 	'images/profil5.png',
 	'images/profil6.png'
-]
+];
 
 var familles={
     combat: [
@@ -74,7 +74,7 @@ var familles={
     "images/rugby.png",
     "images/tennis.png",
   ]
-}
+};
 
 var pioche=[];
 
@@ -82,7 +82,7 @@ function distributeCards(id_partie, joueurs) {
     console.log("Distribution des cartes lancée pour la partie", id_partie);
 
     cartes.sort(() => Math.random() - 0.5);
-	/* Pour tester
+	/*Pour tester*/
 	cartes=["images/boxe.png",
     "images/judo.png",
     "images/karate.png",
@@ -99,18 +99,9 @@ function distributeCards(id_partie, joueurs) {
 	
 	"images/roller.png",
     "images/skateboard.png",
-    "images/monocycle.png",
-    "images/vtt.png",
-    "images/trottinette.png",
-    "images/cyclisme.png",
-	
-	"images/escalade.png",
-    "images/randonnee.png",
-    "images/parapente.png",
-    "images/alpinisme.png",
-    "images/trail.png",
-    "images/slackline.png"];
-	*/
+	"images/monocycle.png",
+	"images/rugby.png",
+    "images/tennis.png",];
 	
 	
     const distrib = 7;
@@ -119,8 +110,6 @@ function distributeCards(id_partie, joueurs) {
     joueurs.forEach((joueur, index) => {
         const playerCards = cartes.slice(index * distrib, (index + 1) * distrib);
         const nom = joueur.nom_joueur;
-		console.log("joueur.nom_joueur =", nom);
-
 
         if (nom) {
             mainsJoueurs[id_partie][nom] = {};
@@ -130,7 +119,7 @@ function distributeCards(id_partie, joueurs) {
         console.log(`Joueur ${nom || "(inconnu)"} reçoit :`, playerCards);
 
         if (joueur.readyState === WebSocket.OPEN) {
-            joueur.send(JSON.stringify({ type: "distribution", cartes: playerCards }));
+            joueur.send(JSON.stringify({ type: "distribution", cartes: playerCards, compteur:pioche.length }));
         } else {
             console.log("Socket fermé pour joueur", index + 1);
         }
@@ -141,18 +130,20 @@ function distributeCards(id_partie, joueurs) {
 }
 
 function initJoueurs(id_partie,joueurs){
-	var profils={}
+	const profils = {};
 	img_profil.sort(() => Math.random() - 0.5);
+
 	joueurs.forEach((joueur, index) => {
 		const nom = joueur.nom_joueur;
-		profils[nom]=img_profil[index];
-		console.log(`Joueur ${nom || "(inconnu)"} reçoit :`, img_profil[index]);
+		profils[nom] = img_profil[index] || "images/profil_defaut.png"; // au cas où
 
-        if (joueur.readyState === WebSocket.OPEN) {
-            joueur.send(JSON.stringify({ type: "profil", profils: profils }));
-        } else {
-            console.log("Socket fermé pour joueur", index + 1);
-        }
+		console.log(`Joueur ${nom} reçoit photo`, profils[nom]);
+	});
+
+	joueurs.forEach((joueur) => {
+		if (joueur.readyState === WebSocket.OPEN) {
+			joueur.send(JSON.stringify({ type: "profil", profils }));
+		}
 	});
 }
 
@@ -173,6 +164,7 @@ function afficherMains(id_partie) {
 }
 
 function passerAuJoueurSuivant(id_partie, initial = false) {
+	if (partiesTerminees[id_partie]) return;
     const data = toursData[id_partie];
     if (!data) return;
 
@@ -197,7 +189,7 @@ function passerAuJoueurSuivant(id_partie, initial = false) {
     // Redémarrer le timer
     if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
     timersTours[id_partie] = setTimeout(() => {
-        console.log(`⌛ Temps écoulé pour ${suivant}, passage au suivant.`);
+        console.log(`Temps écoulé pour ${suivant}, passage au suivant.`);
         passerAuJoueurSuivant(id_partie);
     }, 20000);
 }
@@ -215,7 +207,6 @@ function ajouterCarte(joueurNom, carte, id_partie) {
     }
   }
 
-  verifierFamilles(joueurNom, id_partie);
 }
 
 function verifierFinPartie(id_partie) {
@@ -228,7 +219,7 @@ function verifierFinPartie(id_partie) {
 		}
 	}
 
-	if (totalCompletes >= totalFamilles) {
+	if (totalCompletes >= totalFamilles || pioche.length === 0) {
 		terminerPartie(id_partie);
 	}
 }
@@ -268,11 +259,18 @@ function afficherScores() {
 }
 
 function terminerPartie(id_partie) {
+	if (partiesTerminees[id_partie]) return;
+	partiesTerminees[id_partie] = true; 
+	
 	console.log(`🏁 Partie ${id_partie} terminée.`);
 
-	const classement = Object.entries(scores)
-		.sort(([, a], [, b]) => b - a)
-		.map(([joueur, score]) => ({ joueur, score }));
+	const joueursPartie = parties[id_partie].map(ws => ws.nom_joueur);
+	const classement = joueursPartie.map(nom => ({
+		joueur: nom,
+		score: scores[nom] || 0
+	})).sort((a, b) => b.score - a.score);
+
+	console.log("Classement calculé :", classement);
 
 	parties[id_partie].forEach(client => {
 		if (client.readyState === WebSocket.OPEN) {
@@ -286,6 +284,7 @@ function terminerPartie(id_partie) {
 	if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
 }
 
+
 //_______________________________________________________________________________________
 
 const WebSocket = require('ws');
@@ -298,6 +297,9 @@ let tours = {};
 let timersTours = {};
 let scores = {};
 let toursData = {};
+let partiesTerminees = {};
+let carteDemandee = {};
+let joueurQuiDemande = {}; 
 
 wss.on('connection', function connection(ws) {
 
@@ -354,6 +356,7 @@ wss.on('connection', function connection(ws) {
 		
 		if (data.type === 'pioche') {
 			const id = ws.id_partie;
+			if (partiesTerminees[id]) return;
 			const joueur = ws.nom_joueur;
 
 			if (tours[id] !== joueur) {
@@ -369,6 +372,19 @@ wss.on('connection', function connection(ws) {
 			const carte = pioche.shift(); // retire la première carte
 			console.log(`Carte piochée : ${carte}`);
 			console.log("Pioche restante :", pioche.length, "cartes");
+
+			let bonnePioche = false;
+			if (carteDemandee[id] && joueurQuiDemande[id]) {
+				// Il y avait une pioche forcée
+				if (carte === carteDemandee[id]) {
+					bonnePioche = true;
+					console.log("Bonne pioche !");
+				}
+
+				// Nettoyer
+				delete carteDemandee[id];
+				delete joueurQuiDemande[id];
+			}
 
 			if (parties[id]) {
 				parties[id].forEach(client => {
@@ -389,16 +405,36 @@ wss.on('connection', function connection(ws) {
 							ajouterCarte(nom, carte, id);
 							/*afficherMains(id);*/
 							console.log("mainsJoueurs[", id, "] :", mainsJoueurs[id]);
+							verifierFamilles(nom, id);
 						}
 					}
 				});
 				if (timersTours[id]) clearTimeout(timersTours[id]);
-				passerAuJoueurSuivant(id);
+				if (bonnePioche) {
+					// Ne rien faire, il rejoue direct (on renverra un "info_tour" pour rester sur lui si besoin)
+					parties[id].forEach(client => {
+						if (client.readyState === WebSocket.OPEN) {
+							client.send(JSON.stringify({
+								type: "bonne_pioche",
+								joueur: joueur
+							}));
+						}
+					});
+					// Redémarrer juste son timer
+					timersTours[id] = setTimeout(() => {
+						console.log(`Temps écoulé pour ${joueur}, passage au suivant.`);
+						passerAuJoueurSuivant(id);
+					}, 20000);
+				} else {
+					// Sinon tour suivant
+					passerAuJoueurSuivant(id);
+				}
 			}
 		}
 
 		if (data.type === 'demande_carte') {
 			const { id_partie, demandeur, cible, carte } = data;
+			if (partiesTerminees[id_partie]) return;
 			if (tours[id_partie] !== demandeur) {
 				console.log(`Ce n'est pas le tour de ${demandeur}`);
 				return;
@@ -422,13 +458,11 @@ wss.on('connection', function connection(ws) {
 					ajouterCarte(demandeur, "images/" + carte + ".png", id_partie);
 					carteTrouvee = true;
 					console.log(`${demandeur} a récupéré ${carte} depuis ${cible}`);
+					verifierFamilles(demandeur, id_partie);
 					break;
 				}
 			}
 
-			if (!carteTrouvee) {
-				console.log(`${cible} ne possède pas ${carte}`);
-			}
 
 			if (parties[id_partie]) {
 				parties[id_partie].forEach(client => {
@@ -443,13 +477,28 @@ wss.on('connection', function connection(ws) {
 					}
 				});
 			}
+			
+			if (carteTrouvee) {
+				if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
+				passerAuJoueurSuivant(id_partie);
+				console.log("mainsJoueurs[", id_partie, "] :", mainsJoueurs[id_partie]);
+			}
+			else{
+				console.log(`${cible} ne possède pas ${carte}`);
+				carteDemandee[id_partie] = "images/" + carte + ".png";
+				joueurQuiDemande[id_partie] = demandeur;
+
+				// Forcer le joueur demandeur à piocher
+				parties[id_partie].forEach(client => {
+					if (client.nom_joueur === demandeur && client.readyState === WebSocket.OPEN) {
+						client.send(JSON.stringify({ type: "forcer_pioche" }));
+					}
+				});
+			}
 
 			/*afficherMains(id_partie);*/
-			console.log("mainsJoueurs[", id_partie, "] :", mainsJoueurs[id_partie]);
-			if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
-			passerAuJoueurSuivant(id_partie);
+			
 		}
-		
     });
 
     ws.on('close', () => {
@@ -461,6 +510,3 @@ wss.on('connection', function connection(ws) {
 });
 
 console.log("WebSocket server running at ws://localhost:8080");
-
-
-
