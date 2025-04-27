@@ -423,9 +423,6 @@ body {
 
 /* POUR LA PIOCHE */
 
-
-
-
 @keyframes flyToTop {
   from { transform: translate(0, 0) rotate(0); opacity: 1; }
   to { transform: translate(0px, -250px) rotate(0deg); opacity: 0; }
@@ -482,6 +479,7 @@ body {
 }
 
 
+/*
 .pioche-cards > *:nth-child(1) {
   animation: flyToTop 1s ease forwards;
   animation-delay: 0.2s;
@@ -508,3 +506,4 @@ body {
   animation: flyToBottom 1s ease forwards;
   animation-delay: 1.2s;
 }
+  */
