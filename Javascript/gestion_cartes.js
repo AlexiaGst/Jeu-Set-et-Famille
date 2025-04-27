@@ -213,10 +213,13 @@ socket.addEventListener('message', (event) => {
 				console.log("🎯 Bonne pioche ! Je rejoue.");
 				// Peut-être afficher un message sympa ici ?
 			}
-			
+
 			// TODO : ajoute la carte à ta main locale
 		} else {
 			console.log("Un autre joueur a pioché !");
+			if (document.querySelector(`.player-info[data-joueur="${data.joueur}"]`).dataset.position ==="haut"){
+				animatePiocheToTop();
+			}
 		}
 		console.log("Pioche restante:",data.compteur); //Nbr de cartes restantes dans la pioche
 		// TODO : lance l'animation de pioche ici
@@ -268,24 +271,25 @@ socket.addEventListener('error', (event) => {
 document.addEventListener("DOMContentLoaded", () => {
     let nomCible = null;
 
-    const boutonPioche = document.getElementById("bouton-pioche");
-    const joueurs = document.querySelectorAll(".joueur");
-    const menuCartes = document.getElementById("menu-cartes");
-    const choix = document.querySelectorAll(".choix");
+	const boutonPioche = document.querySelector(".pioche-cards");
+    const joueurs = document.querySelectorAll(".player-info");
+    //const menuCartes = document.getElementById("menu-cartes");
+    //const choix = document.querySelectorAll(".choix");
 
 
     boutonPioche.addEventListener("click", () => {
+		console.log("pioooooche");
         socket.send(JSON.stringify({ type: "pioche", id_partie: idPartie }));
     });
 
     joueurs.forEach(joueur => {
         joueur.addEventListener("click", () => {
-            nomCible = joueur.dataset.nom;
+            nomCible = joueur.dataset.joueur;
             console.log("Cible sélectionnée :", nomCible);
-            menuCartes.style.display = "block";
+            //menuCartes.style.display = "block";
         });
     });
-
+/*
     choix.forEach(carte => {
         carte.addEventListener("click", () => {
             const nomCarte = carte.dataset.carte;
@@ -306,5 +310,5 @@ document.addEventListener("DOMContentLoaded", () => {
             nomCible = null;
         });
     });
-	
+	*/
 });
