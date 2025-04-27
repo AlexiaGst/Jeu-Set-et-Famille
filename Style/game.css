@@ -391,34 +391,13 @@ body {
   animation: flyInFromCenterWide 0.6s ease-out forwards;
 }
 
-.cards > *:nth-child(1) {
-  --final-x: 0%;
-  animation-delay: 0.1s;
-}
-.cards > *:nth-child(2) {
-  --final-x: -50%;
-  animation-delay: 0.2s;
-}
-.cards > *:nth-child(3) {
-  --final-x: -100%;
-  animation-delay: 0.3s;
-}
-.cards > *:nth-child(4) {
-  --final-x: -125%;
-  animation-delay: 0.4s;
-}
-.cards > *:nth-child(5) {
-  --final-x: -150%;
-  animation-delay: 0.5s;
-}
-.cards > *:nth-child(6) {
-  --final-x: -175%;
-  animation-delay: 0.6s;
-}
-.cards > *:nth-child(7) {
-  --final-x: -200%;
-  animation-delay: 0.7s;
-}
+.cards > *:nth-child(1) { --final-x: 0%; animation-delay: 0.1s; }
+.cards > *:nth-child(2) { --final-x: -25%; animation-delay: 0.2s; }
+.cards > *:nth-child(3) { --final-x: -50%; animation-delay: 0.3s; }
+.cards > *:nth-child(4) { --final-x: -75%; animation-delay: 0.4s; }
+.cards > *:nth-child(5) { --final-x: -100%; animation-delay: 0.5s; }
+.cards > *:nth-child(6) { --final-x: -125%; animation-delay: 0.6s; }
+.cards > *:nth-child(7) { --final-x: -150%; animation-delay: 0.7s; }
 
 
 /* POUR LA PIOCHE */
