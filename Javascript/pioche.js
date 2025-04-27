@@ -22,8 +22,6 @@ function animatePiocheToTop() {
 
   setTimeout(() => {
     lastCard.classList.remove("fly-to-top");
-    lastCard.style.opacity = "1";
-    lastCard.style.transform = "translate(0, 0)";
   }, 1000);
 }
 
@@ -39,9 +37,7 @@ function animatePiocheToTopLeft() {
 
   setTimeout(() => {
     lastCard.classList.remove("fly-to-topleft");
-    lastCard.style.opacity = "1";
-    lastCard.style.transform = "translate(0, 0) rotate(0)";
-  }, 3000);
+  }, 2000);
 }
 
 function animatePiocheToTopRight() {
@@ -54,9 +50,7 @@ function animatePiocheToTopRight() {
 
   setTimeout(() => {
     lastCard.classList.remove("fly-to-topright");
-    lastCard.style.opacity = "1";
-    lastCard.style.transform = "translate(0, 0) rotate(0)";
-  }, 5000);
+  }, 3000);
 }
 
 function animatePiocheToMiddleLeft() {
@@ -69,9 +63,7 @@ function animatePiocheToMiddleLeft() {
 
   setTimeout(() => {
     lastCard.classList.remove("fly-to-middleleft");
-    lastCard.style.opacity = "1";
-    lastCard.style.transform = "translate(0, 0) rotate(0)";
-  }, 7000);
+  }, 4000);
 }
 
 function animatePiocheToMiddleRight() {
@@ -84,9 +76,7 @@ function animatePiocheToMiddleRight() {
 
   setTimeout(() => {
     lastCard.classList.remove("fly-to-middleright");
-    lastCard.style.opacity = "1";
-    lastCard.style.transform = "translate(0, 0) rotate(0)";
-  }, 9000);
+  }, 5000);
 }
 
 // ANIMATION CARTE VERS LE JOUEUR DU BAS
@@ -101,5 +91,5 @@ function animatePiocheToBottom() {
 
   setTimeout(() => {
     lastCard.classList.remove("fly-to-bottom");
-  }, 1200);
+  }, 6000);
 }
