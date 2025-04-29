@@ -249,7 +249,7 @@ body {
 }
 
 .card2 {
-  width: 7rem;
+  width:calc(9rem * (2/3));
   height: 9rem;
   background: white;
   border-radius: 16px;
