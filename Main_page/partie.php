@@ -75,6 +75,7 @@ $playerCount = intval($row_count['max_joueurs']);
     <link rel="icon" href="images/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="style/game.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap" rel="stylesheet">
+    <script src="js/chat_bubble.js" defer></script>
     <script src="js/gestion_cartes.js" defer></script>
     <script src="js/pioche.js" defer></script>
     <script src="js/game_script.js" defer></script>
