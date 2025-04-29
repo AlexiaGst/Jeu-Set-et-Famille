@@ -87,9 +87,8 @@ $playerCount = intval($row_count['max_joueurs']);
 
 <body>
 
-<div id="chat-bubble" class="chat-bubble">
-  <div class="chat-text"></div>
-</div>
+<div id="chat-container" class="chat-container"></div>
+
 
 
 <main>
