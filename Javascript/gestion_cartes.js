@@ -1,5 +1,63 @@
 var mesCartes=[];
-var joueurs=[];
+
+var familles={
+    combat: [
+    "images/boxe.png",
+    "images/judo.png",
+    "images/karate.png",
+    "images/mma.png",
+    "images/lutte.png",
+    "images/taekwondo.png"
+  ],
+    aquatique: [
+    "images/aviron.png",
+    "images/kitesurf.png",
+    "images/natation.png",
+    "images/surf.png",
+    "images/wakeboard.png",
+    "images/waterpolo.png"
+  ],
+    mobilite: [
+    "images/roller.png",
+    "images/skateboard.png",
+    "images/monocycle.png",
+    "images/vtt.png",
+    "images/trottinette.png",
+    "images/cyclisme.png"
+  ],
+    aventure: [
+    "images/escalade.png",
+    "images/randonnee.png",
+    "images/parapente.png",
+    "images/alpinisme.png",
+    "images/trail.png",
+    "images/slackline.png"
+  ],
+    hiver: [
+    "images/ski.png",
+    "images/snowboard.png",
+    "images/patinage.png",
+    "images/hockey.png",
+    "images/bobsleigh.png",
+    "images/curling.png"
+  ],
+    precision: [
+    "images/arc.png",
+    "images/flechettes.png",
+    "images/javelot.png",
+    "images/golf.png",
+    "images/petanque.png",
+    "images/bowling.png"
+  ],
+    ballons: [
+    "images/basket.png",
+    "images/baseball.png",
+    "images/football.png",
+    "images/volleyball.png",
+    "images/rugby.png",
+    "images/tennis.png",
+  ]
+};
 
 function afficherClassement(classement) {
 	const wrapper=document.getElementById("wrapper_fin");
@@ -200,9 +258,50 @@ socket.addEventListener('message', (event) => {
 
     if (data.type === 'distribution') {
         const myCards = data.cartes;
-        console.log("🃏 Cartes reçues :", myCards);
-		mesCartes.push(myCards);
-        // Affichage
+        console.log("Cartes reçues :", myCards);
+		mesCartes.push(...myCards);
+		function getOrdreCarte(carte) {
+			let ordre = 1000; // très grand par défaut
+			let index = 0;
+			for (const famille in familles) {
+				for (const img of familles[famille]) {
+					if (img === carte) return index;
+					index++;
+				}
+			}
+			return ordre;
+		}
+		const cartesTriees = myCards.slice().sort((a, b) => getOrdreCarte(a) - getOrdreCarte(b));
+
+		
+		//Mes cartes
+		const cartesElements = document.querySelectorAll(".bottom-section .cards .card");
+		cartesElements.forEach((cardDiv, index) => {
+			const carte = cartesTriees[index];
+			if (carte) {
+				cardDiv.style.backgroundImage = `url(${carte})`;
+				cardDiv.style.backgroundRepeat = "no-repeat";
+				cardDiv.style.backgroundPosition = "center";
+			} else {
+				cardDiv.style.display = "none";
+			}
+		});
+		//Cartes des autres joueurs
+		document.querySelectorAll('.player-info').forEach(playerDiv => {
+			if (playerDiv.dataset.joueur !== monNom) {
+				const cartes = playerDiv.querySelectorAll('.cards1 .card1');
+				cartes.forEach(divCarte => {
+					divCarte.style.backgroundImage = "url('images/dos.png')";
+					divCarte.style.backgroundSize = "cover";
+				});
+			}
+		});
+		//Pioche
+		document.querySelectorAll('.pioche-cards .card2').forEach(divCarte => {
+			divCarte.style.backgroundImage = "url('images/dos.png')";
+			divCarte.style.backgroundSize = "cover";
+			divCarte.style.backgroundPosition = "center";
+		});
     }
 	
 	if (data.type === 'pioche_animation') {
@@ -210,16 +309,22 @@ socket.addEventListener('message', (event) => {
 			console.log("J'ai pioché :", data.carte);
 			mesCartes.push(data.carte);
 			if (data.bonne_pioche) {
-				console.log("🎯 Bonne pioche ! Je rejoue.");
-				// Peut-être afficher un message sympa ici ?
+				console.log("Bonne pioche ! Je rejoue.");
+				showChatBubble("Bonne pioche ! Rejoue !",2000);
 			}
 
 			// TODO : ajoute la carte à ta main locale
 		} else {
 			console.log("Un autre joueur a pioché !");
-			if (document.querySelector(`.player-info[data-joueur="${data.joueur}"]`).dataset.position ==="haut"){
-				animatePiocheToTop();
-			}
+			showChatBubble(data.joueur+" a pioché !",2000);
+			const position=document.querySelector(`.player-info[data-joueur="${data.joueur}"]`).dataset.position
+			position==="haut" ?animatePiocheToTop():
+			position==="gauche"?animatePiocheToMiddleLeft():
+			position==="droite"?animatePiocheToMiddleRight():
+			position==="bas"?animatePiocheToBottom():
+			position==="gauche_h"?animatePiocheToTopLeft():
+			position==="droite_h"?animatePiocheToTopRight():console.log("aucun des cas");
+			
 		}
 		console.log("Pioche restante:",data.compteur); //Nbr de cartes restantes dans la pioche
 		// TODO : lance l'animation de pioche ici
@@ -233,13 +338,12 @@ socket.addEventListener('message', (event) => {
 
 
 	if (data.type === 'pioche_vide') {
-		alert("La pioche est vide !");
+		showChatBubble("La pioche est vide !",2000);
 	}
 	if (data.type === "info_demande") {
 		console.log(data.texte);
 		
-		// animation / message visible
-		//afficherMessage(data.texte);
+		showChatBubble(data.texte,2000);
 
 		if (data.succes && data.pourMoi) {
 			// Tu peux aussi mettre data.destinataire === monNom pour sécuriser
@@ -251,8 +355,9 @@ socket.addEventListener('message', (event) => {
 	
 	
 	if (data.type === 'famille_complete') {
-		const message = `${data.joueur} a complété la famille ${data.famille}`;
+		const message = `${data.joueur} a complété la famille ${data.famille} !`;
 		console.log("🎉", message);
+		showChatBubble(message,2000);
 	}
 	
 	if (data.type === "fin_partie") {
@@ -278,7 +383,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     boutonPioche.addEventListener("click", () => {
-		console.log("pioooooche");
         socket.send(JSON.stringify({ type: "pioche", id_partie: idPartie }));
     });
 
