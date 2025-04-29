@@ -222,8 +222,6 @@ body {
 
 .card,
 .card1 {
-  width: 5rem;
-  height: 7rem;
   background: white;
   border-radius: 16px;
   border: 2px solid #333;
@@ -239,9 +237,15 @@ body {
   position: relative;
 }
 
+.card1{
+  width: 5rem;
+  height: 7rem;
+}
+
 .card {
-  width: 7rem;
   height: 9rem;
+  width:calc(9rem * (2/3));
+  background-size: cover
 }
 
 .card2 {
