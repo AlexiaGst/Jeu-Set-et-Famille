@@ -1,18 +1,27 @@
-window.addEventListener("load", () => {
- 
 function showChatBubble(message, duration) {
-  const bubble = document.getElementById('chat-bubble');
-  const text = bubble.querySelector('.chat-text');
+  const container = document.getElementById('chat-container');
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble';
+  bubble.textContent = message;
+  container.appendChild(bubble);
   
-  text.textContent = message;
-  bubble.style.display = 'block';
-  
-  if (duration) {
-    setTimeout(() => {
-      bubble.style.display = 'none';
-    }, duration);
-  }
+
+  //lance l'animation
+  requestAnimationFrame(() => {
+    bubble.style.opacity = '1';
+  });
+
+  setTimeout(() => {
+    bubble.style.animation = 'fadeOut 0.5s ease forwards';
+
+    bubble.addEventListener('animationend', () => {
+      bubble.remove();
+    }, { once: true });
+
+  }, duration);
 }
 
-showChatBubble("Bienvenue ! La partie va commencer !", 5000);
+
+window.addEventListener("load", () => {
+	showChatBubble("Bienvenue ! La partie va commencer !", 3000);
 });
