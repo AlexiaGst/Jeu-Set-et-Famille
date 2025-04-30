@@ -82,7 +82,7 @@ function distributeCards(id_partie, joueurs) {
     console.log("Distribution des cartes lancée pour la partie", id_partie);
 
     cartes.sort(() => Math.random() - 0.5);
-	/*Pour tester*/
+	/*Pour tester
 	cartes=["images/boxe.png",
     "images/judo.png",
     "images/karate.png",
@@ -101,7 +101,7 @@ function distributeCards(id_partie, joueurs) {
     "images/skateboard.png",
 	"images/monocycle.png",
 	"images/rugby.png",
-    "images/tennis.png",];
+    "images/tennis.png",];*/
 	
 	
 	const distrib = 7;
@@ -133,6 +133,7 @@ function distributeCards(id_partie, joueurs) {
 		}
 	});
 }
+
 
 function initJoueurs(id_partie,joueurs){
 	const profils = {};
@@ -390,7 +391,6 @@ wss.on('connection', function connection(ws) {
 				delete carteDemandee[id];
 				delete joueurQuiDemande[id];
 			}
-
 			if (parties[id]) {
 				parties[id].forEach(client => {
 					if (client.readyState === WebSocket.OPEN) {
@@ -398,7 +398,10 @@ wss.on('connection', function connection(ws) {
 						client.send(JSON.stringify({
 							type: "pioche_animation",
 							pourMoi: isJoueur,
-							carte: isJoueur ? carte : null
+							joueur:joueur,
+							carte: isJoueur ? carte : null,
+							bonne_pioche:bonnePioche,
+							compteur:pioche.length
 						}));
 						
 						if (isJoueur) {
@@ -416,16 +419,16 @@ wss.on('connection', function connection(ws) {
 				});
 				if (timersTours[id]) clearTimeout(timersTours[id]);
 				if (bonnePioche) {
-					// Ne rien faire, il rejoue direct (on renverra un "info_tour" pour rester sur lui si besoin)
 					parties[id].forEach(client => {
 						if (client.readyState === WebSocket.OPEN) {
 							client.send(JSON.stringify({
-								type: "bonne_pioche",
-								joueur: joueur
+								type: "info_tour",
+								joueur:joueur
 							}));
 						}
 					});
-					// Redémarrer juste son timer
+					
+					// Redémarrer son timer
 					timersTours[id] = setTimeout(() => {
 						console.log(`Temps écoulé pour ${joueur}, passage au suivant.`);
 						passerAuJoueurSuivant(id);
