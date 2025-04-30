@@ -127,4 +127,44 @@ function removePlayer(joueur) {
   } 
 }
 
-removePlayer(joueur1)
+function meRequestCard(joueurE,joueurR) {
+  const joueurEnvoi = document.querySelector(`.player-info[data-joueur="${joueurE}"]`);
+  const emplacementJoueurEnvoi = joueurEnvoi.querySelector(".cards").getBoundingClientRect();
+
+  const joueurRecu = document.querySelector(`.player-info[data-joueur="${joueurR}"]`);
+  const emplacementJoueurRecu = joueurRecu.querySelector(".cards1").getBoundingClientRect();
+
+
+  const mesCartes = document.querySelector('.cards .card');
+  if (!mesCartes) {
+    console.error("Erreur : aucune carte à animer.");
+    return;
+  }
+
+  const carteAnimee = mesCartes.cloneNode(true);
+  document.body.appendChild(carteAnimee);
+
+  Object.assign(carteAnimee.style, {
+    position: 'fixed',
+    left: `${emplacementJoueurEnvoi.left}px`,
+    top: `${emplacementJoueurEnvoi.top}px`,
+    height: '9rem',
+    width: 'calc(9rem * (2/3))',
+    transition: 'all 0.8s ease',
+    zIndex: 1000,
+    transform: 'scale(0.8)',
+    opacity: '0.8',
+    backgroundImage: "url('images/dos.png')",
+  });
+
+  requestAnimationFrame(() => {
+    carteAnimee.style.left = `${emplacementJoueurRecu.left}px`;
+    carteAnimee.style.top = `${emplacementJoueurRecu.top}px`;
+    carteAnimee.style.transform = 'scale(1)';
+    carteAnimee.style.opacity = '1';
+  });
+
+  setTimeout(() => {
+    carteAnimee.remove();
+  }, 800);
+}
