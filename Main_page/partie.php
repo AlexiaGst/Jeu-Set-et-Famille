@@ -11,6 +11,12 @@ if (isset($_GET['id_partie'])) {
 	$id_partie = $_GET['id_partie'];
 	$id_joueur = $_SESSION['nom_utilisateur'];
 	
+	$sql="SELECT id_client FROM utilisateurs WHERE nom_utilisateur='$id_joueur'";
+	$res=mysqli_query($bdd, $sql);
+	$row=mysqli_fetch_assoc($res);
+	$id=$row['id_client'];
+	
+	
 	$sql = "SELECT nbr_joueurs FROM parties WHERE id_partie=$id_partie";
 	$res = mysqli_query($bdd, $sql);
 	$row = mysqli_fetch_assoc($res);
@@ -27,33 +33,6 @@ if (isset($_GET['id_partie'])) {
 		$joueurs[] = $row;
 	}
 }
-
-//----------------------------------------------------------------------------------------------------------------------------------
-//Au dessus c'est la partie que j'avais faite et qui a été supprimée
-// J'ai retiré ce qui était en double avec ma partie et j'ai laissé ta partie en dessous au cas où tu en ais besoin mais j'ai pas du tout compris ce que tu veux faire 😅
-
-/*
-$nom_utilisateur = $_SESSION['nom_utilisateur'];
-
-$stmt_user = $bdd->prepare("SELECT id_client FROM utilisateurs WHERE nom_utilisateur = ?");
-$stmt_user->bind_param("s", $nom_utilisateur);
-$stmt_user->execute();
-$result_user = $stmt_user->get_result();
-
-if ($result_user->num_rows === 0) {
-    die("Utilisateur non trouvé.");
-}
-
-$id_client = $result_user->fetch_assoc()['id_client'];
-
-$check_sql = "SELECT * FROM jeu WHERE id_joueur = ? AND id_partie = ?";
-$stmt = $bdd->prepare($check_sql);
-$stmt->bind_param("ii", $id_client, $id_partie);
-$stmt->execute();
-$result = $stmt->get_result();
-
-*/
-
 
 // TABLEAU DES JOUEURS
 
@@ -92,7 +71,7 @@ $playerCount = intval($row_count['max_joueurs']);
 
 
 <main>
-    <a href='ongoing_games.php?retour=<?php echo $id_partie; ?>' id='retour'>&lt; Retour</a>
+    <a href='ongoing_games.php?retour=<?php echo $id_partie; ?>&quit=<?php echo $id; ?>' id='retour'>&lt; Retour</a>
     <div id="wrapper_fin"></div>
     <div class="grid-layout">
         
