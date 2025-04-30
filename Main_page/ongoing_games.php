@@ -26,7 +26,18 @@ $isConnected = isset($_SESSION['nom_utilisateur']);
 
 if (isset($_GET['retour'])) {
     $id_partie = intval($_GET['retour']);
-
+	if (isset($_GET['quit'])){
+		$id=$_GET['quit'];
+		$sql_supp="DELETE FROM jeu WHERE id_partie = '$id_partie' AND id_joueur = '$id'";
+		mysqli_query($bdd, $sql_supp);
+	}
+	$sql = "SELECT id_client FROM utilisateurs WHERE nom_utilisateur = '$nom'";
+	$res = mysqli_query($bdd, $sql);
+	$row_joueur = mysqli_fetch_assoc($res);
+	$id_joueur=$row_joueur['id_client'];
+	$id_joueur = $row_joueur['id_client'];
+	$sql2="DELETE FROM jeu WHERE id_partie = $id_partie AND id_joueur=$id_joueur";
+	mysqli_query($bdd, $sql2);
     $sql = "UPDATE parties SET nbr_joueurs = nbr_joueurs - 1 WHERE id_partie = $id_partie";
     mysqli_query($bdd, $sql);
 
