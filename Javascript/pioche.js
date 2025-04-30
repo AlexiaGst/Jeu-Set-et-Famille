@@ -93,3 +93,27 @@ function animatePiocheToBottom() {
     lastCard.classList.remove("fly-to-bottom");
   }, 6000);
 }
+
+
+// AJOUTER UNE CARTE AU JOUEUR PRINCIPAL 
+
+function addCardMainPlayer() {
+  const cardsContainer = document.querySelector('.cards');
+
+  const cardCount = cardsContainer.children.length;
+
+  const newCard = document.createElement('div');
+  newCard.classList.add('card');
+
+  const index = cardCount; 
+  const decalageX = -50 * index;
+
+  newCard.style.setProperty('--index', index);
+  newCard.style.transform = `translateX(${decalageX}%)`;
+  newCard.style.opacity = '0';
+  newCard.style.animation = `flyInFromCenterWide 0.6s ease-out forwards`;
+  newCard.style.setProperty('--final-x', `${decalageX}%`);
+  newCard.style.animationDelay = `${0.1 * index}s`;
+
+  cardsContainer.appendChild(newCard);
+}
