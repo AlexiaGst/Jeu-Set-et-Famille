@@ -97,7 +97,7 @@ function animatePiocheToBottom() {
 
 // AJOUTER UNE CARTE AU JOUEUR PRINCIPAL 
 
-function addCardMainPlayer() {
+function addCardMainPlayer(img) {
   const cardsContainer = document.querySelector('.cards');
 
   const cardCount = cardsContainer.children.length;
@@ -114,6 +114,9 @@ function addCardMainPlayer() {
   newCard.style.animation = `flyInFromCenterWide 0.6s ease-out forwards`;
   newCard.style.setProperty('--final-x', `${decalageX}%`);
   newCard.style.animationDelay = `${0.1 * index}s`;
+  newCard.style.backgroundImage = `url('${img}')`;
+  newCard.style.backgroundSize = "cover";
+  newCard.style.backgroundPosition = "center";
 
   cardsContainer.appendChild(newCard);
 }
