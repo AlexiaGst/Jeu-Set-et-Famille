@@ -127,6 +127,8 @@ function removePlayer(joueur) {
   } 
 }
 
+// MOI AUX AUTRES JOUEURS
+
 function meRequestCard(joueurE,joueurR) {
   const joueurEnvoi = document.querySelector(`.player-info[data-joueur="${joueurE}"]`);
   const emplacementJoueurEnvoi = joueurEnvoi.querySelector(".cards").getBoundingClientRect();
@@ -155,6 +157,7 @@ function meRequestCard(joueurE,joueurR) {
     transform: 'scale(0.8)',
     opacity: '0.8',
     backgroundImage: "url('images/dos.png')",
+    backgroundSize: "cover",
   });
 
   requestAnimationFrame(() => {
@@ -168,3 +171,48 @@ function meRequestCard(joueurE,joueurR) {
     carteAnimee.remove();
   }, 800);
 }
+
+// AUTRE JOUEUR A AUTRE JOUEUR
+
+function othersRequestCard(joueurE,joueurR) {
+  const joueurEnvoi = document.querySelector(`.player-info[data-joueur="${joueurE}"]`);
+  const emplacementJoueurEnvoi = joueurEnvoi.querySelector(".cards1").getBoundingClientRect();
+
+  const joueurRecu = document.querySelector(`.player-info[data-joueur="${joueurR}"]`);
+  const emplacementJoueurRecu = joueurRecu.querySelector(".cards1").getBoundingClientRect();
+
+  const mesCartes = document.querySelector('.cards1 .card1');
+  if (!mesCartes) {
+    console.error("Erreur : aucune carte à animer.");
+    return;
+  }
+
+  const carteAnimee = mesCartes.cloneNode(true);
+  document.body.appendChild(carteAnimee);
+
+  Object.assign(carteAnimee.style, {
+    position: 'fixed',
+    left: `${emplacementJoueurEnvoi.left}px`,
+    top: `${emplacementJoueurEnvoi.top}px`,
+    width: '5rem',
+    height: '7rem',
+    transition: 'all 0.8s ease',
+    zIndex: 1000,
+    transform: 'scale(0.8)',
+    opacity: '0.8',
+    backgroundImage: "url('images/dos.png')",
+    backgroundSize: "cover",
+  });
+
+  requestAnimationFrame(() => {
+    carteAnimee.style.left = `${emplacementJoueurRecu.left}px`;
+    carteAnimee.style.top = `${emplacementJoueurRecu.top}px`;
+    carteAnimee.style.transform = 'scale(1)';
+    carteAnimee.style.opacity = '1';
+  });
+
+  setTimeout(() => {
+    carteAnimee.remove();
+  }, 800);
+}
+
