@@ -244,7 +244,7 @@ body {
 .card1 {
   background: white;
   border-radius: 16px;
-  border: 2px solid #333;
+  border: 2px solid #ffffff;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   padding: 16px;
   display: flex;
@@ -257,11 +257,7 @@ body {
   position: relative;
 }
 
-.card-count {
-  position: absolute;
-  color: #003645cc;
-  font-size: 24px;
-}
+
 
 
 .card1{
@@ -280,7 +276,7 @@ body {
   height: 9rem;
   background: white;
   border-radius: 16px;
-  border: 2px solid #333;
+  border: 2px solid #ffffff;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   padding: 16px;
   display: flex;
@@ -294,7 +290,15 @@ body {
   font-weight: bold;
 }
 
+#pioche-count {
+  background-color: #7cd0cf !important;
+}
 
+.card-count {
+  position: absolute;
+  color: #003645cc;
+  font-size: 24px;
+}
 
 .pioche-cards > *:nth-child(1) { transform: rotate(-8deg); z-index: 1; }
 .pioche-cards > *:nth-child(2) { transform: rotate(5deg);  z-index: 1; }
