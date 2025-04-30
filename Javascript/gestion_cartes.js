@@ -298,10 +298,14 @@ socket.addEventListener('message', (event) => {
 		});
 		//Pioche
 		document.querySelectorAll('.pioche-cards .card2').forEach(divCarte => {
-			divCarte.style.backgroundImage = "url('images/dos.png')";
-			divCarte.style.backgroundSize = "cover";
-			divCarte.style.backgroundPosition = "center";
+			if (divCarte.id!=="pioche-count"){
+				divCarte.style.backgroundImage = "url('images/dos.png')";
+				divCarte.style.backgroundSize = "cover";
+				divCarte.style.backgroundPosition = "center";
+			}
 		});
+		const compte=document.getElementById("pioche-count");
+		compte.textContent=data.compteur;
     }
 	
 	if (data.type === 'pioche_animation') {
@@ -310,13 +314,13 @@ socket.addEventListener('message', (event) => {
 			mesCartes.push(data.carte);
 			if (data.bonne_pioche) {
 				console.log("Bonne pioche ! Je rejoue.");
-				showChatBubble("Bonne pioche ! Rejoue !",2000);
+				showChatBubble("Bonne pioche ! Rejoue !",4000);
 			}
 
 			// TODO : ajoute la carte à ta main locale
 		} else {
 			console.log("Un autre joueur a pioché !");
-			showChatBubble(data.joueur+" a pioché !",2000);
+			showChatBubble(data.joueur+" a pioché !",4000);
 			const position=document.querySelector(`.player-info[data-joueur="${data.joueur}"]`).dataset.position
 			position==="haut" ?animatePiocheToTop():
 			position==="gauche"?animatePiocheToMiddleLeft():
@@ -327,6 +331,8 @@ socket.addEventListener('message', (event) => {
 			
 		}
 		console.log("Pioche restante:",data.compteur); //Nbr de cartes restantes dans la pioche
+		const compte=document.getElementById("pioche-count");
+		compte.textContent=data.compteur;
 		// TODO : lance l'animation de pioche ici
 		//lancerAnimationPioche();
 	}
