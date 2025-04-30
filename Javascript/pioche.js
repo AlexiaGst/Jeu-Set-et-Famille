@@ -117,3 +117,14 @@ function addCardMainPlayer() {
 
   cardsContainer.appendChild(newCard);
 }
+
+
+function removePlayer(joueur) {
+  const joueurARetirer = document.querySelector(`.player-info[data-joueur="${joueur}"]`);
+  if (joueurARetirer) {
+    joueurARetirer.remove(); 
+    console.log(`Joueur ${joueur} retiré.`);
+  } 
+}
+
+removePlayer(joueur1)
