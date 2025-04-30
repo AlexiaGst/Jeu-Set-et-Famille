@@ -285,13 +285,16 @@ body {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   transition: transform 0.3s;
   transform-origin: bottom center;
   z-index: calc(var(--index));
   position: absolute;
+  font-weight: bold;
 }
+
+
 
 .pioche-cards > *:nth-child(1) { transform: rotate(-8deg); z-index: 1; }
 .pioche-cards > *:nth-child(2) { transform: rotate(5deg);  z-index: 1; }
