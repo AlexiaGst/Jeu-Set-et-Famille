@@ -364,6 +364,26 @@ body {
 }
 
 
+.cards > *:nth-child(8):hover {
+  transform: translateX(-350%) translateY(-20px) !important;
+}
+.cards > *:nth-child(9):hover {
+  transform: translateX(-400%) translateY(-20px) !important;
+}
+.cards > *:nth-child(10):hover {
+  transform: translateX(-450%) translateY(-20px) !important;
+}
+.cards > *:nth-child(11):hover {
+  transform: translateX(-500%) translateY(-20px) !important;
+}
+.cards > *:nth-child(12):hover {
+  transform: translateX(-550%) translateY(-20px) !important;
+}
+
+
+
+
+
 
 .cards1 > *:nth-child(1) { --index: 0; transform: translateX(0%); }
 .cards1 > *:nth-child(2) { --index: 1; transform: translateX(-15%); }
@@ -430,12 +450,12 @@ body {
 }
 
 .cards > *:nth-child(1) { --final-x: 0%; animation-delay: 0.1s; }
-.cards > *:nth-child(2) { --final-x: -25%; animation-delay: 0.2s; }
-.cards > *:nth-child(3) { --final-x: -50%; animation-delay: 0.3s; }
-.cards > *:nth-child(4) { --final-x: -75%; animation-delay: 0.4s; }
-.cards > *:nth-child(5) { --final-x: -100%; animation-delay: 0.5s; }
-.cards > *:nth-child(6) { --final-x: -125%; animation-delay: 0.6s; }
-.cards > *:nth-child(7) { --final-x: -150%; animation-delay: 0.7s; }
+.cards > *:nth-child(2) { --final-x: -50%; animation-delay: 0.2s; }
+.cards > *:nth-child(3) { --final-x: -100%; animation-delay: 0.3s; }
+.cards > *:nth-child(4) { --final-x: -150%; animation-delay: 0.4s; }
+.cards > *:nth-child(5) { --final-x: -200%; animation-delay: 0.5s; }
+.cards > *:nth-child(6) { --final-x: -250%; animation-delay: 0.6s; }
+.cards > *:nth-child(7) { --final-x: -300%; animation-delay: 0.7s; }
 
 
 /* POUR LA PIOCHE */
