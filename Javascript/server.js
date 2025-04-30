@@ -104,29 +104,34 @@ function distributeCards(id_partie, joueurs) {
     "images/tennis.png",];
 	
 	
-    const distrib = 7;
-    mainsJoueurs[id_partie] = {};
+	const distrib = 7;
+	mainsJoueurs[id_partie] = {};
 
-    joueurs.forEach((joueur, index) => {
-        const playerCards = cartes.slice(index * distrib, (index + 1) * distrib);
-        const nom = joueur.nom_joueur;
+	const totalDistrib = joueurs.length * distrib;
+	pioche = cartes.slice(totalDistrib);  // <-- pioche définie d'abord
+	console.log("Pioche restante :", pioche.length, "cartes");
 
-        if (nom) {
-            mainsJoueurs[id_partie][nom] = {};
+	joueurs.forEach((joueur, index) => {
+		const playerCards = cartes.slice(index * distrib, (index + 1) * distrib);
+		const nom = joueur.nom_joueur;
+
+		if (nom) {
+			mainsJoueurs[id_partie][nom] = {};
 			playerCards.forEach(carte => ajouterCarte(nom, carte, id_partie));
-        }
+		}
 
-        console.log(`Joueur ${nom || "(inconnu)"} reçoit :`, playerCards);
+		console.log(`Joueur ${nom || "(inconnu)"} reçoit :`, playerCards);
 
-        if (joueur.readyState === WebSocket.OPEN) {
-            joueur.send(JSON.stringify({ type: "distribution", cartes: playerCards, compteur:pioche.length }));
-        } else {
-            console.log("Socket fermé pour joueur", index + 1);
-        }
-    });
-
-    pioche = cartes.slice(joueurs.length * distrib);
-    console.log("Pioche restante :", pioche.length, "cartes");
+		if (joueur.readyState === WebSocket.OPEN) {
+			joueur.send(JSON.stringify({
+				type: "distribution",
+				cartes: playerCards,
+				compteur: pioche.length  // maintenant correct
+			}));
+		} else {
+			console.log("Socket fermé pour joueur", index + 1);
+		}
+	});
 }
 
 function initJoueurs(id_partie,joueurs){
