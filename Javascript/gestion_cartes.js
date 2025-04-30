@@ -147,10 +147,12 @@ function afficherClassement(classement) {
     wrapper.appendChild(fin);
 	
 	document.getElementById("menu").addEventListener("click", () => {
+		socket.send(JSON.stringify({ type:"exit", id_partie: idPartie, joueur: monNom }));
 		window.location.href = "index.php";
 	});
 
 	document.getElementById("rejouer").addEventListener("click", () => {
+		socket.send(JSON.stringify({ type:"exit", id_partie: idPartie, joueur: monNom }));
 		window.location.href = "ongoing_games.php";
 	});
 }
@@ -316,16 +318,17 @@ socket.addEventListener('message', (event) => {
 				console.log("Bonne pioche ! Je rejoue.");
 				showChatBubble("Bonne pioche ! Rejoue !",4000);
 			}
-
-			// TODO : ajoute la carte à ta main locale
+			animatePiocheToBottom()
+			addCardMainPlayer(data.carte);
+			
 		} else {
 			console.log("Un autre joueur a pioché !");
 			showChatBubble(data.joueur+" a pioché !",4000);
 			const position=document.querySelector(`.player-info[data-joueur="${data.joueur}"]`).dataset.position
+			console.log(position);
 			position==="haut" ?animatePiocheToTop():
 			position==="gauche"?animatePiocheToMiddleLeft():
 			position==="droite"?animatePiocheToMiddleRight():
-			position==="bas"?animatePiocheToBottom():
 			position==="gauche_h"?animatePiocheToTopLeft():
 			position==="droite_h"?animatePiocheToTopRight():console.log("aucun des cas");
 			
@@ -333,8 +336,11 @@ socket.addEventListener('message', (event) => {
 		console.log("Pioche restante:",data.compteur); //Nbr de cartes restantes dans la pioche
 		const compte=document.getElementById("pioche-count");
 		compte.textContent=data.compteur;
-		// TODO : lance l'animation de pioche ici
-		//lancerAnimationPioche();
+	}
+	
+	if (data.type==='exit'){
+		showChatBubble(`Le joueur ${data.joueur} a quitté la partie`,4000);
+		removePlayer(data.joueur);
 	}
 	
 	if (data.type === 'forcer_pioche') {
@@ -349,14 +355,15 @@ socket.addEventListener('message', (event) => {
 	if (data.type === "info_demande") {
 		console.log(data.texte);
 		
-		showChatBubble(data.texte,2000);
+		showChatBubble(data.texte,4000);
 
 		if (data.succes && data.pourMoi) {
-			// Tu peux aussi mettre data.destinataire === monNom pour sécuriser
 			console.log("Carte reçue :", data.carte);
 			mesCartes.push(data.carte);
-			// ajoute la carte à ta main ici
+			meRequestCard(data.joueurE,data.joueurR);
+			addCardMainPlayer(data.carte);
 		}
+		othersRequestCard(data.joueurE,data.joueurR);
 	}
 	
 	
@@ -364,6 +371,7 @@ socket.addEventListener('message', (event) => {
 		const message = `${data.joueur} a complété la famille ${data.famille} !`;
 		console.log("🎉", message);
 		showChatBubble(message,2000);
+		const score=data.score; //Nombre de familles du joueur
 	}
 	
 	if (data.type === "fin_partie") {
@@ -384,9 +392,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const boutonPioche = document.querySelector(".pioche-cards");
     const joueurs = document.querySelectorAll(".player-info");
+	const exit=document.getElementById("retour");
     //const menuCartes = document.getElementById("menu-cartes");
     //const choix = document.querySelectorAll(".choix");
 
+	exit.addEventListener("click",()=>{
+		socket.send(JSON.stringify({ type:"exit", id_partie: idPartie, joueur: monNom }));
+	});
 
     boutonPioche.addEventListener("click", () => {
         socket.send(JSON.stringify({ type: "pioche", id_partie: idPartie }));
