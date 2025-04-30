@@ -406,7 +406,7 @@ $playerCount = intval($row_count['max_joueurs']);
 
         <!-- Bas pour TOUS les cas (joueur principal) -->
         <div class="bottom-section">
-            <div class="player-info" id="me" data-joueur="joueur2" id="player1">
+            <div class="player-info" id="me" data-joueur="?">
                 <div class="profile-timer">
                     <svg class="progress-ring" width="80" height="80">
                         <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
