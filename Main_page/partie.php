@@ -134,8 +134,10 @@ $playerCount = intval($row_count['max_joueurs']);
                     <div class="card2"></div>
                     <div class="card2"></div>
                     <div class="card2"></div>
-                    <div class="card2"></div>
-                  </div>
+                    <div class="card2" id="pioche-count">
+                    <span class="card-count">25</span>
+                    </div>
+		  </div>
                 </div>
                 <div class="box">
 
@@ -196,8 +198,10 @@ $playerCount = intval($row_count['max_joueurs']);
                     <div class="card2"></div>
                     <div class="card2"></div>
                     <div class="card2"></div>
-                    <div class="card2"></div>
-                </div>
+                    <div class="card2" id="pioche-count">
+                    <span class="card-count">25</span>
+                    </div>
+		</div>
               </div>
 
           <!-- -->
@@ -299,7 +303,9 @@ $playerCount = intval($row_count['max_joueurs']);
           <div class="card2"></div>
           <div class="card2"></div>
           <div class="card2"></div>
-          <div class="card2"></div>
+                    <div class="card2" id="pioche-count">
+                    <span class="card-count">25</span>
+                    </div>
       </div>
     </div>
 
