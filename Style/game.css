@@ -257,6 +257,13 @@ body {
   position: relative;
 }
 
+.card-count {
+  position: absolute;
+  color: #003645cc;
+  font-size: 24px;
+}
+
+
 .card1{
   width: 5rem;
   height: 7rem;
