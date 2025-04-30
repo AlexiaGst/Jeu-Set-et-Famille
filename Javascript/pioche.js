@@ -219,3 +219,12 @@ function othersRequestCard(joueurE,joueurR) {
   }, 800);
 }
 
+// A METTRE DANS GESTION CARTES.JS
+
+function showCountFamilles() {
+  const joueurAvecFamille = document.querySelector(`.player-info[data-joueur="${joueur}"]`);
+  const elem = joueurAvecFamille.getElementsByClassName('family-count')[0]; 
+    elem.querySelector('span').innerHTML = "Famille " + score;
+    elem.style.display = 'flex'; 
+}
+
