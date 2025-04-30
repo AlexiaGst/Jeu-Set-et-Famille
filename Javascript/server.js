@@ -244,7 +244,8 @@ function verifierFamilles(joueurNom, id_partie) {
 				  client.send(JSON.stringify({
 					type: 'famille_complete',
 					joueur: joueurNom,
-					famille: nomFamille
+					famille: nomFamille,
+					score:scores[joueurNom]
 				  }));
 				}
 			});
@@ -359,6 +360,66 @@ wss.on('connection', function connection(ws) {
 			
 
         }
+		
+	if (data.type === 'exit') {
+		const id_partie = data.id_partie;
+		const joueur = data.joueur;
+
+		console.log(`Joueur ${joueur} a quitté la partie ${id_partie}`);
+
+		// Récupération et suppression des cartes du joueur
+		if (mainsJoueurs[id_partie]?.[joueur]) {
+			const cartes = Object.values(mainsJoueurs[id_partie][joueur]).flat();
+			pioche.push(...cartes);
+			pioche = pioche.sort(() => Math.random() - 0.5);
+			delete mainsJoueurs[id_partie][joueur];
+		}
+
+		// Retirer le joueur du tableau des tours
+		if (toursData[id_partie]) {
+			toursData[id_partie].joueurs = toursData[id_partie].joueurs.filter(nom => nom !== joueur);
+		}
+
+		// Notifier les autres joueurs
+		(parties[id_partie] || []).forEach(j => {
+			if (j.readyState === WebSocket.OPEN) {
+				j.send(JSON.stringify({ type: 'exit', joueur }));
+			}
+		});
+
+		// S'il ne reste qu'un joueur, on termine la partie automatiquement
+		const restants = Object.keys(mainsJoueurs[id_partie] || {});
+		if (restants.length === 1 && !partiesTerminees[id_partie]) {
+			const gagnant = restants[0];
+			console.log(`Un seul joueur restant (${gagnant}) : fin automatique de la partie.`);
+			partiesTerminees[id_partie] = true;
+
+			parties[id_partie].forEach(client => {
+				if (client.nom_joueur === gagnant && client.readyState === WebSocket.OPEN) {
+					client.send(JSON.stringify({
+						type: "fin_partie",
+						classement: [{ joueur: gagnant, score: scores[gagnant] || 0 }]
+					}));
+				}
+			});
+
+			if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
+		}
+
+		// Si tous les sockets sont fermés, on déclenche la suppression de la partie dans la BDD
+		const clientsActifs = (parties[id_partie] || []).filter(j => j.readyState === WebSocket.OPEN);
+		console.log(clientsActifs.length);
+		if (clientsActifs.length === 1) {
+			console.log("Tous les joueurs ont quitté, suppression en base.");
+			fetch(`http://localhost/Jeu_Set_Famille/suppression_partie.php?id_partie=${id_partie}`)
+				.then(res => res.text())
+				.then(console.log)
+				.catch(console.error);
+		}
+	}
+
+
+
 		
 		if (data.type === 'pioche') {
 			const id = ws.id_partie;
@@ -480,7 +541,9 @@ wss.on('connection', function connection(ws) {
 							texte: `${demandeur} a demandé \"${carte}\" à ${cible}`,
 							succes: carteTrouvee,
 							pourMoi: client.nom_joueur === demandeur,
-							carte: carteTrouvee ? carte : null
+							carte: carteTrouvee ? carte : null,
+							joueurE:cible,
+							joueurR:demandeur
 						}));
 					}
 				});
