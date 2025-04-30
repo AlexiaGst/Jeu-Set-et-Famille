@@ -65,8 +65,8 @@ function afficherClassement(classement) {
     fin.className = "fin";
     fin.innerHTML = "<h2>Classement final</h2>";
 
-    const box = document.createElement("div");
-    box.className = "box";
+    const box_fin = document.createElement("div");
+    box_fin.className = "box_fin";
 
     const trophe = document.createElement("img");
     trophe.src = "images/coupe.png";
@@ -104,8 +104,8 @@ function afficherClassement(classement) {
 
         conteneurColonnes.appendChild(ulGauche);
         conteneurColonnes.appendChild(ulDroite);
-        box.appendChild(trophe);
-        box.appendChild(conteneurColonnes);
+        box_fin.appendChild(trophe);
+        box_fin.appendChild(conteneurColonnes);
     } else {
         const ul = document.createElement("ul");
         classement.forEach(({ joueur, score }, index) => {
@@ -122,8 +122,8 @@ function afficherClassement(classement) {
             li.appendChild(texte);
             ul.appendChild(li);
         });
-        box.appendChild(trophe);
-        box.appendChild(ul);
+        box_fin.appendChild(trophe);
+        box_fin.appendChild(ul);
     }
 	const box_boutons = document.createElement("div");
 	box_boutons.className = "box_boutons";
@@ -141,9 +141,9 @@ function afficherClassement(classement) {
     box_boutons.appendChild(bouton_replay);
 	box_boutons.appendChild(bouton_menu);
 
-	box.appendChild(box_boutons);
+	box_fin.appendChild(box_boutons);
 	
-    fin.appendChild(box);
+    fin.appendChild(box_fin);
     wrapper.appendChild(fin);
 	
 	document.getElementById("menu").addEventListener("click", () => {
