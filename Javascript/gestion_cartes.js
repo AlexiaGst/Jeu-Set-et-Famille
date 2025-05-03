@@ -1,5 +1,7 @@
 var mesCartes=[];
 
+let monTour = false;
+
 var familles={
     combat: [
     "images/boxe.png",
@@ -58,6 +60,92 @@ var familles={
     "images/tennis.png",
   ]
 };
+
+function clore_menu(){
+	const menu=document.getElementById("menu-cartes");
+	menu.style.display="none";
+}
+
+function afficheMenu(){
+	const menu=document.getElementById("menu-cartes");
+	menu.innerHTML = "";
+	
+	const box_cartes=document.createElement("div");
+	box_cartes.id="box_cartes";
+	const titre = document.createElement("p");
+	titre.textContent = "Choisissez une carte";
+	titre.className = "titre_menu";
+	box_cartes.appendChild(titre);
+	const fermer = document.createElement("p");
+	fermer.textContent = "x";
+	fermer.className = "close";
+	fermer.addEventListener("click", clore_menu);
+	box_cartes.appendChild(fermer);
+
+	const grid = document.createElement("div");
+	grid.id="grille_cartes";
+	
+	const mesfamilles = [];
+    for (const carte of mesCartes) {
+        for (const nomFamille in familles) {
+            if (familles[nomFamille].includes(carte)&& !(mesfamilles.includes(nomFamille))) {
+                mesfamilles.push(nomFamille);
+                break;
+            }
+        }
+    }
+	console.log(mesfamilles);
+	mesfamilles.forEach(nomFamille => {
+		familles[nomFamille].forEach(carte => {
+			const divCarte = document.createElement("div");
+			divCarte.style.backgroundImage = `url(${carte})`;
+			divCarte.className = "choix";
+			divCarte.setAttribute("data-carte", carte);
+
+			// ⬇️ Ici tu ajoutes le click dès la création de l'élément
+			divCarte.addEventListener("click", () => {
+				console.log("Click sur la carte", carte);
+
+				if (!nomCible) {
+					console.warn("Aucun joueur cible sélectionné !");
+					return;
+				}
+
+				socket.send(JSON.stringify({
+					type: "demande_carte",
+					id_partie: idPartie,
+					demandeur: monNom,
+					cible: nomCible,
+					carte: carte
+				}));
+
+				nomCible = null;
+				document.getElementById("menu-cartes").style.display = "none";
+			});
+
+			grid.appendChild(divCarte);
+		});
+	});
+
+	
+	box_cartes.appendChild(grid);
+	menu.appendChild(box_cartes);
+	menu.style.display="block";
+}
+
+
+function showCountFamilles(joueur,score) {
+	let joueurAvecFamille;
+	if (joueur==="me"){
+		joueurAvecFamille = document.getElementById('me');
+	}else{
+		joueurAvecFamille = document.querySelector(`.player-info[data-joueur="${joueur}"]`);
+	}
+	console.log(joueur,joueurAvecFamille);
+    const elem = joueurAvecFamille.getElementsByClassName('family-count')[0]; 
+    elem.querySelector('span').innerHTML = "Familles: " + score;
+    elem.style.display = 'flex'; 
+}
 
 function afficherClassement(classement) {
 	const wrapper=document.getElementById("wrapper_fin");
@@ -178,7 +266,7 @@ socket.addEventListener('message', (event) => {
 
 	if (data.type === 'info_tour') {
 		const joueur = data.joueur;
-		
+		monTour = (joueur === monNom);
 		//on réinitialise tous les cercles
 		document.querySelectorAll(".progress-ring__circle").forEach(circle => {
 			circle.style.strokeDasharray = '';
@@ -212,12 +300,13 @@ socket.addEventListener('message', (event) => {
 
 		const joueurs = Object.keys(profils); // ordre envoyé par le serveur
 		const nbJoueurs = joueurs.length;
-
+		console.log("monNom :", monNom);
+		console.log("Joueurs dans profils :", joueurs);
 		const indexMoi = joueurs.indexOf(monNom);
 
 		// Créer la liste circulaire tournée pour "moi"
 		const joueursTournes = joueurs.slice(indexMoi).concat(joueurs.slice(0, indexMoi));
-
+		
 		// Positions fixes selon ton point de vue
 		let positionsUtiles = [];
 		if (nbJoueurs === 2) {
@@ -240,7 +329,9 @@ socket.addEventListener('message', (event) => {
 			if (img) img.src = profils[monNom];
 			if (span) span.textContent = monNom;
 			blocMoi.dataset.joueur = monNom;
+			showCountFamilles("me",0);
 		}
+
 
 		// 2. Remplir les autres joueurs en fonction de joueursTournes
 		joueursTournes.slice(1).forEach((joueur, i) => {
@@ -252,9 +343,22 @@ socket.addEventListener('message', (event) => {
 				if (img) img.src = profils[joueur];
 				if (span) span.textContent = joueur;
 				bloc.dataset.joueur = joueur;
+				
+				bloc.addEventListener("click", () => {
+					if (!monTour) {
+						console.log("Ce n'est pas ton tour !");
+						return;
+					}else{
+						nomCible = joueur;
+						console.log("Cible sélectionnée :", nomCible);
+						afficheMenu();
+					}
+				});
+				showCountFamilles(joueur,0);
 			}
 			console.log(joueur, "->", position);
 		});
+
 	}
 
 
@@ -357,13 +461,17 @@ socket.addEventListener('message', (event) => {
 		
 		showChatBubble(data.texte,4000);
 
-		if (data.succes && data.pourMoi) {
-			console.log("Carte reçue :", data.carte);
-			mesCartes.push(data.carte);
-			meRequestCard(data.joueurE,data.joueurR);
-			addCardMainPlayer(data.carte);
-		}
-		othersRequestCard(data.joueurE,data.joueurR);
+		if (data.succes){
+			if (data.pourMoi) {
+				console.log("Carte reçue :", data.carte);
+				mesCartes.push(data.carte);
+				meRequestCard(data.joueurE,data.joueurR);
+				addCardMainPlayer(data.carte);
+			}
+			else{
+				othersRequestCard(data.joueurE,data.joueurR);
+			}
+		}	
 	}
 	
 	
@@ -391,10 +499,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let nomCible = null;
 
 	const boutonPioche = document.querySelector(".pioche-cards");
-    const joueurs = document.querySelectorAll(".player-info");
 	const exit=document.getElementById("retour");
-    //const menuCartes = document.getElementById("menu-cartes");
-    //const choix = document.querySelectorAll(".choix");
+
 
 	exit.addEventListener("click",()=>{
 		socket.send(JSON.stringify({ type:"exit", id_partie: idPartie, joueur: monNom }));
@@ -404,33 +510,5 @@ document.addEventListener("DOMContentLoaded", () => {
         socket.send(JSON.stringify({ type: "pioche", id_partie: idPartie }));
     });
 
-    joueurs.forEach(joueur => {
-        joueur.addEventListener("click", () => {
-            nomCible = joueur.dataset.joueur;
-            console.log("Cible sélectionnée :", nomCible);
-            //menuCartes.style.display = "block";
-        });
-    });
-/*
-    choix.forEach(carte => {
-        carte.addEventListener("click", () => {
-            const nomCarte = carte.dataset.carte;
-
-            if (!nomCible) {
-                console.warn("Aucun joueur cible sélectionné !");
-                return;
-            }
-
-            socket.send(JSON.stringify({
-                type: "demande_carte",
-                id_partie: idPartie,
-                demandeur: monNom,
-                cible: nomCible,
-                carte: nomCarte
-            }));
-
-            nomCible = null;
-        });
-    });
-	*/
+	
 });
