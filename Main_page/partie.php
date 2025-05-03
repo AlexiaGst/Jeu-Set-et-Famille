@@ -35,32 +35,6 @@ if (isset($_GET['id_partie'])) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // TABLEAU DES JOUEURS
 
 $stmt_count = $bdd->prepare("SELECT max_joueurs FROM parties WHERE id_partie = ?");
@@ -71,7 +45,6 @@ $row_count = $result_count->fetch_assoc();
 $playerCount = intval($row_count['max_joueurs']);
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -86,7 +59,7 @@ $playerCount = intval($row_count['max_joueurs']);
     <script src="js/gestion_cartes.js" defer></script>
     <script src="js/game_script.js" defer></script>
     <script>
-	const monNom = <?php echo json_encode($_SESSION['nom_utilisateur']); ?>;
+		const monNom = <?php echo json_encode($_SESSION['nom_utilisateur']); ?>;
     </script>
      <link rel="stylesheet" href="style/fin_partie.css">
 </head>
@@ -108,50 +81,51 @@ $playerCount = intval($row_count['max_joueurs']);
         <?php if ($playerCount === 2): ?>
             <!-- Affichage pour 2 joueurs -->
             <div class="top-section">
-              <div class="player-info" data-joueur="?" data-position="haut">
-                <div class="profile-timer">
-                  <svg class="progress-ring" width="80" height="80">
-                    <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-                  </svg>
-                  <img src="images/profil1.png" alt="Profil" class="profile-pic">
-                </div>
-                <span class="player-name"> Joueur 1 </span>
-				
-                <div class="family-count">
-                <span>
-                </span>
-                </div>
+                <div class="player-info" data-joueur="?" data-position="haut">
+					<div class="profile-timer">
+					  <svg class="progress-ring" width="80" height="80">
+						<circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+					  </svg>
+					  <img src="images/profil1.png" alt="Profil" class="profile-pic">
+					</div>
+					<div class="player-text">
+						<span class="player-name">Joueur 1</span>
+						<div class="family-count">
+						  <span></span>
+						</div>
+				    </div>
+					
 
-              <div class="cards1">
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-              </div>
-            </div>
+				    <div class="cards1">
+					    <div class="card1"></div>
+					    <div class="card1"></div>
+					    <div class="card1"></div>
+					    <div class="card1"></div>
+				    </div>
+                </div>
             </div>
             <!-- Pioche -->
             <div class="middle-section">
-              <div class="box">
+                <div class="box">
 
-              </div>
-              <div class="box">
-                  <div class="pioche-cards">
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2" id="pioche-count">
-					<span class="card-count">
-                    </span>
-                    </div>
-		  </div>
+                </div>
+				<div class="box">
+					<div class="pioche-cards">
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2" id="pioche-count">
+							<span class="card-count">
+							</span>
+						</div>
+					</div>
                 </div>
                 <div class="box">
 
@@ -161,247 +135,252 @@ $playerCount = intval($row_count['max_joueurs']);
         <?php elseif ($playerCount === 4): ?>
             <!-- Affichage pour 4 joueurs avec middle-section version 1 -->
             <div class="top-section">
-              <div class="player-info" data-joueur="?" data-position="haut">
-                <div class="profile-timer">
-                  <svg class="progress-ring" width="80" height="80">
-                    <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-                  </svg>
-                  <img src="images/profil1.png" alt="Profil" class="profile-pic">
-                </div>
-              <span class="player-name">Joueur 1</span>
-			  
-                <div class="family-count">
-                <span>
-                </span>
-                </div>
-              </div>
+                <div class="player-info" data-joueur="?" data-position="haut">
+					<div class="profile-timer">
+					  <svg class="progress-ring" width="80" height="80">
+						<circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+					  </svg>
+					  <img src="images/profil1.png" alt="Profil" class="profile-pic">
+					</div>
+					<div class="player-text">
+						<span class="player-name">Joueur 1</span>
+						<div class="family-count">
+						  <span></span>
+						</div>
+					</div>
+				  
 
-              <div class="cards1">
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-              </div>
+				    <div class="cards1">
+					    <div class="card1"></div>
+					    <div class="card1"></div>
+					    <div class="card1"></div>
+					    <div class="card1"></div>
+				    </div>
+			    </div>
             </div>
             <div class="middle-section">
-              <div class="box">
-              <div class="player-info" data-joueur="?" data-position="gauche">
-                <div class="profile-timer">
-                  <svg class="progress-ring" width="80" height="80">
-                    <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-                  </svg>
-                  <img src="images/profil1.png" alt="Profil" class="profile-pic">
-                </div>
-                <span class="player-name">Joueur 1</span>
-				
-                <div class="family-count">
-                <span>
-                </span>
-                </div>
+				<div class="box">
+					<div class="player-info" data-joueur="?" data-position="gauche">
+						<div class="profile-timer">
+						  <svg class="progress-ring" width="80" height="80">
+							<circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+						  </svg>
+						  <img src="images/profil1.png" alt="Profil" class="profile-pic">
+						</div>
+						<div class="player-text">
+							<span class="player-name">Joueur 1</span>
+							<div class="family-count">
+							  <span></span>
+							</div>
+						</div>
 
-              <div class="cards1">
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-              </div>
-              </div>
-            </div>
+						<div class="cards1">
+							<div class="card1"></div>
+							<div class="card1"></div>
+							<div class="card1"></div>
+							<div class="card1"></div>
+						</div>
+					</div>
+				</div>
 
 
           <!-- PIOCHE -->
-              <div class="box">
-                <div class="pioche-cards">
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2"></div>
-                    <div class="card2" id="pioche-count">
-                    <span class="card-count"></span>
-                    </div>
-		</div>
-              </div>
+				<div class="box">
+					<div class="pioche-cards">
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2"></div>
+						<div class="card2" id="pioche-count">
+						<span class="card-count"></span>
+						</div>
+					</div>
+				</div>
 
           <!-- -->
 
-          <div class="box">
-              <div class="player-info" data-joueur="?" data-position="droite">
-                <div class="profile-timer">
-                  <svg class="progress-ring" width="80" height="80">
-                    <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-                  </svg>
-                  <img src="images/profil1.png" alt="Profil" class="profile-pic">
-                </div>
-                <span class="player-name">Joueur 1</span>
-				
-                <div class="family-count">
-                <span>
-                </span>
-                </div>
+				<div class="box">
+					<div class="player-info" data-joueur="?" data-position="droite">
+					  <div class="cards1">
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+					  </div>
+						
+					  <div class="player-text">
+						<span class="player-name">Joueur 1</span>
+						<div class="family-count">
+						  <span></span>
+						</div>
+					  </div>
+					  <div class="profile-timer">
+						  <svg class="progress-ring" width="80" height="80">
+							<circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+						  </svg>
+						  <img src="images/profil1.png" alt="Profil" class="profile-pic">
+						</div>
 
-              <div class="cards1">
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-              </div>
-              </div>
-            </div>
-  </div>
+				  
+					</div>
+				</div>
+			</div>
 
         <?php elseif ($playerCount === 6): ?>
             <!-- Affichage pour 6 joueurs (middle-section complet) -->
             <div class="top-section">
-              <div class="player-info" data-joueur="?" data-position="haut">
-                <div class="profile-timer">
-                  <svg class="progress-ring" width="80" height="80">
-                    <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-                  </svg>
-                  <img src="images/profil1.png" alt="Profil" class="profile-pic">
-                </div>
-              <span class="player-name">Joueur 1</span>
-			  
-                <div class="family-count">
-                <span>
-                </span>
-                </div>
-			  
-              </div>
+                <div class="player-info" data-joueur="?" data-position="haut">
+					<div class="profile-timer">
+					  <svg class="progress-ring" width="80" height="80">
+						<circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+					  </svg>
+					  <img src="images/profil1.png" alt="Profil" class="profile-pic">
+					</div>
+					<div class="player-text">
+						<span class="player-name">Joueur 1</span>
+						<div class="family-count">
+						  <span></span>
+						</div>
+					</div>
+				  
 
-              <div class="cards1">
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-                  <div class="card1"></div>
-              </div>
+					<div class="cards1">
+						<div class="card1"></div>
+						<div class="card1"></div>
+						<div class="card1"></div>
+						<div class="card1"></div>
+					</div>
+			    </div>
             </div>
-            <div class="middle-section">
-    <div class="box">
-    <div class="two-player">
-    <div class="player-info" data-joueur="?" data-position="gauche_h">
-  <div class="profile-timer">
-    <svg class="progress-ring" width="80" height="80">
-      <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-    </svg>
-    <img src="images/profil1.png" alt="Profil" class="profile-pic">
-  </div>
-  <span class="player-name">Joueur 1</span>
-	
-	<div class="family-count">
-	<span>
-	</span>
-	</div>
+			
+			<div class="middle-section">
+				<div class="box">
+				<div class="two-player">
+				
+					<div class="player-info" data-joueur="?" data-position="gauche_h">
+					  <div class="profile-timer">
+						<svg class="progress-ring" width="80" height="80">
+						  <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+						</svg>
+						<img src="images/profil1.png" alt="Profil" class="profile-pic">
+					  </div>
+					  <div class="player-text">
+						<span class="player-name">Joueur 1</span>
+						<div class="family-count">
+						  <span></span>
+						</div>
+					  </div>
 
-      <div class="cards1">
-          <div class="card1"></div>
-          <div class="card1"></div>
-          <div class="card1"></div>
-          <div class="card1"></div>
-      </div>
-      </div>
+					  <div class="cards1">
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+					  </div>
+					</div>
 
-      <div class="player-info" data-joueur="?" data-position="droite_h">
-  <div class="profile-timer">
-    <svg class="progress-ring" width="80" height="80">
-      <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-    </svg>
-    <img src="images/profil1.png" alt="Profil" class="profile-pic">
-  </div>
-  <span class="player-name">Joueur 1</span>
-	
-	<div class="family-count">
-	<span>
-	</span>
-	</div>
+				    <div class="player-info" data-joueur="?" data-position="gauche_b">
 
-      <div class="cards1">
-          <div class="card1"></div>
-          <div class="card1"></div>
-          <div class="card1"></div>
-          <div class="card1"></div>
-      </div>
-      </div>
+					  <div class="profile-timer">
+						<svg class="progress-ring" width="80" height="80">
+						  <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+						</svg>
+						<img src="images/profil1.png" alt="Profil" class="profile-pic">
+					  </div>
+					  <div class="player-text">
+						<span class="player-name">Joueur 1</span>
+						<div class="family-count">
+						  <span></span>
+						</div>
+					  </div>
+						  <div class="cards1">
+							  <div class="card1"></div>
+							  <div class="card1"></div>
+							  <div class="card1"></div>
+							  <div class="card1"></div>
+						  </div>
+
+				    </div>
+				</div>
+				</div>
+			
 
 
-    </div>
-    </div>
+			<!-- PIOCHE -->
+				<div class="box">
+				  <div class="pioche-cards">
+					  <div class="card2"></div>
+					  <div class="card2"></div>
+					  <div class="card2"></div>
+					  <div class="card2"></div>
+					  <div class="card2"></div>
+					  <div class="card2"></div>
+					  <div class="card2"></div>
+					  <div class="card2"></div>
+					  <div class="card2"></div>
+						<div class="card2" id="pioche-count">
+						<span class="card-count"></span>
+						</div>
+				  </div>
+				</div>
 
+			<!-- -->
 
-<!-- PIOCHE -->
-    <div class="box">
-      <div class="pioche-cards">
-          <div class="card2"></div>
-          <div class="card2"></div>
-          <div class="card2"></div>
-          <div class="card2"></div>
-          <div class="card2"></div>
-          <div class="card2"></div>
-          <div class="card2"></div>
-          <div class="card2"></div>
-          <div class="card2"></div>
-			<div class="card2" id="pioche-count">
-			<span class="card-count"></span>
+				<div class="box">
+				  <div class="two-player2">
+					<div class="player-info" data-joueur="?" data-position="droite_h">
+						
+						<div class="profile-timer">
+							<svg class="progress-ring" width="80" height="80">
+							  <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+							</svg>
+							<img src="images/profil1.png" alt="Profil" class="profile-pic">
+						</div>
+					    <div class="player-text">
+							<span class="player-name">Joueur 1</span>
+							<div class="family-count">
+								<span></span>
+							</div>
+						</div>
+						
+						<div class="cards1">
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+					    </div>
+
+					</div>
+
+					<div class="player-info" data-joueur="?" data-position="droite_b">
+
+						<div class="profile-timer">
+							<svg class="progress-ring" width="80" height="80">
+							  <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
+							</svg>
+							<img src="images/profil1.png" alt="Profil" class="profile-pic">
+						</div>
+						  <div class="player-text">
+								<span class="player-name">Joueur 1</span>
+								<div class="family-count">
+									<span></span>
+								</div>
+						  </div>
+						<div class="cards1">
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+					    </div>
+					</div>
+				  </div>
+				</div>
 			</div>
-      </div>
-    </div>
-
-<!-- -->
-
-<div class="box">
-  <div class="two-player2">
-    <div class="player-info" data-joueur="?" data-position="gauche_b">
-  <div class="profile-timer">
-    <svg class="progress-ring" width="80" height="80">
-      <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-    </svg>
-    <img src="images/profil1.png" alt="Profil" class="profile-pic">
-  </div>
-  <span class="player-name">Joueur 1</span>
-	
-	<div class="family-count">
-	<span>
-	</span>
-	</div>
-
-      <div class="cards1">
-          <div class="card1"></div>
-          <div class="card1"></div>
-          <div class="card1"></div>
-          <div class="card1"></div>
-      </div>
-      </div>
-
-      <div class="player-info" data-joueur="?" data-position="droite_b">
-  <div class="profile-timer">
-    <svg class="progress-ring" width="80" height="80">
-      <circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
-    </svg>
-    <img src="images/profil1.png" alt="Profil" class="profile-pic">
-  </div>
-  <span class="player-name">Joueur 1</span>
-
-	<div class="family-count">
-	<span>
-	</span>
-	</div>
-
-      <div class="cards1">
-          <div class="card1"></div>
-          <div class="card1"></div>
-          <div class="card1"></div>
-          <div class="card1"></div>
-      </div>
-      </div>
-
-
-    </div>
-    </div>
-  </div>
         <?php endif; ?>
 
         <!-- Bas pour TOUS les cas (joueur principal) -->
@@ -413,11 +392,12 @@ $playerCount = intval($row_count['max_joueurs']);
                     </svg>
                     <img src="images/profil1.png" alt="Profil" class="profile-pic">
                 </div>
-                <span class="player-name"> Moi </span>
-            <div class="family-count">
-			<span>
-			</span>
-			</div>
+                <div class="player-text">
+					<span class="player-name">Moi</span>
+					<div class="family-count">
+					  <span></span>
+					</div>
+				</div>
 
             <div class="cards">
                 <div class="card"></div>
