@@ -132,13 +132,12 @@ function removePlayer(joueur) {
 
 // MOI AUX AUTRES JOUEURS
 
-function meRequestCard(joueurE,joueurR) {
+function meRequestCard(joueurE, joueurR) {
   const joueurEnvoi = document.querySelector(`.player-info[data-joueur="${joueurE}"]`);
-  const emplacementJoueurEnvoi = joueurEnvoi.querySelector(".cards").getBoundingClientRect();
-
   const joueurRecu = document.querySelector(`.player-info[data-joueur="${joueurR}"]`);
-  const emplacementJoueurRecu = joueurRecu.querySelector(".cards1").getBoundingClientRect();
-
+    
+  const emplacementJoueurEnvoi = joueurEnvoi.querySelector(".cards1").getBoundingClientRect();
+  const emplacementJoueurRecu = joueurRecu.querySelector(".cards").getBoundingClientRect();
 
   const mesCartes = document.querySelector('.cards .card');
   if (!mesCartes) {
@@ -175,15 +174,22 @@ function meRequestCard(joueurE,joueurR) {
   }, 800);
 }
 
+
 // AUTRE JOUEUR A AUTRE JOUEUR
 
 function othersRequestCard(joueurE,joueurR) {
   const joueurEnvoi = document.querySelector(`.player-info[data-joueur="${joueurE}"]`);
-  const emplacementJoueurEnvoi = joueurEnvoi.querySelector(".cards1").getBoundingClientRect();
-
   const joueurRecu = document.querySelector(`.player-info[data-joueur="${joueurR}"]`);
-  const emplacementJoueurRecu = joueurRecu.querySelector(".cards1").getBoundingClientRect();
 
+  const emplacementJoueurRecu = joueurRecu.querySelector(".cards1")
+  let emplacementJoueurEnvoi = joueurEnvoi.querySelector(".cards1")
+  if (!emplacementJoueurEnvoi){
+	  emplacementJoueurEnvoi = joueurEnvoi.querySelector(".cards")
+  }
+  
+  
+  emplacementJoueurRecu.getBoundingClientRect();
+  emplacementJoueurEnvoi.getBoundingClientRect();
   const mesCartes = document.querySelector('.cards1 .card1');
   if (!mesCartes) {
     console.error("Erreur : aucune carte à animer.");
@@ -218,13 +224,3 @@ function othersRequestCard(joueurE,joueurR) {
     carteAnimee.remove();
   }, 800);
 }
-
-// A METTRE DANS GESTION CARTES.JS
-
-function showCountFamilles(joueur) {
-  const joueurAvecFamille = document.querySelector(`.player-info[data-joueur="${joueur}"]`);
-  const elem = joueurAvecFamille.getElementsByClassName('family-count')[0]; 
-    elem.querySelector('span').innerHTML = "Famille " + score;
-    elem.style.display = 'flex'; 
-}
-
