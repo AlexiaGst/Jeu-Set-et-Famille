@@ -224,12 +224,3 @@ function othersRequestCard(joueurE,joueurR) {
     carteAnimee.remove();
   }, 800);
 }
-
-//MONTRER LA FAMILLE 
-
-function showCountFamilles(score) {
-  const joueurAvecFamille = document.querySelector(`.player-info[data-joueur="joueur1"]`);
-  const elem = joueurAvecFamille.getElementsByClassName('family-count')[0]; 
-    elem.querySelector('span').innerHTML = "Famille " + score;
-    elem.style.display = 'flex'; 
-}
