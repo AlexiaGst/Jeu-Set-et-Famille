@@ -32,7 +32,6 @@ body {
 .grid-layout {
   display: grid;
   grid-template-rows: auto auto auto;
-  padding: 20px;
   border-radius: 30px;
   max-width: 1200px;
   width: 100%;
@@ -280,7 +279,7 @@ body {
 }
 
 .bottom-section {
-  margin-top: 3%;
+	margin-top: 3%;
   margin-left: 7%;
 }
 
@@ -311,6 +310,10 @@ body {
   height: 250px;
 }
 
+.right > .player-info {
+	flex-direction: row-reverse;
+}
+
 .two-player2 > .player-info {
 
   flex-direction: row-reverse;
@@ -323,6 +326,7 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-left: 20px;
 }
 
 .pioche-cards {
@@ -491,6 +495,15 @@ body {
 
 /* POUR LES CARTES */
 
+@keyframes disappearCard {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 
 @keyframes flyInFromCenter {
   from {
@@ -608,3 +621,27 @@ body {
   animation: flyToBottom 1s ease forwards;
 }
 
+
+
+@media screen and (max-width: 1200px) {
+	.middle-section .player-info {
+	  display: flex;
+	  flex-wrap: wrap;
+	  align-items: center;
+	  gap: 10px;
+	}
+	.card1{
+	  height: 12vw;
+	  width:calc(12vw * (2/3));
+	}
+
+	.card {
+	  height: 14vw;
+	  width:calc(14vw * (2/3));
+	  background-size: cover
+	}
+
+	.card2 {
+	  width:calc(14vw * (2/3));
+	  height: 14vw;
+	}
