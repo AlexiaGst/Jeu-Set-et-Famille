@@ -69,16 +69,26 @@ function retirerCarteVisuellement(carte) {
 		if (bg.includes(carte)) {
 			card.style.animation = 'none';
 			card.offsetHeight;
-			card.style.animation = 'disappearCard 1s ease forwards';
+			card.style.animation = 'disappear 0.8s ease forwards';
 
 			setTimeout(() => {
 				card.remove();
-			}, 1000);
+				realignerCartes();
+			}, 800);
 			break;
 		}
 	}
 }
 
+function realignerCartes() {
+	const cartesDivs = document.querySelectorAll(".bottom-section .cards .card");
+	Array.from(cartesDivs).forEach((div, index) => {
+		const decalageX = -50 * index;
+		div.style.setProperty('--index', index);
+		div.style.setProperty('--final-x', `${decalageX}%`);
+		div.style.transform = `translateX(${decalageX}%)`;
+	});
+}
 
 
 
@@ -264,6 +274,42 @@ function afficherClassement(classement) {
 	});
 }
 
+function getOrdreCarte(carte) {
+	let ordre = 1000; // très grand par défaut
+	let index = 0;
+	for (const famille in familles) {
+		for (const img of familles[famille]) {
+			if (img === carte) return index;
+			index++;
+		}
+	}
+	return ordre;
+}
+
+function mettreAJourMainTriee() {
+	const cartesContainer = document.querySelector(".bottom-section .cards");
+
+	// On trie mesCartes (les URLs) selon l'ordre défini
+	const cartesTriees = mesCartes.slice().sort((a, b) => getOrdreCarte(a) - getOrdreCarte(b));
+
+	// On vide l'affichage actuel
+	cartesContainer.innerHTML = "";
+
+	// On réinjecte chaque carte dans le bon ordre
+	cartesTriees.forEach((img, index) => {
+		const newCard = document.createElement('div');
+		newCard.classList.add('card');
+		const decalageX = -50 * index;
+		newCard.style.setProperty('--index', index);
+		newCard.style.setProperty('--final-x', `${decalageX}%`);
+		newCard.style.transform = `translateX(${decalageX}%)`;
+		newCard.style.opacity = '1';
+		newCard.style.backgroundImage = `url('${img}')`;
+		newCard.style.backgroundSize = "cover";
+		newCard.style.backgroundPosition = "center";
+		cartesContainer.appendChild(newCard);
+	});
+}
 
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -305,7 +351,7 @@ socket.addEventListener('message', (event) => {
 			const circle = bloc.querySelector(".progress-ring__circle");
 			console.log(circle);
 			if (circle) {
-				startTimer(20000, circle); // 20 secondes
+				startTimer(30000, circle); // 20 secondes
 			}
 		} else {
 			console.warn(`Impossible de trouver le bloc du joueur ${joueur}`);
@@ -313,8 +359,7 @@ socket.addEventListener('message', (event) => {
 	}
 
 
-	if (data.type === 'profil') {
-		
+	if (data.type === 'profil') {		
 		const profils = data.profils;
 		console.log("Profils des joueurs reçus :", profils);
 		
@@ -379,9 +424,10 @@ socket.addEventListener('message', (event) => {
 			console.log(joueur, "->", position);
 		});
 		
-		/*const loader=document.getElementById("loader");
-		loader.classList.add("disappear");
-		setTimeout(() => loader.style.display="none", 1000);*/
+		const loader=document.getElementsByClassName("loader_box")[0]; 
+		loader.style.animation='disappear 0.8s ease forwards';
+		
+		setTimeout(() => loader.style.display="none", 800);
 	}
 
 
@@ -442,11 +488,14 @@ socket.addEventListener('message', (event) => {
 			console.log("J'ai pioché :", data.carte);
 			mesCartes.push(data.carte);
 			if (data.bonne_pioche) {
-				console.log("Bonne pioche ! Je rejoue.");
 				showChatBubble("Bonne pioche ! Rejoue !",4000);
-			}
+				const fireworks = document.querySelector(".fireworks");
+				fireworks.classList.remove("animate"); // reset
+				void fireworks.offsetWidth; // reflow
+				fireworks.classList.add("animate");
+							}
 			animatePiocheToBottom()
-			addCardMainPlayer(data.carte);
+			mettreAJourMainTriee();
 			
 		} else {
 			console.log("Un autre joueur a pioché !");
@@ -487,7 +536,7 @@ socket.addEventListener('message', (event) => {
 				console.log("Carte reçue :", data.carte);
 				mesCartes.push(data.carte);
 				meRequestCard(data.joueurE,data.joueurR);
-				addCardMainPlayer(data.carte);
+				mettreAJourMainTriee();
 			}
 			else if (data.joueurE===monNom){
 				const index = mesCartes.indexOf(data.carte);
@@ -506,7 +555,14 @@ socket.addEventListener('message', (event) => {
 	if (data.type === 'famille_complete') {
 		const message = `${data.joueur} a complété la famille ${data.famille} !`;
 		showChatBubble(message,2000);
-		const score=data.score; //Nombre de familles du joueur
+		showCountFamilles(data.joueur,data.score);
+		
+		if (data.joueur === monNom) {	
+			  setTimeout(() => {
+				removeCards(familles[data.famille]);
+			  }, 700);
+		}
+
 	}
 	
 	if (data.type === "fin_partie") {
