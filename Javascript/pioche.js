@@ -1,4 +1,4 @@
-window.addEventListener("load", () => {
+/*window.addEventListener("load", () => {
   const piocheCards = document.querySelectorAll('.pioche-cards .card2');
   
   // PIOCHE DU DEBUT
@@ -8,7 +8,7 @@ window.addEventListener("load", () => {
   setTimeout(() => animatePiocheToMiddleLeft(), 800);
   setTimeout(() => animatePiocheToMiddleRight(), 1000);
   setTimeout(() => animatePiocheToBottom(), 1200);
-});
+});*/
 
 // ANIMATION CARTE VERS LE JOUEUR DU HAUT
 
@@ -96,7 +96,7 @@ function animatePiocheToBottom() {
 
 
 // AJOUTER UNE CARTE AU JOUEUR PRINCIPAL 
-
+/*
 function addCardMainPlayer(img) {
   const cardsContainer = document.querySelector('.cards');
 
@@ -120,6 +120,8 @@ function addCardMainPlayer(img) {
 
   cardsContainer.appendChild(newCard);
 }
+*/
+
 
 
 function removePlayer(joueur) {
@@ -228,10 +230,6 @@ function othersRequestCard(joueurE,joueurR) {
 
 // RETIRER CARTES QUAND FAMILLE COMPLETE
 
-/*
-const cartesFamille = familles[data.famille];
-mesCartes = mesCartes.filter(carte => !cartesFamille.includes(carte));
-*/
 
 function removeCards(cartesFamille) {
   const cartesARetirer = document.querySelectorAll(".bottom-section .cards .card");
@@ -266,15 +264,3 @@ function removeCards(cartesFamille) {
   });
 }
 
-function reTranslateRemainingCards() {
-  const remainingCards = document.querySelectorAll(".bottom-section .cards .card");
-  let decalage = 0; 
-
-  remainingCards.forEach((card) => {
-    const decalageX = -decalage;
-    card.style.transition = "transform 0.5s ease";
-    card.style.transform = `translateX(${decalageX}%)`;
-  
-    decalage = decalage + 50; 
-  });
-}
