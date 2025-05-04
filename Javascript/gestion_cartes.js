@@ -61,6 +61,27 @@ var familles={
   ]
 };
 
+
+function retirerCarteVisuellement(carte) {
+	const cartesDivs = document.querySelectorAll(".bottom-section .cards .card");
+	for (let card of cartesDivs) {
+		const bg = card.style.backgroundImage;
+		if (bg.includes(carte)) {
+			card.style.animation = 'none';
+			card.offsetHeight;
+			card.style.animation = 'disappearCard 1s ease forwards';
+
+			setTimeout(() => {
+				card.remove();
+			}, 1000);
+			break;
+		}
+	}
+}
+
+
+
+
 function clore_menu(){
 	const menu=document.getElementById("menu-cartes");
 	menu.style.display="none";
@@ -94,7 +115,6 @@ function afficheMenu(){
             }
         }
     }
-	console.log(mesfamilles);
 	mesfamilles.forEach(nomFamille => {
 		familles[nomFamille].forEach(carte => {
 			const divCarte = document.createElement("div");
@@ -104,7 +124,6 @@ function afficheMenu(){
 
 			// ⬇️ Ici tu ajoutes le click dès la création de l'élément
 			divCarte.addEventListener("click", () => {
-				console.log("Click sur la carte", carte);
 
 				if (!nomCible) {
 					console.warn("Aucun joueur cible sélectionné !");
@@ -295,9 +314,10 @@ socket.addEventListener('message', (event) => {
 
 
 	if (data.type === 'profil') {
+		
 		const profils = data.profils;
 		console.log("Profils des joueurs reçus :", profils);
-
+		
 		const joueurs = Object.keys(profils); // ordre envoyé par le serveur
 		const nbJoueurs = joueurs.length;
 		console.log("monNom :", monNom);
@@ -358,7 +378,10 @@ socket.addEventListener('message', (event) => {
 			}
 			console.log(joueur, "->", position);
 		});
-
+		
+		/*const loader=document.getElementById("loader");
+		loader.classList.add("disappear");
+		setTimeout(() => loader.style.display="none", 1000);*/
 	}
 
 
@@ -456,9 +479,7 @@ socket.addEventListener('message', (event) => {
 	if (data.type === 'pioche_vide') {
 		showChatBubble("La pioche est vide !",2000);
 	}
-	if (data.type === "info_demande") {
-		console.log(data.texte);
-		
+	if (data.type === "info_demande") {		
 		showChatBubble(data.texte,4000);
 
 		if (data.succes){
@@ -468,16 +489,22 @@ socket.addEventListener('message', (event) => {
 				meRequestCard(data.joueurE,data.joueurR);
 				addCardMainPlayer(data.carte);
 			}
+			else if (data.joueurE===monNom){
+				const index = mesCartes.indexOf(data.carte);
+				if (index !== -1) {
+					mesCartes.splice(index, 1);
+				}
+				retirerCarteVisuellement(data.carte);
+			}
 			else{
 				othersRequestCard(data.joueurE,data.joueurR);
 			}
-		}	
+		}
 	}
 	
 	
 	if (data.type === 'famille_complete') {
 		const message = `${data.joueur} a complété la famille ${data.famille} !`;
-		console.log("🎉", message);
 		showChatBubble(message,2000);
 		const score=data.score; //Nombre de familles du joueur
 	}
