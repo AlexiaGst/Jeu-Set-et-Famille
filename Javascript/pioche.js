@@ -224,3 +224,36 @@ function othersRequestCard(joueurE,joueurR) {
     carteAnimee.remove();
   }, 800);
 }
+
+
+// RETIRER CARTES QUAND FAMILLE COMPLETE
+
+/*
+const cartesFamille = familles[data.famille];
+mesCartes = mesCartes.filter(carte => !cartesFamille.includes(carte));
+*/
+
+function removeCards(cartesFamille) {
+
+  const cartesARetirer = document.querySelectorAll(".bottom-section .cards .card");
+
+  cartesARetirer.forEach(cardDiv => {
+    const bgImage = cardDiv.style.backgroundImage;
+    const match = /url\("?(.*?)"?\)/.exec(bgImage);
+
+    if (match && cartesFamille.includes(match[1])) {
+      cardDiv.style.transition = "transform 0.5s ease, opacity 0.5s ease";
+      cardDiv.style.transform = "translateX(0)";
+      cardDiv.style.opacity = "1";
+
+      void cardDiv.offsetWidth; 
+
+      cardDiv.style.transform = "translateX(100px)";
+      cardDiv.style.opacity = "0";
+
+      setTimeout(() => {
+        cardDiv.style.display = "none";
+      }, 500);
+    }
+  });
+}
