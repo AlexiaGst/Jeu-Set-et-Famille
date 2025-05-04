@@ -233,29 +233,33 @@ const cartesFamille = familles[data.famille];
 mesCartes = mesCartes.filter(carte => !cartesFamille.includes(carte));
 */
 
-function removeCards() {
-
+function removeCards(cartesFamille) {
   const cartesARetirer = document.querySelectorAll(".bottom-section .cards .card");
+  const cartesContainer = document.querySelector(".bottom-section .cards");
 
-  let cartesFamilleRetiree = 0;
-  let cartesRetiree = 0;
+  let cartesRetirees = 0;
 
   cartesARetirer.forEach(cardDiv => {
     const bgImage = cardDiv.style.backgroundImage;
     const match = /url\("?(.*?)"?\)/.exec(bgImage);
 
     if (match && cartesFamille.includes(match[1])) {
-      cartesFamilleRetiree++;
+      cartesRetirees++;
+
+      cardDiv.style.animation = 'none';
+      cardDiv.offsetHeight; //Force un reflow
 
       cardDiv.style.transition = "transform 0.5s ease, opacity 0.5s ease";
       cardDiv.style.transform = "translateY(-100px)";
       cardDiv.style.opacity = "0";
 
       setTimeout(() => {
-        cardDiv.style.display = "none";
-        cartesRetiree++;
-        if (cartesRetiree === cartesFamilleRetiree) {
-          reTranslateRemainingCards();
+        cartesContainer.removeChild(cardDiv);
+        cartesRetirees--;
+
+        if (cartesRetirees === 0) {
+          mesCartes = mesCartes.filter(carte => !cartesFamille.includes(carte));
+          mettreAJourMainTriee();
         }
       }, 500);
     }
