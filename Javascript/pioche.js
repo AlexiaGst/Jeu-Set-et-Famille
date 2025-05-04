@@ -233,27 +233,44 @@ const cartesFamille = familles[data.famille];
 mesCartes = mesCartes.filter(carte => !cartesFamille.includes(carte));
 */
 
-function removeCards(cartesFamille) {
+function removeCards() {
 
   const cartesARetirer = document.querySelectorAll(".bottom-section .cards .card");
+
+  let cartesFamilleRetiree = 0;
+  let cartesRetiree = 0;
 
   cartesARetirer.forEach(cardDiv => {
     const bgImage = cardDiv.style.backgroundImage;
     const match = /url\("?(.*?)"?\)/.exec(bgImage);
 
     if (match && cartesFamille.includes(match[1])) {
+      cartesFamilleRetiree++;
+
       cardDiv.style.transition = "transform 0.5s ease, opacity 0.5s ease";
-      cardDiv.style.transform = "translateX(0)";
-      cardDiv.style.opacity = "1";
-
-      void cardDiv.offsetWidth; 
-
-      cardDiv.style.transform = "translateX(100px)";
+      cardDiv.style.transform = "translateY(-100px)";
       cardDiv.style.opacity = "0";
 
       setTimeout(() => {
         cardDiv.style.display = "none";
+        cartesRetiree++;
+        if (cartesRetiree === cartesFamilleRetiree) {
+          reTranslateRemainingCards();
+        }
       }, 500);
     }
+  });
+}
+
+function reTranslateRemainingCards() {
+  const remainingCards = document.querySelectorAll(".bottom-section .cards .card");
+  let decalage = 0; 
+
+  remainingCards.forEach((card) => {
+    const decalageX = -decalage;
+    card.style.transition = "transform 0.5s ease";
+    card.style.transform = `translateX(${decalageX}%)`;
+  
+    decalage = decalage + 50; 
   });
 }
