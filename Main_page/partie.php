@@ -65,8 +65,13 @@ $playerCount = intval($row_count['max_joueurs']);
 </head>
 
 <body>
-
-<div id="chat-container" class="chat-container"></div>
+	<div class="loader_box">
+	    <div class="loader_content">
+			<p class="loader_text">Chargement des joueurs</p>
+			<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+	    </div>
+	</div>
+	<div id="chat-container" class="chat-container"></div>
 
 
 
@@ -120,7 +125,7 @@ $playerCount = intval($row_count['max_joueurs']);
 						<div class="card2"></div>
 						<div class="card2"></div>
 						<div class="card2"></div>
-						<div class="card2"></div>
+						
 						<div class="card2" id="pioche-count">
 							<span class="card-count">
 							</span>
@@ -204,28 +209,29 @@ $playerCount = intval($row_count['max_joueurs']);
 
           <!-- -->
 
-				<div class="box">
+				<div class="box right">
 					<div class="player-info" data-joueur="?" data-position="droite">
-					  <div class="cards1">
-						  <div class="card1"></div>
-						  <div class="card1"></div>
-						  <div class="card1"></div>
-						  <div class="card1"></div>
-					  </div>
-						
-					  <div class="player-text">
-						<span class="player-name">Joueur 1</span>
-						<div class="family-count">
-						  <span></span>
-						</div>
-					  </div>
+					  
 					  <div class="profile-timer">
 						  <svg class="progress-ring" width="80" height="80">
 							<circle class="progress-ring__circle" stroke="green" stroke-width="5" fill="transparent" r="35" cx="40" cy="40"/>
 						  </svg>
 						  <img src="images/profil1.png" alt="Profil" class="profile-pic">
 						</div>
-
+						
+						<div class="player-text">
+							<span class="player-name">Joueur 1</span>
+							<div class="family-count">
+							  <span></span>
+							</div>
+						</div>
+						
+						<div class="cards1">
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+						  <div class="card1"></div>
+					  </div>
 				  
 					</div>
 				</div>
