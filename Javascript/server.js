@@ -204,11 +204,13 @@ function passerAuJoueurSuivant(id_partie, initial = false) {
 function ajouterCarte(joueurNom, carte, id_partie) {
   if (!mainsJoueurs[id_partie][joueurNom]) mainsJoueurs[id_partie][joueurNom] = {};
   const main = mainsJoueurs[id_partie][joueurNom];
-
+	console.log("DEBUG: main",main,"carte:",carte);
   for (const famille in familles) {
+	  console.log("DEBUG: familles:",familles[famille]);
     if (familles[famille].includes(carte)) {
       if (!main[famille]) main[famille] = [];
       main[famille].push(carte);
+	  console.log("DEBUG: main famille",main[famille]);
       break;
     }
   }
@@ -407,6 +409,7 @@ wss.on('connection', function connection(ws) {
 		}
 
 		// Si tous les sockets sont fermés, on déclenche la suppression de la partie dans la BDD
+		/*
 		const clientsActifs = (parties[id_partie] || []).filter(j => j.readyState === WebSocket.OPEN);
 		console.log(clientsActifs.length);
 		if (clientsActifs.length === 1) {
@@ -415,7 +418,7 @@ wss.on('connection', function connection(ws) {
 				.then(res => res.text())
 				.then(console.log)
 				.catch(console.error);
-		}
+		}*/
 	}
 
 
@@ -521,10 +524,10 @@ wss.on('connection', function connection(ws) {
 
 			let carteTrouvee = false;
 			for (const fam in mainCible) {
-				const index = mainCible[fam].indexOf("images/" + carte + ".png");
+				const index = mainCible[fam].indexOf(carte);
 				if (index !== -1) {
 					mainCible[fam].splice(index, 1);
-					ajouterCarte(demandeur, "images/" + carte + ".png", id_partie);
+					ajouterCarte(demandeur, carte, id_partie);
 					carteTrouvee = true;
 					console.log(`${demandeur} a récupéré ${carte} depuis ${cible}`);
 					verifierFamilles(demandeur, id_partie);
