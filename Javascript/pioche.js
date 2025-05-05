@@ -97,28 +97,39 @@ function animatePiocheToBottom() {
 
 // AJOUTER UNE CARTE AU JOUEUR PRINCIPAL 
 /*
-function addCardMainPlayer(img) {
-  const cardsContainer = document.querySelector('.cards');
 
+let margin = 0; 
+
+function addCardMainPlayer() {
+  const cardsContainer = document.querySelector('.cards');
   const cardCount = cardsContainer.children.length;
 
   const newCard = document.createElement('div');
   newCard.classList.add('card');
 
-  const index = cardCount; 
+  const index = cardCount;
   const decalageX = -50 * index;
 
   newCard.style.setProperty('--index', index);
+  newCard.style.setProperty('--final-x', `${decalageX}%`);
   newCard.style.transform = `translateX(${decalageX}%)`;
   newCard.style.opacity = '0';
   newCard.style.animation = `flyInFromCenterWide 0.6s ease-out forwards`;
-  newCard.style.setProperty('--final-x', `${decalageX}%`);
   newCard.style.animationDelay = `${0.1 * index}s`;
-  newCard.style.backgroundImage = `url('${img}')`;
   newCard.style.backgroundSize = "cover";
   newCard.style.backgroundPosition = "center";
 
   cardsContainer.appendChild(newCard);
+
+  margin = margin + 10; 
+  adaptMargin(margin); 
+}
+
+function adaptMargin(setMargin) {
+  const bottomSection = document.querySelector('.bottom-section');
+  if (bottomSection) {
+    bottomSection.style.setProperty('margin-left', `${setMargin}%`);
+  }
 }
 */
 
