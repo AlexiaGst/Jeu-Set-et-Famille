@@ -279,8 +279,9 @@ body {
 }
 
 .bottom-section {
-	margin-top: 3%;
+  margin-top: 3%;
   margin-left: 7%;
+  max-width: 700px;
 }
 
 .middle-section {
