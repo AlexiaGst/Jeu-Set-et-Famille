@@ -1,3 +1,6 @@
+//--------------------------------------------------------------------------------------
+//Initialisation des images
+
 var cartes=[
 	'images/alpinisme.png', 'images/arc.png', 'images/aviron.png', 'images/basket.png', 'images/baseball.png', 'images/bobsleigh.png',
 	'images/bowling.png', 'images/boxe.png', 'images/curling.png', 'images/cyclisme.png', 'images/escalade.png', 'images/flechettes.png',
@@ -76,18 +79,19 @@ var familles={
   ]
 };
 
-var pioche=[];
+//--------------------------------------------------------------------------------------
+//Fonctions
 
-function distributeCards(id_partie, joueurs) {
-    console.log("Distribution des cartes lancée pour la partie", id_partie);
+function distributeCards(id_partie, joueurs) {//Distribution des cartes
 
-    cartes.sort(() => Math.random() - 0.5);
+    cartes.sort(() => Math.random() - 0.5);//Mélange des cartes
 	/*Pour tester
 	cartes=["images/boxe.png",
     "images/judo.png",
     "images/karate.png",
     "images/mma.png",
     "images/lutte.png",
+	"images/roller.png",
 	
 	"images/aviron.png",
     "images/kitesurf.png",
@@ -97,19 +101,18 @@ function distributeCards(id_partie, joueurs) {
     "images/wakeboard.png",
     "images/waterpolo.png",
 	
-	"images/roller.png",
+	
     "images/skateboard.png",
 	"images/monocycle.png",
 	"images/rugby.png",
-    "images/tennis.png",];*/
+    "images/tennis.png"];*/
 	
 	
-	const distrib = 7;
+	const distrib = 7;//cartes à distribuer
 	mainsJoueurs[id_partie] = {};
 
 	const totalDistrib = joueurs.length * distrib;
-	pioche = cartes.slice(totalDistrib);  // <-- pioche définie d'abord
-	console.log("Pioche restante :", pioche.length, "cartes");
+	pioche = cartes.slice(totalDistrib);
 
 	joueurs.forEach((joueur, index) => {
 		const playerCards = cartes.slice(index * distrib, (index + 1) * distrib);
@@ -119,33 +122,31 @@ function distributeCards(id_partie, joueurs) {
 			mainsJoueurs[id_partie][nom] = {};
 			playerCards.forEach(carte => ajouterCarte(nom, carte, id_partie));
 		}
-
-		console.log(`Joueur ${nom || "(inconnu)"} reçoit :`, playerCards);
-
+		
+		//Envoi des cartes aux joueurs
 		if (joueur.readyState === WebSocket.OPEN) {
 			joueur.send(JSON.stringify({
 				type: "distribution",
 				cartes: playerCards,
-				compteur: pioche.length  // maintenant correct
+				compteur: pioche.length
 			}));
 		} else {
-			console.log("Socket fermé pour joueur", index + 1);
+			console.log("Socket fermée pour le joueur", index + 1);
 		}
 	});
 }
 
 
-function initJoueurs(id_partie,joueurs){
+function initJoueurs(id_partie,joueurs){// Crée le profil de chaque joueur pour la partie
 	const profils = {};
-	img_profil.sort(() => Math.random() - 0.5);
+	img_profil.sort(() => Math.random() - 0.5);//photo de profil au hasard
 
 	joueurs.forEach((joueur, index) => {
 		const nom = joueur.nom_joueur;
-		profils[nom] = img_profil[index] || "images/profil_defaut.png"; // au cas où
+		profils[nom] = img_profil[index] || "images/profil1.png"; // profil par défaut au cas où
 
-		console.log(`Joueur ${nom} reçoit photo`, profils[nom]);
 	});
-
+	//Envoie son profil à chaque joueur
 	joueurs.forEach((joueur) => {
 		if (joueur.readyState === WebSocket.OPEN) {
 			joueur.send(JSON.stringify({ type: "profil", profils }));
@@ -153,23 +154,8 @@ function initJoueurs(id_partie,joueurs){
 	});
 }
 
-function afficherMains(id_partie) {
-    const mains = mainsJoueurs[id_partie];
-    console.log(`Mains des joueurs pour la partie ${id_partie} :`);
 
-    if (!mains) {
-        console.log("Aucune main enregistrée pour cette partie.");
-        return;
-    }
-
-    for (const joueur in mains) {
-        const cartes = getMainPlate(joueur, id_partie);
-        console.log(`${joueur} : ${cartes.length} carte(s)`);
-        cartes.forEach(c => console.log(`      - ${c}`));
-    }
-}
-
-function passerAuJoueurSuivant(id_partie, initial = false) {
+function passerAuJoueurSuivant(id_partie, initial = false) {//Change le tour actuel pour le joueur suivant
 	if (partiesTerminees[id_partie]) return;
     const data = toursData[id_partie];
     if (!data) return;
@@ -181,8 +167,7 @@ function passerAuJoueurSuivant(id_partie, initial = false) {
     const suivant = data.joueurs[data.indexTour];
     tours[id_partie] = suivant;
 
-    console.log(`🔁 Nouveau tour pour la partie ${id_partie} : ${suivant}`);
-
+	//Envoie les infos du nouveau tour aux autres joueurs
     parties[id_partie].forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
             client.send(JSON.stringify({
@@ -192,32 +177,27 @@ function passerAuJoueurSuivant(id_partie, initial = false) {
         }
     });
 
-    // Redémarrer le timer
+    // Redémarre le timer
     if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
     timersTours[id_partie] = setTimeout(() => {
-        console.log(`Temps écoulé pour ${suivant}, passage au suivant.`);
         passerAuJoueurSuivant(id_partie);
-    }, 20000);
+    }, 30000);
 }
 
 
-function ajouterCarte(joueurNom, carte, id_partie) {
-  if (!mainsJoueurs[id_partie][joueurNom]) mainsJoueurs[id_partie][joueurNom] = {};
-  const main = mainsJoueurs[id_partie][joueurNom];
-	console.log("DEBUG: main",main,"carte:",carte);
-  for (const famille in familles) {
-	  console.log("DEBUG: familles:",familles[famille]);
-    if (familles[famille].includes(carte)) {
-      if (!main[famille]) main[famille] = [];
-      main[famille].push(carte);
-	  console.log("DEBUG: main famille",main[famille]);
-      break;
-    }
-  }
-
+function ajouterCarte(joueurNom, carte, id_partie) {//Ajoute une carte à la main du joueur
+	if (!mainsJoueurs[id_partie][joueurNom]) mainsJoueurs[id_partie][joueurNom] = {};
+	const main = mainsJoueurs[id_partie][joueurNom];
+	for (const famille in familles) {
+		if (familles[famille].includes(carte)) {
+		    if (!main[famille]) main[famille] = [];
+		    main[famille].push(carte);
+		    break;
+		}
+	}
 }
 
-function verifierFinPartie(id_partie) {
+function verifierFinPartie(id_partie) {//Vérifie si la partie doit se terminer
 	const totalFamilles = Object.keys(familles).length;
 	let totalCompletes = 0;
 
@@ -226,29 +206,29 @@ function verifierFinPartie(id_partie) {
 			totalCompletes += scores[joueur];
 		}
 	}
-
+	//Si la pioche est vide ou que les joueurs ont toutes les familles, fin de la partie
 	if (totalCompletes >= totalFamilles || pioche.length === 0) {
 		terminerPartie(id_partie);
 	}
 }
 
-function verifierFamilles(joueurNom, id_partie) {
+function verifierFamilles(joueurNom, id_partie) {//Vérifie si une famille est complète
 	const main = mainsJoueurs[id_partie][joueurNom];
 	for (const nomFamille in main) {
-		if (main[nomFamille].length === 6) {
+		if (main[nomFamille].length === 6) {//Si la famille est complète
 			delete main[nomFamille];
 			if (!scores[joueurNom]) scores[joueurNom] = 0;
 			scores[joueurNom] += 1;
-			afficherScores();
+			
+			//Envoi aux joueurs
 			parties[id_partie].forEach(client => {
 				if (client.readyState === WebSocket.OPEN) {
-					console.log(`✅ Envoi du message 'famille_complete' à ${client.nom_joueur}`);
-				  client.send(JSON.stringify({
-					type: 'famille_complete',
-					joueur: joueurNom,
-					famille: nomFamille,
-					score:scores[joueurNom]
-				  }));
+				    client.send(JSON.stringify({
+						type: 'famille_complete',
+						joueur: joueurNom,
+						famille: nomFamille,
+						score:scores[joueurNom]
+				    }));
 				}
 			});
 		}
@@ -256,30 +236,19 @@ function verifierFamilles(joueurNom, id_partie) {
 	verifierFinPartie(id_partie);
 }
 
-function getMainPlate(joueurNom, id_partie) {
-  return Object.values(mainsJoueurs[id_partie][joueurNom] || {}).flat();
-}
 
-function afficherScores() {
-    console.log("🎯 Scores des joueurs (familles complètes) :");
-    for (const [joueur, score] of Object.entries(scores)) {
-        console.log(`${joueur} : ${score} famille(s)`);
-    }
-}
-
-function terminerPartie(id_partie) {
+function terminerPartie(id_partie) {//Fin de partie
 	if (partiesTerminees[id_partie]) return;
 	partiesTerminees[id_partie] = true; 
 	
-	console.log(`🏁 Partie ${id_partie} terminée.`);
+	console.log(`Partie ${id_partie} terminée.`);
 
+	//Création du classement
 	const joueursPartie = parties[id_partie].map(ws => ws.nom_joueur);
 	const classement = joueursPartie.map(nom => ({
 		joueur: nom,
 		score: scores[nom] || 0
 	})).sort((a, b) => b.score - a.score);
-
-	console.log("Classement calculé :", classement);
 
 	parties[id_partie].forEach(client => {
 		if (client.readyState === WebSocket.OPEN) {
@@ -294,11 +263,13 @@ function terminerPartie(id_partie) {
 }
 
 
-//_______________________________________________________________________________________
+//--------------------------------------------------------------------------------------
+//Variables d'initialisation
 
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
 
+var pioche=[];
 let parties = {}; // Liste des sockets par id_partie
 let partiesLancees = {}; 
 let mainsJoueurs = {};
@@ -310,12 +281,14 @@ let partiesTerminees = {};
 let carteDemandee = {};
 let joueurQuiDemande = {}; 
 
-wss.on('connection', function connection(ws) {
+//--------------------------------------------------------------------------------------
+//Ecoute sur la websocket
 
+wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
         const data = JSON.parse(message);
 
-        if (data.type === 'join') {
+        if (data.type === 'join') {//Inscrit les joueurs dans la partie
             const id = data.id_partie;
 			const nom = data.nom_utilisateur;
             ws.id_partie = id;
@@ -324,24 +297,23 @@ wss.on('connection', function connection(ws) {
             if (!parties[id]) parties[id] = [];
             parties[id].push(ws);
 
-            // Si la partie est déjà lancée on envoie directement "start_game"
+            // Si la partie est déjà lancée, envoie directement start_game
             if (partiesLancees[id]) {
                 ws.send(JSON.stringify({ type: 'start_game' }));
             }
         }
 			
-        if (data.type === 'start') {
-			
+        if (data.type === 'start') {// Lance la partie
             const id = data.id_partie;
             partiesLancees[id] = true;
 
             if (parties[id]) {
-                console.log(`Joueurs enregistrés pour la partie ${id} :`, parties[id].length);
                 parties[id].forEach(client => {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(JSON.stringify({ type: 'start_game' }));
                     }
                 });
+				//Temps de sécurité
 				setTimeout(() => {
 					initJoueurs(id,parties[id]);
 					distributeCards(id,parties[id]);
@@ -363,7 +335,7 @@ wss.on('connection', function connection(ws) {
 
         }
 		
-	if (data.type === 'exit') {
+	if (data.type === 'exit') {// En cas d'abandon de la partie
 		const id_partie = data.id_partie;
 		const joueur = data.joueur;
 
@@ -379,17 +351,22 @@ wss.on('connection', function connection(ws) {
 
 		// Retirer le joueur du tableau des tours
 		if (toursData[id_partie]) {
+			const quit = tours[id_partie] === joueur;
 			toursData[id_partie].joueurs = toursData[id_partie].joueurs.filter(nom => nom !== joueur);
+			if (quit) {
+				if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
+				passerAuJoueurSuivant(id_partie);
+			}
 		}
 
-		// Notifier les autres joueurs
+		// Envoi aux autres joueurs
 		(parties[id_partie] || []).forEach(j => {
 			if (j.readyState === WebSocket.OPEN) {
-				j.send(JSON.stringify({ type: 'exit', joueur }));
+				j.send(JSON.stringify({ type: 'exit', joueur:joueur, pioche:pioche.length }));
 			}
 		});
 
-		// S'il ne reste qu'un joueur, on termine la partie automatiquement
+		// S'il ne reste qu'un joueur, on termine la partie
 		const restants = Object.keys(mainsJoueurs[id_partie] || {});
 		if (restants.length === 1 && !partiesTerminees[id_partie]) {
 			const gagnant = restants[0];
@@ -408,8 +385,8 @@ wss.on('connection', function connection(ws) {
 			if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
 		}
 
-		// Si tous les sockets sont fermés, on déclenche la suppression de la partie dans la BDD
-		/*
+		// Si tous les sockets sont fermés, on déclenche la suppression de la partie dans la base de données
+		
 		const clientsActifs = (parties[id_partie] || []).filter(j => j.readyState === WebSocket.OPEN);
 		console.log(clientsActifs.length);
 		if (clientsActifs.length === 1) {
@@ -418,19 +395,17 @@ wss.on('connection', function connection(ws) {
 				.then(res => res.text())
 				.then(console.log)
 				.catch(console.error);
-		}*/
+		}
 	}
 
-
-
 		
-		if (data.type === 'pioche') {
+		if (data.type === 'pioche') {//Quand un joueur pioche
 			const id = ws.id_partie;
 			if (partiesTerminees[id]) return;
 			const joueur = ws.nom_joueur;
-
+			
+			//Bloque les actions du joueur si ce n'est pas son tour
 			if (tours[id] !== joueur) {
-				console.log(`Ce n'est pas le tour de ${joueur}`);
 				return;
 			}
 			if (!pioche || pioche.length === 0) {
@@ -440,22 +415,18 @@ wss.on('connection', function connection(ws) {
 			}
 
 			const carte = pioche.shift(); // retire la première carte
-			console.log(`Carte piochée : ${carte}`);
-			console.log("Pioche restante :", pioche.length, "cartes");
-
+			console.log(pioche);
 			let bonnePioche = false;
 			if (carteDemandee[id] && joueurQuiDemande[id]) {
-				// Il y avait une pioche forcée
+				// Après une pioche forcée
 				if (carte === carteDemandee[id]) {
 					bonnePioche = true;
-					console.log("Bonne pioche !");
 				}
 
-				// Nettoyer
 				delete carteDemandee[id];
 				delete joueurQuiDemande[id];
 			}
-			if (parties[id]) {
+			if (parties[id]) {//Envoie aux autres joueurs de lancer l'animation
 				parties[id].forEach(client => {
 					if (client.readyState === WebSocket.OPEN) {
 						const isJoueur = client === ws;
@@ -474,15 +445,13 @@ wss.on('connection', function connection(ws) {
 							if (!mainsJoueurs[id]) mainsJoueurs[id] = {};
 							if (!mainsJoueurs[id][nom]) mainsJoueurs[id][nom] = [];
 
-							ajouterCarte(nom, carte, id);
-							/*afficherMains(id);*/
-							console.log("mainsJoueurs[", id, "] :", mainsJoueurs[id]);
-							verifierFamilles(nom, id);
+							ajouterCarte(nom, carte, id);// Ajoute la carte à la main
+							verifierFamilles(nom, id); //Vérifie si une famille est complète
 						}
 					}
 				});
 				if (timersTours[id]) clearTimeout(timersTours[id]);
-				if (bonnePioche) {
+				if (bonnePioche) {//Si le joueur fait une bonne pioche, on recommence son tour
 					parties[id].forEach(client => {
 						if (client.readyState === WebSocket.OPEN) {
 							client.send(JSON.stringify({
@@ -496,7 +465,7 @@ wss.on('connection', function connection(ws) {
 					timersTours[id] = setTimeout(() => {
 						console.log(`Temps écoulé pour ${joueur}, passage au suivant.`);
 						passerAuJoueurSuivant(id);
-					}, 20000);
+					}, 30000);
 				} else {
 					// Sinon tour suivant
 					passerAuJoueurSuivant(id);
@@ -504,18 +473,16 @@ wss.on('connection', function connection(ws) {
 			}
 		}
 
-		if (data.type === 'demande_carte') {
+		if (data.type === 'demande_carte') {//Quand un joueur demande une carte
 			const { id_partie, demandeur, cible, carte } = data;
 			if (partiesTerminees[id_partie]) return;
+			//Bloque les actions du joueur si ce n'est pas son tour
 			if (tours[id_partie] !== demandeur) {
-				console.log(`Ce n'est pas le tour de ${demandeur}`);
 				return;
 			}
 
 			const mainDemandeur = mainsJoueurs[id_partie]?.[demandeur];
 			const mainCible = mainsJoueurs[id_partie]?.[cible];
-
-			console.log("Demandeur :", demandeur, "| Cible :", cible);
 
 			if (!mainCible || !mainDemandeur) {
 				console.log("Joueur introuvable dans les mains");
@@ -525,23 +492,20 @@ wss.on('connection', function connection(ws) {
 			let carteTrouvee = false;
 			for (const fam in mainCible) {
 				const index = mainCible[fam].indexOf(carte);
-				if (index !== -1) {
+				if (index !== -1) {// Si le joueur cible possède la carte demandée
 					mainCible[fam].splice(index, 1);
 					ajouterCarte(demandeur, carte, id_partie);
 					carteTrouvee = true;
-					console.log(`${demandeur} a récupéré ${carte} depuis ${cible}`);
-					verifierFamilles(demandeur, id_partie);
 					break;
 				}
 			}
 
-
-			if (parties[id_partie]) {
+			if (parties[id_partie]) {// Informe tous les joueurs
 				parties[id_partie].forEach(client => {
 					if (client.readyState === WebSocket.OPEN) {
 						client.send(JSON.stringify({
 							type: "info_demande",
-							texte: `${demandeur} a demandé \"${carte}\" à ${cible}`,
+							texte: `${demandeur} a demandé \"${carte.split('/').pop().replace('.png', '')}\" à ${cible}`,
 							succes: carteTrouvee,
 							pourMoi: client.nom_joueur === demandeur,
 							carte: carteTrouvee ? carte : null,
@@ -555,23 +519,18 @@ wss.on('connection', function connection(ws) {
 			if (carteTrouvee) {
 				if (timersTours[id_partie]) clearTimeout(timersTours[id_partie]);
 				passerAuJoueurSuivant(id_partie);
-				console.log("mainsJoueurs[", id_partie, "] :", mainsJoueurs[id_partie]);
+				verifierFamilles(demandeur, id_partie);
 			}
-			else{
-				console.log(`${cible} ne possède pas ${carte}`);
-				carteDemandee[id_partie] = "images/" + carte + ".png";
+			else{// Si la carte n'est pas trouvée, le joueur doit piocher
+				carteDemandee[id_partie] = carte;
 				joueurQuiDemande[id_partie] = demandeur;
 
-				// Forcer le joueur demandeur à piocher
 				parties[id_partie].forEach(client => {
 					if (client.nom_joueur === demandeur && client.readyState === WebSocket.OPEN) {
 						client.send(JSON.stringify({ type: "forcer_pioche" }));
 					}
 				});
-			}
-
-			/*afficherMains(id_partie);*/
-			
+			}			
 		}
     });
 
