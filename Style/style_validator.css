@@ -10,7 +10,7 @@
 
 body {
     background: linear-gradient(135deg, #003645, #00798c);
-    overflow: hidden;
+	overflow: hidden;
 }
 
 main {
@@ -85,25 +85,4 @@ form {
 
 .submit:hover {
     background-color: #26a0a6;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .main {
-        width: 90%;
-    }
-
-    .game-item {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px;
-    }
-
-    .game-item img {
-        margin-bottom: 10px;
-    }
-
-    .game-item a {
-        margin-top: 10px;
-    }
 }
