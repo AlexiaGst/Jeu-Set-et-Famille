@@ -12,14 +12,22 @@ body {
   margin: 0;  
 }
 
+p{
+	margin-top:20px;
+	color:red;
+	text-align:center;
+}
+
+#message{
+	color:green;
+}
 
 .container {
-  
-  max-width: 350px;
+  max-width:400px;
   background: #F8F9FD;
   background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
   border-radius: 40px;
-  padding: 25px 35px;
+  padding: 35px 45px;
   border: 5px solid rgb(255, 255, 255);
   box-shadow: rgba(000, 189, 215, 0.8) 0px 30px 30px -20px;
   margin: 20px;
@@ -28,17 +36,18 @@ body {
 .heading {
   text-align: center;
   font-weight: 900;
-  font-size: 30px;
+  font-size: 2rem;
   color: rgb(0, 140, 200);
 }
 
 .form {
-  margin-top: 20px;
+  margin-top: 10px;
+
 }
 
 #inscription{
   border:1px solid #c3c3c3;
-  font-size: 12px;
+  font-size: 80%;
   color: #003645;
   background-color: white;
   padding: 8px 16px;
@@ -53,7 +62,7 @@ body {
   border: none;
   padding: 15px 20px;
   border-radius: 20px;
-  margin-top: 15px;
+  margin-top: 25px;
   box-shadow: #cff0ff 0px 10px 10px -5px;
   border-inline: 2px solid transparent;
 }
@@ -90,7 +99,7 @@ body {
   background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
   color: white;
   padding-block: 15px;
-  margin: 20px auto;
+  margin: 30px auto;
   border-radius: 20px;
   box-shadow: rgba(0, 189, 215, 0.8) 0px 20px 10px -15px;
   border: none;
