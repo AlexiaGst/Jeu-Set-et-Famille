@@ -63,6 +63,8 @@ node js/server.js
 ```
 
 3. **Créer la base de donnée** :
+
+
 Importer le fichier jeu-set-et-famille.sql dans votre gestionnaire de base de données (ex: phpMyAdmin).
 
 ## Utilisation
@@ -74,8 +76,6 @@ Importer le fichier jeu-set-et-famille.sql dans votre gestionnaire de base de do
 - Créer une partie ou rejoindre une partie 
 - Jouer !
 
-## 📚 Contenu du site
-
 ### Pages disponibles
 
 - `index.php` → Accueil avec animation  
@@ -84,9 +84,9 @@ Importer le fichier jeu-set-et-famille.sql dans votre gestionnaire de base de do
 - `create_game.php` → Création d’une partie  
 - `ongoing_games.php` → Rejoindre une partie (privée ou publique) existante  
 - `waiting_room.php` → Salle d’attente des joueurs  
-- `partie.php` → Interface de jeu  
+- `partie.php` → Interface du jeu  
 - `regles.php` → Règles du jeu  
-- `famille.php` → Visualisation des cartes  
+- `famille.php` → Affichage des cartes par famille 
 
 ---
 
