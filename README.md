@@ -45,7 +45,7 @@ Voici les outils nécessaires pour exécuter correctement le projet :
 ---
 
 
-## Installation
+##  Installation
 
 
 1. **Cloner le dépôt GitHub** :
@@ -54,19 +54,4 @@ Voici les outils nécessaires pour exécuter correctement le projet :
 ```bash
 git clone https://github.com/AlexiaGst/Jeu-Set-et-Famille.git
 cd Jeu-Set-et-Famille
-2. **Lancer le serveur** :
-```bash
-node js/server.js
-3. **Créer la base de donnée** :
-Importer le fichier jeu-set-et-famille.sql 
 
-
-
-
-## Utilisation
-Créer un compte utilisateur afin de jouer
-Se connecter 
-Lire les règles si vous ne connaissez pas le jeu
-Se familiariser avec les cartes et différentes famille du jeu
-Créer une partie ou rejoindre une partie 
-Jouer ! 
