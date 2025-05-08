@@ -39,7 +39,7 @@ Voici les outils nécessaires pour exécuter correctement le projet :
 
 
 - [Node.js](https://nodejs.org/) – Serveur pour la communication en temps réel entre les joueurs.
-- [XAMPP](https://www.apachefriends.org/fr/index.html) – Serveur local Apache + MySQL pour l'exécution du backend PHP et la gestion de la base de données.
+- [XAMPP](https://www.apachefriends.org/fr/index.html) – Serveur local Apache + MySQL pour l'exécution du backend PHP et la gestion de la base de données (ou un serveur en ligne).
 
 
 ---
@@ -54,4 +54,73 @@ Voici les outils nécessaires pour exécuter correctement le projet :
 ```bash
 git clone https://github.com/AlexiaGst/Jeu-Set-et-Famille.git
 cd Jeu-Set-et-Famille
+```
+
+2. **Lancer le serveur** :
+
+```bash
+node js/server.js
+```
+
+3. **Créer la base de donnée** :
+Importer le fichier jeu-set-et-famille.sql dans votre gestionnaire de base de données (ex: phpMyAdmin).
+
+## Utilisation
+
+- Créer un compte utilisateur afin de jouer
+- Se connecter 
+- Lire les règles si vous ne connaissez pas le jeu
+- Se familiariser avec les cartes et différentes famille du jeu
+- Créer une partie ou rejoindre une partie 
+- Jouer !
+
+## 📚 Contenu du site
+
+### Pages disponibles
+
+- `index.php` → Accueil avec animation  
+- `login.php` / `register.php` → Connexion / Inscription  
+- `play_game.php` → Création ou recherche de partie  
+- `create_game.php` → Création d’une partie  
+- `ongoing_games.php` → Rejoindre une partie (privée ou publique) existante  
+- `waiting_room.php` → Salle d’attente des joueurs  
+- `partie.php` → Interface de jeu  
+- `regles.php` → Règles du jeu  
+- `famille.php` → Visualisation des cartes  
+
+---
+
+### Fonctionnalités
+
+- Système d'authentification (connexion/inscription)  
+- Gestion des parties multijoueurs  
+- Distribution des cartes et affichage dynamique  
+- Interactions entre joueurs (demande de cartes, pioche, tour par tour)
+
+---
+
+## Construit avec
+
+### Langages & Frameworks
+
+- HTML/CSS  
+- JavaScript  
+- PHP  
+- Socket
+- Requetes AJAX
+
+---
+
+## Sources
+
+### Sources graphiques
+
+- **Profils des joueurs** : Freepik – *Hand drawn people doing sports illustration set* by *pikisuperstar*  
+- **Design des cartes** : Canva et Freepik  
+- **Animation page d’accueil** : [CodePen – Animation Cards](https://codepen.io/waseem-polus/pen/NWLVzwb)
+
+### Crédit modèle README
+
+Modèle inspiré de ce [README](https://gist.github.com/marc-gavanier/8e2a2a14a888deb80978373e51682bfb)
+
 
