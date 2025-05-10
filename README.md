@@ -118,6 +118,7 @@ Importer le fichier jeu-set-et-famille.sql dans votre gestionnaire de base de do
 - **Profils des joueurs** : Freepik – *Hand drawn people doing sports illustration set* by *pikisuperstar*  
 - **Design des cartes** : Canva et Freepik  
 - **Animation page d’accueil** : [CodePen – Animation Cards](https://codepen.io/waseem-polus/pen/NWLVzwb)
+- **Animation page de chargement** : [Uiverse - Dot Animation](https://uiverse.io/Shoh2008/loud-warthog-69)
 
 ### Crédit modèle README
 
