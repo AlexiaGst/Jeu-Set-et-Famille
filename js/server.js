@@ -388,7 +388,6 @@ wss.on('connection', function connection(ws) {
 		// Si tous les sockets sont fermés, on déclenche la suppression de la partie dans la base de données
 		
 		const clientsActifs = (parties[id_partie] || []).filter(j => j.readyState === WebSocket.OPEN);
-		console.log(clientsActifs.length);
 		if (clientsActifs.length === 1) {
 			console.log("Tous les joueurs ont quitté, suppression en base.");
 			fetch(`http://localhost/Jeu_Set_Famille/suppression_partie.php?id_partie=${id_partie}`)
