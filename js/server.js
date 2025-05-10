@@ -415,7 +415,6 @@ wss.on('connection', function connection(ws) {
 			}
 
 			const carte = pioche.shift(); // retire la première carte
-			console.log(pioche);
 			let bonnePioche = false;
 			if (carteDemandee[id] && joueurQuiDemande[id]) {
 				// Après une pioche forcée
