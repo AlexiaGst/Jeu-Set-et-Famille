@@ -38,7 +38,7 @@ $playerCount = intval($row_count['max_joueurs']);
     <link rel="stylesheet" href="style/game.css">
 	<link rel="stylesheet" href="style/fin_partie.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap" rel="stylesheet">
-	<script src="js/pioche.js" defer></script>
+	<script src="js/fonctions.js" defer></script>
     <script src="js/gestion_cartes.js" defer></script>
     <script>
 		const monNom = <?php echo json_encode($_SESSION['nom_utilisateur']); ?>;
