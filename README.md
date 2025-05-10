@@ -72,7 +72,7 @@ Importer le fichier jeu-set-et-famille.sql dans votre gestionnaire de base de do
 - Créer un compte utilisateur afin de jouer
 - Se connecter 
 - Lire les règles si vous ne connaissez pas le jeu
-- Se familiariser avec les cartes et différentes famille du jeu
+- Se familiariser avec les cartes et différentes familles du jeu
 - Créer une partie ou rejoindre une partie 
 - Jouer !
 
@@ -106,7 +106,7 @@ Importer le fichier jeu-set-et-famille.sql dans votre gestionnaire de base de do
 - HTML/CSS  
 - JavaScript  
 - PHP  
-- Socket
+- WebSocket
 - Requetes AJAX
 
 ---
