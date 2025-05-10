@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 19 avr. 2025 à 14:04
+-- Généré le : sam. 10 mai 2025 à 10:46
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -46,16 +46,6 @@ CREATE TABLE `parties` (
   `max_joueurs` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Déchargement des données de la table `parties`
---
-
-INSERT INTO `parties` (`id_partie`, `nom_partie`, `mot_de_passe`, `nbr_joueurs`, `max_joueurs`) VALUES
-(18, 'bla', NULL, 0, 2),
-(19, 'test', NULL, 4, 4),
-(20, 'test', NULL, 4, 2),
-(21, 'bla', '425245', 0, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -68,17 +58,6 @@ CREATE TABLE `utilisateurs` (
   `adresse_mail_utilisateur` varchar(100) NOT NULL,
   `mot_de_passe` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Déchargement des données de la table `utilisateurs`
---
-
-INSERT INTO `utilisateurs` (`id_client`, `nom_utilisateur`, `adresse_mail_utilisateur`, `mot_de_passe`) VALUES
-(5, 'test', 'test@test.com', '$2y$10$EjWHibXALmO/0aOwsnZEIeUrdZjHcanoikIFZ4PtN9Bf5jjZeh0h.'),
-(7, 'alexia', 'alexia@test.com', '$2y$10$yOjJYcQaN6hE2i28fG08Zet3RljoADWfq0U7wb1e9rPw3c.dQMqI6'),
-(8, 'compte', 't@t.com', '$2y$10$4GeKcVE5ICmqCNTqw//L8Og6nfU3pCbo82Zy0jl5.UCFkQnZFVLDu'),
-(9, 'sophie', 't@t.com', '$2y$10$bWC2rqGwcFgC5Fq5hdpxTOT4EUOaPHSvGL0VazuXfFixdk2fCzJDa'),
-(10, 'AlexiaGst', 'alexia12122005@gmail.com', '$2y$10$WwMFVBCx6bFYEXobYGWbNu3MWZEQ8UauTUZ7zB9xA1IBBc1OuxBru');
 
 --
 -- Index pour les tables déchargées
@@ -111,13 +90,13 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `parties`
 --
 ALTER TABLE `parties`
-  MODIFY `id_partie` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_partie` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id_client` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_client` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Contraintes pour les tables déchargées
