@@ -389,7 +389,7 @@ body {
 .middle-section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 80px;
+  gap: 50px;
   height: 250px;
 }
 
