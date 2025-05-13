@@ -38,7 +38,7 @@ $playerCount = intval($row_count['max_joueurs']);
     <link rel="stylesheet" href="style/game.css">
 	<link rel="stylesheet" href="style/fin_partie.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap" rel="stylesheet">
-	<script src="js/fonctions.js" defer></script>
+	<script src="js/pioche.js" defer></script>
     <script src="js/gestion_cartes.js" defer></script>
     <script>
 		const monNom = <?php echo json_encode($_SESSION['nom_utilisateur']); ?>;
@@ -66,9 +66,10 @@ $playerCount = intval($row_count['max_joueurs']);
 	
 	<div id="mes-cartes"></div>
 	
-    <div class="grid-layout">
+    
 
-        <?php if ($playerCount === 2): ?>
+    <?php if ($playerCount === 2): ?>
+		<div style="max-width:1200px;" class="grid-layout">
             <!-- Affichage pour 2 joueurs -->
             <div class="top-section">
                 <div class="player-info" data-joueur="?" data-position="haut">
@@ -121,7 +122,8 @@ $playerCount = intval($row_count['max_joueurs']);
                 </div>
             </div>
 
-        <?php elseif ($playerCount === 4 || $playerCount === 3): ?>
+    <?php elseif ($playerCount === 4 || $playerCount === 3): ?>
+		<div style="max-width:1400px;" class="grid-layout">
             <!-- Affichage pour 4 joueurs avec middle-section version 1 -->
             <div class="top-section">
 			<?php if ($playerCount === 4):?>
@@ -223,7 +225,8 @@ $playerCount = intval($row_count['max_joueurs']);
 				</div>
 			</div>
 
-        <?php elseif ($playerCount === 6 || $playerCount === 5): ?>
+    <?php elseif ($playerCount === 6 || $playerCount === 5): ?>
+		<div style="max-width:1400px;" class="grid-layout">
             <!-- Affichage pour 6 joueurs (middle-section complet) -->
             <div class="top-section">
                 <div class="player-info" data-joueur="?" data-position="haut">
@@ -374,7 +377,7 @@ $playerCount = intval($row_count['max_joueurs']);
 				  </div>
 				</div>
 			</div>
-        <?php endif; ?>
+    <?php endif; ?>
 
         <!-- Bas pour TOUS les cas (joueur principal) -->
         <div class="bottom-section">
