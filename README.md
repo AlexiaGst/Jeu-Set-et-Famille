@@ -2,7 +2,7 @@
 
 
 **Par : Alexia Gastaud & Jade Bissessur**  
-🔗 [Lien vers le dépôt GitHub](https://github.com/AlexiaGst/Jeu-Set-et-Famille)
+🔗 [Lien vers le dépôt GitHub](https://github.com/AlexiaGst/Jeu-Set-et-Famille)  
 🔗 [Lien vers la vidéo de présentation](https://youtu.be/roGdibgyaZ4)
 
 ## À propos
